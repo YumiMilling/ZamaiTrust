@@ -21,7 +21,7 @@ export default function ClosingSection() {
       <div className="footer">
         <div className="footer-inner">
           <div>
-            <div style={{ fontFamily: "var(--display)", fontSize: 20, fontWeight: 800, color: 'var(--t1)', letterSpacing: '.02em' }}>ZAMAI</div>
+            <img src="/ZAMAI.png" alt="ZamAi" style={{ height: 24, filter: 'brightness(0) invert(1)' }} />
             <div style={{ fontFamily: "var(--serif)", fontSize: 16, fontStyle: 'italic', fontWeight: 300, color: 'var(--cu-lt)' }}>Technology at the service of people. Always.</div>
           </div>
           <div style={{ fontSize: 14, color: 'rgba(242,237,230,.35)', textAlign: 'right' }}>

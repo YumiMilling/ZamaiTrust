@@ -6,6 +6,7 @@ export default function Hero() {
           <div className="hero-kicker-line"></div>
           <div className="hero-kicker-text">Exploration &middot; v0.1 &middot; March 2026</div>
         </div>
+        <img src="/ZAMAI.png" alt="ZamAi" className="fade d1" style={{ height: 40, marginBottom: 34, filter: 'brightness(0) invert(1)' }} />
         <h1 className="hero-title fade d2">
           Building a<br />
           <em>Trust System</em><br />
