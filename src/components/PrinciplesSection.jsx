@@ -1,17 +1,17 @@
 const principles = [
-  { num: '01', eye: 'Proof of Benefit', title: 'Verified value, not speculation', desc: 'Every action generates a signed attestation of real benefit. Reputation is built from demonstrated contribution.' },
-  { num: '02', eye: 'Grain as Collateral', title: 'The commodity is the credit', desc: 'Forward contracts backed by committed, insured grain replace bank loans. The farmer never sees a bank.' },
-  { num: '03', eye: 'Tamper-Evidence', title: 'Data that cannot lie', desc: 'Every record hashed into a Merkle tree. Change one byte and the root changes. No blockchain needed.' },
-  { num: '04', eye: 'Value Addition', title: 'Process in Zambia', desc: 'Forward contracts are for processed goods. Jobs and margin stay in Zambia. Export policy aligned.' },
-  { num: '05', eye: 'Progressive Trust', title: 'Earn decentralisation', desc: 'Start centralised. Distribute governance as the data proves the model works over seasons.' },
-  { num: '06', eye: 'Sovereignty', title: 'Local rails. Global reach.', desc: 'Domestic in Kwacha. Cross-border in local currencies. International capital via tokenised contracts later.' },
+  { num: '01', eye: 'Show Your Work', title: 'Every action leaves a receipt', desc: 'Like a teacher asking you to show your working — every step in the chain creates a signed, permanent record. Your reputation is built from what you actually did, not what you claim.' },
+  { num: '02', eye: 'Grain is the Credit', title: 'No bank loan needed', desc: 'The grain itself backs the deal. A buyer promises to purchase. A farmer promises to deliver. The committed, insured harvest replaces a bank loan. The farmer never walks into a bank.' },
+  { num: '03', eye: 'Tamper-Proof Records', title: 'Data that cannot lie', desc: 'Think of it like a wax seal on a letter. Every record is digitally sealed. Change even one number and the seal breaks visibly. No one can quietly alter the books.' },
+  { num: '04', eye: 'Process Here First', title: 'Mill in Zambia, then export', desc: 'Buyers purchase mealie meal, not raw maize. The milling jobs and the profit margin stay in Zambia. Raw grain doesn\'t cross the border — finished product does.' },
+  { num: '05', eye: 'Trust is Earned', title: 'Start tight, loosen over time', desc: 'The system starts with one organisation running it — like training wheels. As the data proves the model works season after season, participants gradually take the steering wheel.' },
+  { num: '06', eye: 'Local Money, Global Reach', title: 'Kwacha first. The world later.', desc: 'Domestic trade in Kwacha. Cross-border trade in local currencies. International investment comes later, once the system has a track record and the regulations catch up.' },
 ]
 
 export default function PrinciplesSection() {
   return (
     <section className="sec">
       <div className="eye">Design Principles</div>
-      <h2 className="h2">What the system believes.</h2>
+      <h2 className="h2">The rules the system lives by.</h2>
       <div className="card-grid-3">
         {principles.map(p => (
           <div className="card" key={p.num}>

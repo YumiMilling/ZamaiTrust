@@ -7,12 +7,12 @@ export default function Hero() {
           <div className="hero-kicker-text">Exploration &middot; v0.1 &middot; March 2026</div>
         </div>
         <h1 className="hero-title fade d2">
-          An Exploration into<br />
-          <em>Trust Infrastructure</em><br />
+          Building a<br />
+          <em>Trust System</em><br />
           for African Agriculture
         </h1>
         <p className="hero-sub fade d3">
-          What if the grain itself were the financial instrument — and the system that verified it were the only bank a farmer ever needed?
+          What if the grain itself were the guarantee — and the farmer never needed to walk into a bank?
         </p>
         <div className="hero-meta fade d4">
           <div className="hero-meta-item">

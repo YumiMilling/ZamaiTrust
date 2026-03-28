@@ -33,10 +33,10 @@ function App() {
       <Divider />
       <PhasesSection />
       <Divider />
-      <SectionHeader id="model" num="02" title="Financial Flow Model" sub="Adjust parameters. Find where it breaks." />
+      <SectionHeader id="model" num="02" title="The Numbers" sub="Move the sliders. See if it works." />
       <FinancialModel />
       <Divider />
-      <SectionHeader id="schema" num="03" title="Data Schema" sub="Attestations, agents, Merkle structure, payment waterfall" />
+      <SectionHeader id="schema" num="03" title="How It Works" sub="The records, the tools, and how money flows" />
       <SchemaSection />
       <Divider />
       <BenefitClassesSection />
@@ -47,7 +47,7 @@ function App() {
       <Divider />
       <WaterfallSection />
       <Divider />
-      <SectionHeader id="regulation" num="04" title="Regulatory Gap Analysis" sub="Every feature mapped against Zambian law" />
+      <SectionHeader id="regulation" num="04" title="Is It Legal?" sub="Every feature checked against Zambian law" />
       <RegulatorySection />
       <Divider />
       <ClosingSection />

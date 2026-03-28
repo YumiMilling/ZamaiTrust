@@ -5,9 +5,9 @@ export default function ClosingSection() {
       <div className="sec-eg">
         <div className="inner">
           <div className="eye" style={{ color: 'var(--cu-hi)' }}>The Question</div>
-          <h2 className="h2" style={{ maxWidth: 700 }}>Can Zambian agriculture be financed by global capital — without a single bank loan to a farmer?</h2>
+          <h2 className="h2" style={{ maxWidth: 700 }}>Can a farmer's harvest attract global capital — without a single bank loan?</h2>
           <div className="pull" style={{ borderColor: 'var(--cu-lt)', color: 'rgba(242,237,230,.75)', marginTop: 34 }}>
-            This is an exploration, not a business plan. A question asked in public because the answer cannot be found alone. <em>CATSP may be the moment all the preconditions align.</em>
+            This is not a business plan. It's a question — asked openly because the answer can't be found alone. Zambia's CATSP programme may be the moment when all the pieces finally line up. <em>If not now, when?</em>
           </div>
           <p className="p" style={{ color: 'rgba(242,237,230,.5)', marginTop: 34 }}>
             <strong style={{ color: 'rgba(242,237,230,.7)' }}>hello@zamai.pro</strong>

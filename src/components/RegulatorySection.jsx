@@ -8,19 +8,19 @@ function Status({ type, label }) {
 }
 
 const rows = [
-  { feature: 'Electronic warehouse receipts', phase: '1', status: 'clear', legislation: 'Agricultural Credits Act 2010', action: 'Partner with certified operators' },
-  { feature: 'Bilateral forward contracts', phase: '1', status: 'clear', legislation: 'Common law; Securities Act exclusion', action: 'Standard commercial docs' },
-  { feature: 'Input credit on future crops', phase: '1', status: 'clear', legislation: 'Agricultural Credits Act 2010', action: 'Register charges with District Ag. Coordinator' },
-  { feature: 'Kwacha settlement', phase: '1', status: 'clear', legislation: 'BoZ Currency Directives 2025', action: 'None' },
-  { feature: 'Digital platform operation', phase: '1', status: 'clear', legislation: 'ECT Act 2021; DPA 2021', action: 'DPA registration' },
-  { feature: 'Automated payment routing', phase: '1', status: 'clear', legislation: 'National Payment Systems Act 2007', action: 'Advisory opinion from BoZ re: escrow' },
-  { feature: 'Index-based crop insurance', phase: '1', status: 'gap', legislation: 'Insurance Act 2021; CATSP ZIRSAT', action: 'Partner with licensed insurer' },
-  { feature: 'Merkle tamper-evidence', phase: '1', status: 'gap', legislation: 'ECT Act; Cyber Security Act 2025', action: 'Zambian data hosting; gov transparency' },
-  { feature: 'Cross-border forwards', phase: '2', status: 'gap', legislation: 'Currency Directives; MoA export permits', action: 'Export permits; authorised dealer routing' },
-  { feature: 'Foreign currency receipt', phase: '2', status: 'clear', legislation: 'Currency Directives Schedule 3(a)', action: 'BoZ reporting compliance' },
-  { feature: 'Token sale to investors', phase: '3', status: 'blocker', legislation: 'Securities Act 2016; BoZ crypto position', action: 'SEC engagement; sandbox; await framework' },
-  { feature: 'Stablecoin-Kwacha conversion', phase: '3', status: 'blocker', legislation: 'Currency Directives; Banking Act', action: 'Await BoZ crypto framework' },
-  { feature: 'Foreign micro-investment', phase: '3', status: 'gap', legislation: 'Investment Act 2022; BoZ forex', action: 'SPV structure; aggregate before distribute' },
+  { feature: 'Digital warehouse receipts', phase: '1', status: 'clear', legislation: 'Agricultural Credits Act 2010', action: 'Partner with certified operators' },
+  { feature: 'Buyer-seller forward contracts', phase: '1', status: 'clear', legislation: 'Common law; Securities Act exclusion', action: 'Standard commercial docs' },
+  { feature: 'Input credit against future harvest', phase: '1', status: 'clear', legislation: 'Agricultural Credits Act 2010', action: 'Register charges with District Ag. Coordinator' },
+  { feature: 'Settlement in Kwacha', phase: '1', status: 'clear', legislation: 'BoZ Currency Directives 2025', action: 'None' },
+  { feature: 'Running a digital platform', phase: '1', status: 'clear', legislation: 'ECT Act 2021; DPA 2021', action: 'Data protection registration' },
+  { feature: 'Automatic payment routing', phase: '1', status: 'clear', legislation: 'National Payment Systems Act 2007', action: 'Advisory from Bank of Zambia on escrow' },
+  { feature: 'Crop insurance for small farmers', phase: '1', status: 'gap', legislation: 'Insurance Act 2021; CATSP ZIRSAT', action: 'Partner with licensed insurer' },
+  { feature: 'Tamper-proof digital records', phase: '1', status: 'gap', legislation: 'ECT Act; Cyber Security Act 2025', action: 'Host data in Zambia; government transparency' },
+  { feature: 'Cross-border sales contracts', phase: '2', status: 'gap', legislation: 'Currency Directives; MoA export permits', action: 'Obtain export permits; use authorised banks' },
+  { feature: 'Receiving foreign currency', phase: '2', status: 'clear', legislation: 'Currency Directives Schedule 3(a)', action: 'Bank of Zambia reporting' },
+  { feature: 'Selling tokens to investors', phase: '3', status: 'blocker', legislation: 'Securities Act 2016; BoZ crypto position', action: 'Engage SEC; apply for regulatory sandbox' },
+  { feature: 'Converting crypto to Kwacha', phase: '3', status: 'blocker', legislation: 'Currency Directives; Banking Act', action: 'Wait for BoZ crypto framework' },
+  { feature: 'Small foreign investments', phase: '3', status: 'gap', legislation: 'Investment Act 2022; BoZ forex', action: 'Pool investments through a holding company' },
 ]
 
 const statusLabels = { clear: 'Clear', gap: 'Gap', blocker: 'Blocker' }
@@ -28,19 +28,19 @@ const statusLabels = { clear: 'Clear', gap: 'Gap', blocker: 'Blocker' }
 export default function RegulatorySection() {
   return (
     <section className="sec">
-      <div className="eye">Summary</div>
-      <h2 className="h2">Phase 1 is legal. Phase 2 is navigable. Phase 3 needs patience.</h2>
+      <div className="eye">Legal Reality Check</div>
+      <h2 className="h2">You can start today. You don't need permission for Phase 1.</h2>
       <p className="p" style={{ marginTop: 21 }}>
-        The Agricultural Credits Act 2010 was written for this system. Electronic warehouse receipts, charges on future crops, negotiable documents of title. The Securities Act explicitly carves out commodity transactions from its scope.
+        Here's the good news: Zambian law already supports most of what this system does in its early phases. The Agricultural Credits Act was practically written for this — digital warehouse receipts, charges on future crops, all explicitly covered. The tricky parts (crypto, international tokens) come later, and by then the system will have years of real data to show regulators.
       </p>
       <div style={{ display: 'flex', gap: 21, flexWrap: 'wrap', margin: '21px 0' }}>
-        <Status type="clear" label="Clear — Legal Today" />
-        <Status type="gap" label="Gap — Needs Framework" />
-        <Status type="blocker" label="Blocker — Requires Change" />
+        <Status type="clear" label="Clear — Legal today" />
+        <Status type="gap" label="Gap — Needs a framework" />
+        <Status type="blocker" label="Blocker — Law must change first" />
       </div>
       <table className="summary">
         <thead>
-          <tr><th>Feature</th><th>Phase</th><th>Status</th><th>Primary Legislation</th><th>Action</th></tr>
+          <tr><th>What the System Does</th><th>Phase</th><th>Status</th><th>Which Law</th><th>What We Need to Do</th></tr>
         </thead>
         <tbody>
           {rows.map(r => (
@@ -55,8 +55,8 @@ export default function RegulatorySection() {
         </tbody>
       </table>
       <div className="note">
-        <div className="note-title">The Strategic Implication</div>
-        <div className="note-body">You do not need regulatory approval to start. You need it to finish. Build Phase 1 now. Prove it works. Generate the data. When BoZ publishes the crypto framework and SEC provides guidance, you will have years of verified data and a working system. That is infinitely more persuasive than a whitepaper.</div>
+        <div className="note-title">The Strategy</div>
+        <div className="note-body">You don't need anyone's permission to start. You need it to finish. Build Phase 1 now. Prove it works. Collect the data. When the Bank of Zambia and SEC are ready with their frameworks, you won't be waving a whitepaper — you'll have years of real transactions and a working system. That's a very different conversation.</div>
       </div>
     </section>
   )
