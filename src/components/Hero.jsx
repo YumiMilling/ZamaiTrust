@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <div className="hero" id="vision">
+    <div className="hero">
       <div className="hero-inner">
         <div className="hero-kicker fade d1">
           <div className="hero-kicker-line"></div>
