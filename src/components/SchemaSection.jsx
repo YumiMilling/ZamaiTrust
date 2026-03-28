@@ -1,3 +1,5 @@
+import { DualSignature } from './TrustDiagrams'
+
 export default function SchemaSection() {
   return (
     <section className="sec">
@@ -21,6 +23,9 @@ export default function SchemaSection() {
       <div className="note">
         <div className="note-title">Dual Signatures</div>
         <div className="note-body">Every attestation requires two parties. Farmer + depot on delivery. Disagreements are recorded, not suppressed — they are data.</div>
+      </div>
+      <div style={{ marginTop: 55 }}>
+        <DualSignature />
       </div>
     </section>
   )

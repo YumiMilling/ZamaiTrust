@@ -1,3 +1,5 @@
+import { CoreLoop } from './TrustDiagrams'
+
 export default function IdeaSection() {
   return (
     <div className="sec-eg">
@@ -36,6 +38,9 @@ export default function IdeaSection() {
         <p className="p" style={{ color: 'rgba(242,237,230,.55)', fontSize: 14, marginTop: 8 }}>
           Insurance wraps the loop. Payment flows backward on verified delivery. Value addition in Zambia before anything crosses a border.
         </p>
+        <div style={{ marginTop: 55 }}>
+          <CoreLoop />
+        </div>
       </div>
     </div>
   )

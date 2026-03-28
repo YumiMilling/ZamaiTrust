@@ -1,3 +1,5 @@
+import { InternationalCapital } from './TrustDiagrams'
+
 const phases = [
   { num: '0', title: 'Proof of Concept', desc: 'One cluster. One depot. One processor. One input supplier. Paper + digital in parallel. One season.', active: true },
   { num: '1', title: 'Pilot', desc: 'Ten clusters, two provinces. Warehouse integration. First insurer. All domestic. All Kwacha. Two seasons.' },
@@ -22,6 +24,9 @@ export default function PhasesSection() {
               </div>
             </div>
           ))}
+        </div>
+        <div style={{ marginTop: 55 }}>
+          <InternationalCapital />
         </div>
       </div>
     </div>

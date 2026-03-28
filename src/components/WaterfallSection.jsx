@@ -1,3 +1,5 @@
+import { InsuranceFlow } from './TrustDiagrams'
+
 export default function WaterfallSection() {
   return (
     <section className="sec">
@@ -18,6 +20,9 @@ export default function WaterfallSection() {
       <div className="note">
         <div className="note-title">The Farmer Sees One Number</div>
         <div className="note-body">"K8,450 deposited to your mobile money. Delivery of 2,000kg grade-A white maize confirmed. Input balance with Seed Co: cleared."</div>
+      </div>
+      <div style={{ marginTop: 55 }}>
+        <InsuranceFlow />
       </div>
     </section>
   )

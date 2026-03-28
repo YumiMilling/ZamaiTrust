@@ -1,3 +1,5 @@
+import { ThreeLayerArchitecture } from './TrustDiagrams'
+
 export default function ArchitectureSection() {
   return (
     <div className="sec-alt">
@@ -20,6 +22,9 @@ export default function ArchitectureSection() {
             <div className="layer-title">Agents on Devices</div>
             <div className="layer-desc">Purpose-built agents for each participant. Farmer via SMS/USSD. Depot operator on Android. Processor on web dashboard. Each speaks the protocol. Each built for its user.</div>
           </div>
+        </div>
+        <div style={{ marginTop: 55 }}>
+          <ThreeLayerArchitecture />
         </div>
       </div>
     </div>

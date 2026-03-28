@@ -1,3 +1,5 @@
+import { ForwardLifecycle } from './TrustDiagrams'
+
 const classes = [
   { cls: 'delivery-verified', event: 'Grain arrives at depot', fields: 'quantity_kg, grade, moisture_pct, crop_type, farmer_id, cluster_id', signed: 'Farmer + Depot' },
   { cls: 'quality-attested', event: 'Independent grade confirmation', fields: 'delivery_id, grade_confirmed, moisture, aflatoxin_ppb, method', signed: 'Assessor' },
@@ -29,6 +31,9 @@ export default function BenefitClassesSection() {
             ))}
           </tbody>
         </table>
+        <div style={{ marginTop: 55 }}>
+          <ForwardLifecycle />
+        </div>
       </div>
     </div>
   )
