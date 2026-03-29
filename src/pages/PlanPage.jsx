@@ -64,8 +64,8 @@ export default function PlanPage() {
             <div key={p.num} style={{ background: 'var(--s2)', marginBottom: 3, padding: '28px 34px', borderLeft: p.active ? '3px solid var(--eg-vi)' : '3px solid var(--s4)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
                 <div>
-                  <span style={{ fontFamily: 'var(--display)', fontSize: 28, fontWeight: 800, color: p.active ? 'var(--eg-vi)' : 'var(--s4)', marginRight: 13 }}>{p.num}</span>
-                  <span style={{ fontFamily: 'var(--display)', fontSize: 18, fontWeight: 700, color: 'var(--t1)' }}>{p.title}</span>
+                  <span style={{ fontFamily: 'var(--serif)', fontSize: 28, fontWeight: 800, color: p.active ? 'var(--eg-vi)' : 'var(--s4)', marginRight: 13 }}>{p.num}</span>
+                  <span style={{ fontFamily: 'var(--serif)', fontSize: 18, fontWeight: 700, color: 'var(--t1)' }}>{p.title}</span>
                 </div>
                 <span style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--cu-lt)' }}>{p.target}</span>
               </div>

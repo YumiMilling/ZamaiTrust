@@ -50,7 +50,7 @@ export default function GovernancePage() {
         <div className="card-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
           {tiers.map(t => (
             <div key={t.name} style={{ background: t.bg, border: '1px solid ' + t.border, padding: '21px', borderTop: '2px solid ' + t.border }}>
-              <div style={{ fontFamily: 'var(--display)', fontSize: 16, fontWeight: 700, color: t.color }}>{t.name}</div>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: 18, fontWeight: 600, color: t.color }}>{t.name}</div>
               <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: t.color, marginBottom: 8 }}>{t.range}</div>
               <div style={{ fontSize: 12, color: 'var(--t3)', lineHeight: '1.6' }}>{t.desc}</div>
             </div>
