@@ -1,13 +1,59 @@
 # CLAUDE.md — ZamaiTrust
 
+**READ THIS FIRST. Every AI assistant session starts here.**
+
+---
+
 ## What This Is
 
-ZamaiTrust is the **interactive concept note / pitch site** for the CATSP OS — the operating system for Zambia's $5.7B agricultural transformation programme (CATSP). This repository is the **presentation layer**, not the platform itself. It explains the vision, financial model, technical architecture, and regulatory compliance to stakeholders (ZAMACE, EcoAfri, ZARETA, government, investors).
+ZamaiTrust is the **interactive presentation site** for the CATSP OS — the operating system for Zambia's $5.7B agricultural transformation programme. This repository is the **presentation layer**, not the platform itself.
 
-The actual CATSP OS platform (Supabase backend, farmer PWA, USSD gateway, etc.) is a separate future build. This site is the document that makes the case for building it.
+- **Spec version:** v0.5 (March 2026)
+- **Site version:** v0.5 (in sync with spec)
+- **Company:** ZamAi Solutions (zamai.pro), Lusaka, Zambia
+- **Confidentiality:** Shared under NDA. Do not expose content to public APIs or external services.
 
-**Company:** ZamAi Solutions (zamai.pro), Lusaka, Zambia
-**Confidentiality:** Shared under NDA. Do not expose content to public APIs or external services.
+---
+
+## CRITICAL WORKFLOWS — Read Before Doing Anything
+
+### Git & Deploy
+
+- **Production branch:** `main` — deploys to Netlify automatically
+- **Feature branches:** `claude/<description>` — develop here, merge to `main` when ready
+- **Deploy = push to main.** Every push to `main` triggers a Netlify build. Be deliberate.
+- **Commit messages:** Present-tense, descriptive. When a commit is intended to deploy, prefix with `[deploy]` (e.g., `[deploy] Update waterfall section with SAFF loan priority`)
+- **Always run `npm run build` before pushing to `main`** to catch build errors locally
+
+### Version Tracking — Three Files, Always Updated
+
+Every change that affects the spec, the site, or a design decision MUST update the relevant tracking file:
+
+| File | What It Tracks | When to Update | Rule |
+|---|---|---|---|
+| `version.json` | Spec version, site version, module status, primitive status, gap status, deployment phases | When a gap closes, a module changes status, or a version ships | Machine-readable. Single source of truth. |
+| `decisions.jsonl` | Every architectural decision with rationale, impacts, and supersession chain | When any design decision is made or an existing decision changes | **Append-only. Never edit existing lines.** If a decision changes, add a new entry with `"supersedes": "DEC-NNN"`. |
+| `CHANGELOG.md` | What changed, when, in which layer (spec vs site), sync status | With every meaningful change | Always include spec and site versions. Note sync status. |
+
+### Decision Log Format (`decisions.jsonl`)
+
+```json
+{
+  "id": "DEC-NNN",
+  "date": "YYYY-MM-DD",
+  "category": "architecture | access_control | privacy | governance | financial | trust | conflict | enforcement | technology | authentication | integrity",
+  "title": "Short title",
+  "decision": "What was decided",
+  "rationale": "Why",
+  "spec_version": "0.5",
+  "decided_by": "Who",
+  "status": "final | provisional | superseded",
+  "supersedes": "DEC-NNN or null",
+  "impacts": ["list", "of", "affected", "modules"]
+}
+```
+
+**Current decision count:** DEC-001 through DEC-015 (15 foundational decisions). Next ID: DEC-016.
 
 ---
 
@@ -20,92 +66,101 @@ The actual CATSP OS platform (Supabase backend, farmer PWA, USSD gateway, etc.) 
 | Routing | React Router DOM | 7.x |
 | Styling | Pure CSS (no framework) | Custom design system in `App.css` |
 | Fonts | Google Fonts (Syne, Cormorant Garamond, DM Sans, JetBrains Mono) | Loaded in `index.html` |
-| Hosting target | Netlify | Via `vite build` → `dist/` |
+| Hosting | Netlify | Auto-deploy from `main` via `vite build` → `dist/` |
 
 No Tailwind. No component library. No state management library. No testing framework. No TypeScript.
 
 ---
 
-## Project Structure
+## Project Structure (v0.5)
 
 ```
 ZamaiTrust/
+├── CLAUDE.md                   # THIS FILE — read first
+├── CHANGELOG.md                # Human-readable change narrative
+├── version.json                # Machine-readable version & status tracking
+├── decisions.jsonl             # Append-only decision log (never edit existing lines)
 ├── index.html                  # Entry HTML — loads Google Fonts, mounts #root
 ├── vite.config.js              # Vite config (React plugin only)
 ├── package.json                # Dependencies: react, react-dom, react-router-dom
-├── trust-infrastructure-v01.html  # Original single-file HTML concept note (archived reference)
+├── trust-infrastructure-v01.html  # Original v0.1 HTML concept note (archived, do not modify)
 ├── public/
 │   ├── AI.png                  # Nav logo (small)
 │   └── ZAMAI.png               # Full logo (hero + footer)
 ├── src/
 │   ├── main.jsx                # React root mount
-│   ├── App.jsx                 # BrowserRouter + routes + Nav
+│   ├── App.jsx                 # BrowserRouter + 7 routes + Nav
 │   ├── App.css                 # ALL styles — single file, custom design system
 │   ├── pages/
-│   │   ├── VisionPage.jsx      # Route: / — Hero, Problem, Idea, Principles, Architecture, Phases
-│   │   ├── ModelPage.jsx       # Route: /model — Interactive financial model with sliders
-│   │   ├── SchemaPage.jsx      # Route: /how-it-works — Schema, Benefits, Merkle, Agents, Waterfall
-│   │   └── RegulationPage.jsx  # Route: /regulation — Regulatory analysis, Closing, Footer
+│   │   ├── VisionPage.jsx      # Route: / — Hero, Problem, Solution, CATSP Mapping, ZATTF
+│   │   ├── SystemPage.jsx      # Route: /system — Six Primitives, Merkle tree
+│   │   ├── ParticipantsPage.jsx # Route: /participants — 12 types, Privacy Principle
+│   │   ├── GovernancePage.jsx  # Route: /governance — Trust scores, Cluster gov, Conflict resolution
+│   │   ├── ModelPage.jsx       # Route: /model — Interactive financial model
+│   │   ├── PlanPage.jsx        # Route: /plan — Phases, Named gaps, Tech stack
+│   │   └── RegulationPage.jsx  # Route: /regulation — Regulatory table, Closing
 │   └── components/
-│       ├── Nav.jsx             # Fixed top nav with page links
-│       ├── Hero.jsx            # Landing hero section
+│       ├── Nav.jsx             # Fixed top nav (7 links)
+│       ├── Hero.jsx            # Landing hero (v0.5)
+│       ├── Footer.jsx          # Reusable footer (v0.5)
 │       ├── ScrollToTop.jsx     # Scroll-to-top on route change
 │       ├── Divider.jsx         # Emerald-green horizontal rule
-│       ├── SectionHeader.jsx   # Numbered section header (used by non-Vision pages)
-│       ├── ProblemSection.jsx  # The problem statement
-│       ├── IdeaSection.jsx     # The core idea / solution
-│       ├── PrinciplesSection.jsx  # Design principles
-│       ├── ArchitectureSection.jsx # System architecture overview
-│       ├── PhasesSection.jsx   # Deployment phases
-│       ├── FinancialModel.jsx  # Interactive slider-based financial model
-│       ├── SchemaSection.jsx   # Database schema / data model display
-│       ├── BenefitClassesSection.jsx # Participant benefit classes
-│       ├── MerkleSection.jsx   # Merkle tree integrity explanation
-│       ├── AgentSection.jsx    # AI agent / channel descriptions
-│       ├── WaterfallSection.jsx # Payment waterfall explanation
-│       ├── TrustDiagrams.jsx   # SVG trust architecture diagrams
-│       ├── RegulatorySection.jsx # Zambian law compliance analysis
-│       └── ClosingSection.jsx  # CTA + footer
+│       ├── SectionHeader.jsx   # Numbered section header
+│       ├── FinancialModel.jsx  # Interactive slider-based financial model (14 sliders)
+│       ├── TrustDiagrams.jsx   # SVG diagrams (CoreLoop, ForwardLifecycle, DualSignature, InsuranceFlow, ThreeLayerArchitecture, InternationalCapital)
+│       └── [v0.1 components]   # Old section components kept for reference (ProblemSection, IdeaSection, etc.) — not imported
 ```
+
+---
+
+## Site Architecture (v0.5)
+
+### 7 Routes
+
+| Route | Nav Label | Content |
+|---|---|---|
+| `/` | Vision | Hero, problem (CATSP disconnection), solution (one OS), SP1-SP7 mapping, ZATTF integration |
+| `/system` | The System | Six primitives (Handshake, Attestation, Function, Organisation, Forward Contract, Waterfall), Merkle tree |
+| `/participants` | Participants | 12 types in 3 groups (value chain, government, service), Privacy Principle |
+| `/governance` | Governance | Trust scores (4 tiers), cluster self-governance, right to exit, 4-tier conflict resolution |
+| `/model` | Numbers | Interactive financial model with 14 sliders |
+| `/plan` | The Plan | 4 deployment phases, 13 named open gaps, tech stack |
+| `/regulation` | Legal | 18 regulatory items with traffic-light status, closing |
+
+### Component Pattern
+- Pages are self-contained with content data arrays + JSX rendering
+- Shared components: Nav, Hero, Footer, Divider, SectionHeader, ScrollToTop, FinancialModel, TrustDiagrams
+- All content hardcoded in JSX — no CMS, no data files, no API calls
 
 ---
 
 ## Design System
 
-All styles live in `src/App.css`. There is no CSS-in-JS, no CSS modules, no Tailwind. The design system uses CSS custom properties:
+All styles in `src/App.css`. CSS custom properties in `:root`.
 
-### Color Palette (defined in `:root`)
-- **Base/surface:** `--base` through `--s4` (dark grays, near-black)
-- **Emerald green (primary):** `--eg` through `--eg-hi` (teal/emerald accent)
-- **Copper (secondary):** `--cu` through `--cu-hi` (warm copper/gold accent)
+### Colors
+- **Base/surface:** `--base` through `--s4` (dark grays)
+- **Emerald green (primary):** `--eg` through `--eg-hi`
+- **Copper (secondary):** `--cu` through `--cu-hi`
 - **Text:** `--t1` (brightest) through `--t4` (dimmest)
 - **Status:** `--green`, `--amber`, `--red`
 
 ### Typography
-- **Display:** Syne (headings, bold UI labels)
-- **Serif:** Cormorant Garamond (pull quotes, decorative)
-- **Body:** DM Sans (paragraphs, UI text)
-- **Mono:** JetBrains Mono (code blocks, schema fields)
+- **Display:** Syne — **Serif:** Cormorant Garamond — **Body:** DM Sans — **Mono:** JetBrains Mono
 
-### CSS Class Conventions
-- `.sec` / `.sec-alt` / `.sec-eg` — section containers (default, dark alt, emerald bg)
-- `.eye` — eyebrow text (small uppercase label above headings)
-- `.h1` / `.h2` / `.h3` — heading styles (NOT semantic HTML tags)
-- `.p` — paragraph style
-- `.pull` — pull quote with left border
-- `.card` / `.card-grid` / `.card-grid-3` — card layout system
-- `.flow` / `.flow-node` / `.flow-arrow` — horizontal flow diagrams
-- `.layer-stack` / `.layer` — stacked layer diagrams
-- `.code-block` — styled code display with syntax color classes (`.ck`, `.cs`, `.cn`, `.cc`, `.ct`)
-- `.btable` / `.ftable` / `.summary` — table styles
-- `.schema-card` — schema entity display cards
-- `.agent-card` / `.agent-grid` — agent description cards
-- `.feature` / `.status` — regulatory feature cards with traffic-light status
-- `.note` — callout/note boxes
-- `.fade` / `.d1`–`.d4` — fade-up entrance animations with staggered delays
+### Key CSS Classes
+- `.sec` / `.sec-alt` / `.sec-eg` — section containers
+- `.eye` — eyebrow label — `.h1`/`.h2`/`.h3` — headings — `.p` — paragraphs — `.pull` — pull quotes
+- `.card` / `.card-grid` / `.card-grid-3` — cards — `.agent-card` / `.agent-grid` — participant cards
+- `.flow` / `.flow-node` / `.flow-arrow` — flow diagrams — `.layer-stack` / `.layer` — layer diagrams
+- `.btable` / `.ftable` / `.summary` — tables — `.code-block` — code display
+- `.feature` / `.status` / `.status-clear` / `.status-gap` / `.status-blocker` — regulatory items
+- `.note` — callout boxes — `.risk-item` — gap/risk items
+- `.merkle` / `.merkle-node` — Merkle tree visualization
+- `.fade` / `.d1`–`.d4` — entrance animations
 
 ### Responsive
-Mobile breakpoint at 820px. Grids collapse to single column. Padding reduces. Nav compresses.
+Mobile breakpoint at 820px. Grids → single column. Tables → horizontal scroll.
 
 ---
 
@@ -113,105 +168,51 @@ Mobile breakpoint at 820px. Grids collapse to single column. Padding reduces. Na
 
 ```bash
 npm install          # Install dependencies
-npm run dev          # Start Vite dev server (localhost:5173)
-npm run build        # Production build → dist/
+npm run dev          # Vite dev server (localhost:5173)
+npm run build        # Production build → dist/ (RUN BEFORE PUSHING TO MAIN)
 npm run preview      # Preview production build locally
 ```
-
-No test suite. No linter configured. No CI/CD pipeline.
-
----
-
-## Architecture Patterns
-
-### Component Pattern
-- Components are plain functional components (no hooks except `useState`/`useMemo` in `FinancialModel.jsx`)
-- All content is hardcoded in JSX — no CMS, no data files, no API calls
-- Components use CSS class names from `App.css` — no inline styles except in `FinancialModel.jsx` and occasional one-off overrides
-- No props drilling — each section component is self-contained with its own content
-
-### Routing
-- 4 routes: `/` (Vision), `/model` (Numbers), `/how-it-works` (Schema), `/regulation` (Legal)
-- `Nav.jsx` uses `NavLink` with automatic `.active` class
-- `ScrollToTop.jsx` resets scroll position on navigation
-
-### Content Architecture
-The site presents the CATSP OS concept in four sections:
-1. **Vision** (`/`) — Problem → Idea → Principles → Architecture → Phases
-2. **The Numbers** (`/model`) — Interactive financial model with real-time slider calculations
-3. **How It Works** (`/how-it-works`) — Data schema, benefit classes, Merkle integrity, AI agents, payment waterfall
-4. **Is It Legal?** (`/regulation`) — Feature-by-feature regulatory compliance check against Zambian law
 
 ---
 
 ## CATSP OS Domain Context
 
-When editing content, understand these domain terms:
-
-- **CATSP:** Comprehensive Agricultural Transformation Support Programme (Zambia's $5.7B agricultural programme)
-- **ZATTF:** Zambia Agricultural Transformation Trust Fund (private-sector-led, 3 subsidiaries: ZIRSAT, ZIFSAT, ZINFSAT)
-- **ZARETA:** Zambia Agricultural Research and Extension Technical Authority (government coordination)
-- **3A Cluster:** Aggregation, Agribusiness, and Association — cooperative farming units (10-30 farmers)
-- **SAFF:** Smallholder Agricultural Finance Facility (K500K max loans at 12% through 5 banks)
-- **Handshake:** Bilateral verification primitive — two parties independently confirm the same event
-- **Forward Contract:** Commitment between processor and cluster for future grain delivery at set price/grade/quantity
-- **Payment Waterfall:** Deterministic settlement cascade — warehouse fees → loan repayment → input repayment → insurance → platform fee → farmer net
-- **Trust Score:** Behavioural reputation score (0-100) with tiers: Verified (50-64), Established (65-79), Trusted (80-89), Anchor (90+)
-- **Merkle Tree:** Tamper-evident integrity mechanism — daily hash root of all transactions
-- **ZAMACE:** Zambia Commodity Exchange
-- **ZMW:** Zambian Kwacha (currency)
+### Key Terms
+- **CATSP:** Comprehensive Agricultural Transformation Support Programme ($5.7B, 10-year)
+- **ZATTF:** Zambia Agricultural Transformation Trust Fund (3 subsidiaries: ZIRSAT, ZIFSAT, ZINFSAT)
+- **ZARETA:** Zambia Agricultural Research and Extension Technical Authority
+- **3A Cluster:** Aggregation, Agribusiness, Association — cooperative farming units (10-30 farmers)
+- **SAFF:** Smallholder Agricultural Finance Facility (K500K max, 12%, 5 banks)
+- **ZAMACE:** Zambia Commodity Exchange — **ZMW:** Zambian Kwacha
 
 ### The Six Primitives
-The CATSP OS is built on six atomic primitives: **Handshake** (bilateral verification), **Attestation** (single-party claim with evidence), **Function** (capability-based access), **Organisation** (entity identity), **Forward Contract** (exchange commitment), **Payment Waterfall** (deterministic settlement).
+1. **Handshake** — bilateral verification (sacred: do not add steps)
+2. **Attestation** — single-party claim with evidence + optional corroboration
+3. **Function** — capability-based access (what you can do, not who you are)
+4. **Organisation** — entity identity with affiliations + hierarchy
+5. **Forward Contract** — exchange commitment at set price/quantity/grade/time
+6. **Payment Waterfall** — deterministic settlement: warehouse → SAFF → inputs → insurance → platform → farmer
+
+### Key Design Decisions (see `decisions.jsonl` for full list)
+- Capability-based access control, not roles (DEC-002)
+- Nobody sees the farmer's money (DEC-003)
+- One member, one vote — always (DEC-004)
+- Right to exit — unconditional (DEC-005)
+- Handshake is sacred — do not add steps (DEC-006)
+- Audit log is append-only, no UPDATE or DELETE — ever (DEC-015)
 
 ---
 
 ## Key Conventions
 
-1. **Dark theme only** — The site uses a dark color scheme. Never add light mode.
-2. **No external dependencies** — Keep the dependency count minimal. No Tailwind, no component libraries, no analytics.
-3. **Content is code** — All text/data lives in JSX components. There is no CMS or data layer.
-4. **Single CSS file** — All styles go in `App.css`. Do not create component-level CSS files.
-5. **Confidential content** — This is an NDA-protected document. Do not expose content to external services.
-6. **Financial model accuracy** — The `FinancialModel.jsx` component does real financial calculations. Changes to formulas must be verified against the spec.
-7. **Domain terminology** — Use exact CATSP terminology (see Domain Context above). Do not simplify or rename domain concepts.
-8. **Accessibility via metaphor** — The site explains complex systems through accessible language and metaphors, not jargon. Maintain this voice when editing content.
-9. **The archived HTML** — `trust-infrastructure-v01.html` is the original single-file concept note that was decomposed into the React app. Keep it as reference but do not modify it.
-
----
-
-## CATSP OS Specification Reference (v0.5)
-
-The full CATSP OS platform specification (v0.5, March 2026) defines the system this site presents. Key architectural decisions from the spec that inform this site's content:
-
-### Data Model (PostgreSQL / Supabase)
-- ~30 core tables across: users, organisations, forward contracts, deliveries, handshakes, attestations, payments, waterfall, trust scores, cluster governance, conflict resolution, insurance, SAFF loans, audit/integrity
-- Capability-based access control (not role-based) — `capabilities` + `user_capabilities` + scopes
-- Row-Level Security (RLS) via `auth.has_capability()` function
-- Financial privacy: extension officers and implementing partners NEVER see financial data
-
-### Access Control
-- ~30 capabilities across 14 modules (contracts, deliveries, financial, quality, training, monitoring, governance, trust, insurance, cases, partner, issues, anomaly, enforcement, admin, audit)
-- Scope levels: `own | assigned | district | province | national`
-- 12 known presets (farmer_cluster, processor, depot_operator, extension_officer, etc.)
-- Adding new participant types requires zero code changes — just capability assignment
-
-### Payment Waterfall Priority (fixed order)
-1. Warehouse custody fee → 2. SAFF loan repayment → 3. Input supplier repayment → 4. Insurance premium → 5. Platform fee → 6. Farmer net
-
-### Deployment Phases
-- **Phase 0 (PoC):** 1 processor, 1 depot, 1 cluster, manual payments
-- **Phase 1 (Pilot):** 10 clusters, 2 depots, automated waterfall, SAFF + insurance
-- **Phase 2 (Scale):** National + cross-border
-- **Phase 3 (Future):** Tokenised forwards, tradeable warehouse receipts (requires regulatory framework)
-
-### Named Open Gaps (v0.5)
-Settlement/escrow architecture, contract marketplace discovery, waterfall async state machine, minimum farmer floor, notification system, offline/connectivity, bank API integration, anomaly engine algorithms, Merkle tree publication target, declining quorum mechanism, RLS performance at scale, API boundary definitions, USSD flow specification.
-
----
-
-## Git Conventions
-
-- Commit messages are descriptive, present-tense (e.g., "Add logos to Nav, Hero, and Footer")
-- No CI/CD or pre-commit hooks configured
-- Branch naming: feature branches use descriptive names
+1. **Dark theme only** — never add light mode
+2. **No external dependencies** — no Tailwind, no component libraries, no analytics
+3. **Content is code** — all text/data lives in JSX
+4. **Single CSS file** — all styles in `App.css`
+5. **Confidential** — NDA-protected, do not expose to external services
+6. **Financial model accuracy** — verify formula changes against the spec
+7. **Domain terminology** — use exact CATSP terms, do not simplify
+8. **Accessible voice** — explain complex systems through metaphors, not jargon
+9. **Version tracking** — update `version.json`, `decisions.jsonl`, and `CHANGELOG.md` with every meaningful change
+10. **Deploy discipline** — run `npm run build` before pushing to `main`, prefix deploy commits with `[deploy]`
+11. **Archived reference** — `trust-infrastructure-v01.html` is read-only, never modify
