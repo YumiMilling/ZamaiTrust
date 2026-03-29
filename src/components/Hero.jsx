@@ -4,16 +4,16 @@ export default function Hero() {
       <div className="hero-inner">
         <div className="hero-kicker fade d1">
           <div className="hero-kicker-line"></div>
-          <div className="hero-kicker-text">Exploration &middot; v0.1 &middot; March 2026</div>
+          <div className="hero-kicker-text">CATSP OS &middot; Specification v0.5 &middot; March 2026</div>
         </div>
         <img src="/ZAMAI.png" alt="ZamAi" className="fade d1" style={{ height: 40, marginBottom: 34, filter: 'brightness(0) invert(1)' }} />
         <h1 className="hero-title fade d2">
-          Building a<br />
-          <em>Trust System</em><br />
-          for African Agriculture
+          The Operating System for<br />
+          <em>Zambia's Agricultural</em><br />
+          Transformation
         </h1>
         <p className="hero-sub fade d3">
-          What if the grain itself were the guarantee — and the farmer never needed to walk into a bank?
+          Every CATSP transaction &mdash; input advance, forward contract, grain delivery, quality test, loan disbursement, insurance event, payment settlement &mdash; through one system where each participant sees exactly what they need.
         </p>
         <div className="hero-meta fade d4">
           <div className="hero-meta-item">
@@ -22,6 +22,10 @@ export default function Hero() {
           </div>
           <div className="hero-meta-item">
             <div className="hero-meta-dot" style={{ background: 'var(--eg-vi)' }}></div>
+            $5.7 billion programme &middot; 7 sub-programmes &middot; 1 operating system
+          </div>
+          <div className="hero-meta-item">
+            <div className="hero-meta-dot" style={{ background: 'var(--t3)' }}></div>
             Confidential &middot; Shared Under NDA
           </div>
         </div>

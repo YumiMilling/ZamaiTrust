@@ -6,18 +6,18 @@
     "description": "CATSP OS — The Operating System for Zambia's Agricultural Transformation"
   },
   "site": {
-    "version": "0.1",
+    "version": "0.5",
     "date": "2026-03-29",
-    "status": "outdated",
-    "description": "Interactive concept note / pitch site — content reflects v0.1 spec, rebuild planned to match v0.5"
+    "status": "current",
+    "description": "Interactive presentation site — 7 pages reflecting full v0.5 spec content"
   },
   "primitives": {
-    "handshake":        { "status": "designed", "spec_version": "0.5", "site_version": "0.1", "note": "Spec has full schema + conflict resolution. Site shows basic dual-signature concept." },
-    "attestation":      { "status": "designed", "spec_version": "0.5", "site_version": "0.1", "note": "Spec has full schema with types + corroboration. Site shows generic JSON envelope." },
-    "function":         { "status": "designed", "spec_version": "0.5", "site_version": null,  "note": "Capability-based access control. ~30 capabilities, 12 presets. Not in site." },
-    "organisation":     { "status": "designed", "spec_version": "0.5", "site_version": null,  "note": "Entity model with affiliations + hierarchy. Not in site." },
-    "forward_contract": { "status": "designed", "spec_version": "0.5", "site_version": "0.1", "note": "Spec has full schema + discovery scope. Site mentions contracts but lacks detail." },
-    "payment_waterfall":{ "status": "designed", "spec_version": "0.5", "site_version": "0.1", "note": "Spec has 6-line priority + async state machine. Site shows 5-line simplified version." }
+    "handshake":        { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with sacred rule callout + DualSignature SVG diagram." },
+    "attestation":      { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with example table (5 types) + corroboration explanation." },
+    "function":         { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with 3 dimensions + capability registry table (8 modules)." },
+    "organisation":     { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with hierarchy visualization + affiliations note." },
+    "forward_contract": { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with governance vote + ForwardLifecycle SVG diagram." },
+    "payment_waterfall":{ "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with 6-line priority + InsuranceFlow SVG diagram." }
   },
   "modules": {
     "forward_contracts":    { "status": "designed",     "note": "Full schema. Discovery mechanism is OPEN." },

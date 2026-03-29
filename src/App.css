@@ -202,6 +202,7 @@ body{font-family:var(--body);background:var(--base);color:var(--t1);-webkit-font
   .phase-row{grid-template-columns:50px 1fr}
   .feature-row{grid-template-columns:1fr}
   .section-header .inner{flex-direction:column;gap:8px}
-  .nav{padding:0 16px;gap:4px}
-  .nav a{font-size:9px;padding:14px 6px;letter-spacing:.08em}
+  .nav{padding:0 12px;gap:2px}
+  .nav a:not(.nav-brand){font-size:8px;padding:14px 4px;letter-spacing:.06em}
+  .btable,.summary{display:block;overflow-x:auto}
 }

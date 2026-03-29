@@ -6,14 +6,28 @@ Format: each entry records what changed, in which layer (spec or site), and whet
 
 ---
 
-## [Unreleased] — Site Rebuild to v0.5
+## 2026-03-29 — Site Rebuild to v0.5
 
-**Sync status: OUT OF SYNC** — Spec is at v0.5, site is at v0.1. Full rebuild planned.
+**Spec: v0.5 | Site: v0.5 | IN SYNC**
 
-### Planned
-- Rebuild site from scratch to present v0.5 spec content
-- Reuse financial model component from v0.1 site as basis
-- New page structure TBD (Primitives, Participants, Governance, etc.)
+### Changed (site — full rebuild)
+- Rebuilt site from 4 pages to 7 pages, presenting full v0.5 spec content
+- **Vision** (`/`) — Problem (CATSP disconnection), solution (one OS), CATSP sub-programme mapping (SP1-SP7), ZATTF integration (ZIRSAT/ZIFSAT/ZINFSAT), core loop SVG
+- **The System** (`/system`) — All six primitives: Handshake (sacred rule + DualSignature SVG), Attestation (5 example types), Function (capability-based access, 8-module registry), Organisation (hierarchy + affiliations), Forward Contract (governance vote + ForwardLifecycle SVG), Payment Waterfall (6-line priority + InsuranceFlow SVG). Plus Merkle tree integrity section.
+- **Participants** (`/participants`) — 12 participant types in 3 groups (Value Chain, Government, Service Delivery). Each card shows: device, identity, writes, sees, and does-not-see. Privacy Principle closing section.
+- **Governance** (`/governance`) — Trust scores (4 tiers, 9 event types, design decisions). Cluster governance (multi-sig treasury, proposals & votes, constitution). Right to exit (unconditional). Conflict resolution (4 tiers with SLAs, case precedent).
+- **Numbers** (`/model`) — Kept existing financial model with 14 sliders (unchanged)
+- **The Plan** (`/plan`) — 4 phases with scope/builds/proves detail. 13 named open gaps with severity + blockers. Tech stack table.
+- **Legal** (`/regulation`) — Updated regulatory table (18 items, up from 13). Added capability-based access, handshake verification, anomaly detection, trust scores. Updated closing to reference v0.5.
+- Updated Nav to 7 items: Vision | The System | Participants | Governance | Numbers | The Plan | Legal
+- Updated Hero to reference CATSP OS v0.5, $5.7B programme
+- Extracted Footer as reusable component (v0.5 branding)
+- Updated mobile responsive for 7-item nav + table overflow
+
+### Old components preserved
+- v0.1 section components kept in `src/components/` (ProblemSection, IdeaSection, PrinciplesSection, ArchitectureSection, PhasesSection, SchemaSection, BenefitClassesSection, MerkleSection, AgentSection, WaterfallSection, RegulatorySection, ClosingSection). No longer imported but available for reference.
+- Financial model component reused unchanged.
+- All 5 SVG diagrams from TrustDiagrams.jsx reused.
 
 ---
 
