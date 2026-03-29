@@ -234,93 +234,115 @@ Foundation (00) ← identity, permissions, audit, claims — everything depends 
 
 ---
 
-## 2. Offline-First Strategy
+## 2. Farmer Access: Kiosk Model (Not Individual Devices)
 
-### The Reality
-Rural Zambia: 2G connectivity, frequent drops, phones held by multiple family members, solar charging means phones die mid-afternoon. "Online-first with offline fallback" won't work. It must be **offline-first with sync-when-connected**.
+### The Insight
 
-### Architecture: Action Queue + Optimistic UI + Server Reconciliation
+Not every farmer needs the app on their phone. What they need is:
+1. **Proof of delivery** (receipt)
+2. **Knowledge of what they're owed** (waterfall breakdown)
+3. **Ability to vote** on proposals
+4. **Ability to dispute** if something's wrong
+
+A **kiosk at the aggregation point** handles #1 and #2 at the exact moment the handshake happens — the farmer is physically present when grain is weighed and graded.
+
+### Kiosk Hardware
 
 ```
-[User Action] → [Local IndexedDB Queue] → [Optimistic UI Update]
-                        │
-                   (when online)
-                        │
-                   [Sync Engine] → [Supabase] → [Confirm/Conflict]
-                        │
-                   [Update Local State]
+Aggregation Point (Monze warehouse / Yumi depot)
+├── Tablet (rugged, wall-mounted or counter-mounted)
+│   ├── Always online (fixed location, fixed power, WiFi/ethernet or mobile router)
+│   ├── Platform PWA running in kiosk mode
+│   └── Camera for QR scanning (bags)
+├── NFC reader (USB, ~$10)
+│   └── Farmer taps NFC card + enters 4-digit PIN → identity confirmed
+│   └── Two-factor: something you have (card) + something you know (PIN)
+│   └── Cards: ~K15-30 each, rugged, no batteries, survives field conditions
+├── Receipt printer (thermal, USB)
+│   └── Prints: delivery reference, quantity, grade, waterfall breakdown, QR code
+└── Scale integration (future — digital scale feeds weight directly into system)
 ```
 
-**What works offline:**
-- View cached data (contracts, deliveries, balances, governance proposals)
-- Queue a handshake confirmation ("I confirm delivery of X kg")
-- Queue a vote ("I vote YES on proposal P-042")
-- View trust tier (cached)
-- View waterfall breakdown (cached from last sync)
+### Why This Is Better Than Individual Devices for Phase 0
 
-**What requires online:**
-- Creating a new forward contract (needs current market data)
-- Triggering a payment (money must move)
-- Filing a dispute (needs to be seen immediately)
-- Auth (first login — then session cached)
+| Problem | Individual Phone | Kiosk |
+|---|---|---|
+| Farmer doesn't have smartphone | Need USSD/SMS fallback (complex) | Not an issue — kiosk has the tablet |
+| Connectivity in rural areas | Offline-first on every device | One fixed point with dedicated internet |
+| Battery / solar dependency | Phone dies, can't confirm delivery | Kiosk has fixed power |
+| Literacy for complex UI | USSD limited to 3 screens | Full UI, operator assists if needed |
+| Identity verification | SIM OTP / mobile money binding | NFC card + PIN — no phone needed |
+| Proof of delivery | SMS (easy to lose/delete) | Printed receipt farmer takes home |
+| Cost per farmer | Each needs a capable device | One kiosk serves hundreds of farmers |
 
-### Conflict Resolution for Offline Actions
+### How the Handshake Works at the Kiosk
 
-| Conflict Type | Resolution |
-|---|---|
-| Farmer votes offline, proposal already closed | Vote rejected. SMS notification: "Proposal P-042 closed before your vote arrived." |
-| Two handshakes queued for same delivery | Accept first-to-arrive. Flag second for review. |
-| Cached balance stale after waterfall settlement | Overwrite with server state. SMS notification of updated balance. |
-| Offline attestation conflicts with online attestation | Both preserved (like a disputed handshake). Flag for Tier 1 resolution. |
+```
+1. Farmer arrives at Monze warehouse with grain
+2. Kagezi operator weighs grain, grades it, enters data on kiosk tablet
+3. Farmer taps NFC card on reader → enters 4-digit PIN → identity confirmed
+4. Screen shows: "2,000kg Grade A pearl millet. Confirm? [Yes / Dispute]"
+5. Farmer taps Yes (or operator reads aloud, farmer confirms verbally + PIN confirms)
+6. Handshake confirmed — both parties verified, same device, same moment
+7. Receipt prints: delivery ref, quantity, grade, estimated waterfall breakdown, QR code
+8. Farmer takes receipt home. Done.
+```
 
-### Technology
-- **IndexedDB** via Dexie.js (lightweight, well-supported)
-- **Service Worker** for PWA offline shell + API caching
-- **Background Sync API** for queued actions (when connection returns)
-- **Supabase Realtime** for live updates when online
-- **Last-write-wins for read data, queue-and-reconcile for write actions**
+The **handshake primitive is unchanged** — two parties verify the same event. They just happen to be at the same physical location using the same device, identified by fingerprint instead of phone.
+
+### What Still Needs Remote Access (Later Phases)
+
+| Need | Phase 0 Solution | Phase 1+ Solution |
+|---|---|---|
+| **Voting on proposals** | SMS reply (yes/no to incoming SMS) or vote at kiosk on next visit | PWA on phone, or SMS, or kiosk |
+| **Checking balance** | SMS notification when mobile money payment arrives | PWA dashboard |
+| **Filing disputes** | At the kiosk, or call Kagezi/Yumi directly | PWA or kiosk |
+| **Viewing contracts** | At the kiosk during next visit | PWA |
+
+### What This Removes from Phase 0 Scope
+
+- ~~USSD gateway~~ — not needed if farmers use kiosks
+- ~~Offline-first for farmer devices~~ — kiosk has fixed connectivity
+- ~~PowerSync~~ — defer to Phase 1 when individual farmer access is added
+- ~~Mobile money auth binding~~ — fingerprint at kiosk handles identity
+
+### What This Adds to Phase 0 Scope
+
+- **NFC + PIN auth** — USB NFC reader integration (Web NFC API or Web Serial), 4-digit PIN entry
+- **Receipt printing** — thermal printer integration (browser Print API or direct USB)
+- **Kiosk mode** — PWA locked to single-purpose interface (no browser chrome)
+- **PowerSync on kiosk only** — in case warehouse internet drops mid-day, queue transactions locally
+
+### Connectivity Strategy (Simplified)
+
+```
+Kiosk (Monze warehouse)          Supabase Cloud
+├── Fixed internet (WiFi/4G)  ←→  PostgreSQL + Auth + Realtime
+├── PowerSync (local SQLite)      Sync when connected
+│   └── Queues handshakes if internet drops
+│   └── Syncs when connection returns
+└── Receipt printer (local, no internet needed)
+```
+
+The kiosk always has internet. PowerSync is the **safety net** for the 10 minutes per day the internet drops — not the primary mode. This is dramatically simpler than building offline-first for every farmer's phone.
 
 ---
 
 ## 3. Multi-Channel Architecture
 
-Same backend, four delivery channels:
+Same backend, three delivery channels (USSD deferred):
 
 ```
-                    ┌─── React PWA (smartphones, tablets, desktop)
+                    ┌─── React PWA — kiosk mode (aggregation points)
                     │
-Supabase Backend ───┼─── USSD Gateway (feature phones via Africa's Talking)
+Supabase Backend ───┼─── React PWA — full mode (processors, admin, government dashboards)
                     │
-                    ├─── SMS Service (notifications, fallback responses)
+                    ├─── SMS Service (notifications — payment confirmations, vote invitations)
                     │
-                    └─── PDF Generator (HCAT/CSC executive reports)
+                    └─── PDF Generator (reports for HCAT/CSC, receipts for offline backup)
 ```
 
-### USSD Design (Africa's Talking Callback)
-
-Africa's Talking sends HTTP callbacks for each USSD screen. Stateless — session state must be encoded in the response or stored server-side (Redis/Supabase).
-
-**Key constraint:** Max 3 screens per interaction. Farmer attention and USSD session timeout (typically 180 seconds) limit depth.
-
-Example: Confirm Delivery
-```
-Screen 1: "Delivery D-2026-042. 2,000kg Grade A maize at Choma Depot. Confirm? 1=Yes 2=No"
-Screen 2: (if Yes) "Confirmed. You will receive K5,070 advance within 24hrs. END"
-Screen 2: (if No) "Dispute filed. Extension officer will contact you. END"
-```
-
-Example: Vote on Contract
-```
-Screen 1: "New contract: Processor X wants 200t Grade A at K6,400/t. Jul-Aug delivery. 1=Accept 2=Reject 3=Details"
-Screen 2: (if Details) "Floor K6,000/t. Ceiling K7,200/t. Insurance included. 1=Accept 2=Reject"
-```
-
-**USSD Gateway** runs as a Supabase Edge Function or standalone Node service. It:
-1. Receives Africa's Talking callback
-2. Looks up user by phone number
-3. Checks `auth.has_capability()` for the requested action
-4. Returns USSD menu text (max 160 chars per screen)
-5. For complex responses, sends SMS follow-up
+**Phase 1+ adds:** USSD gateway (Africa's Talking) for individual farmer access on feature phones, and full PWA for smartphones. The kiosk model proves the platform works before adding channel complexity.
 
 ---
 
@@ -356,39 +378,120 @@ $$ LANGUAGE sql STABLE;
 
 ---
 
-## 5. What to Build First (Phase 0 Sequence)
+## 5. Phase 0: Kagezi Seeds × Yumi Milling Pilot
 
-### Sprint 0: Foundation (2 weeks)
-1. Supabase project setup (hosted — data sovereignty addressed by Supabase's region selection or self-host later)
-2. Foundation migrations: `users`, `organisations`, `user_affiliations`, `capabilities`, `user_capabilities`, `presets`, `audit_log`, `attestations`
+### The Real Pilot
+
+Phase 0 is not a test environment. It's a **live pilot** with two real Zambian companies:
+
+- **Kagezi Seeds Limited** — seed company breeding climate-resilient varieties (pearl millet, sorghum, sunflower, groundnuts, beans, cowpeas, pigeon peas, rice). Farmer networks across provinces. Warehouse in Monze. Partner of Caritas Czech Republic. Developing value-added products including millet-based munkoyo.
+- **Yumi Milling** — registered Zambian processor currently milling maize and soya, expanding into multi-grain processing (flour, meal, oil, dehulling, grading, packaging).
+
+### Pilot Location: Monze, Southern Province
+
+Kagezi's warehouse is in Monze. Farmers are in surrounding areas. ZamAi is in Batoka (also Southern Province). The pilot runs close to home.
+
+### How They Map to the Platform
+
+| Platform Role | Real Entity | Notes |
+|---|---|---|
+| **Processor** | Yumi Milling | Posts contracts, receives grain, processes, triggers waterfall |
+| **Seed Supplier** | Kagezi Seeds | Supplies improved seed varieties to farmers (climate-smart crops) |
+| **Aggregator / Warehouse** | Kagezi Seeds (Monze warehouse) | Collects, grades, stores grain from farmer networks |
+| **Farmer Clusters (Kagezi)** | Kagezi's existing farmer networks | Deliver climate-smart crops (millet, sorghum, etc.) against contracts |
+| **Farmer Clusters (independent)** | Non-Kagezi farmers near Monze | Deliver maize and soya directly to Yumi — no Kagezi involvement |
+
+**Two farmer streams from day 1:**
+- **Kagezi-associated farmers** deliver climate-smart crops (pearl millet, sorghum, sunflower, groundnuts, etc.) through Kagezi's aggregation network
+- **Independent farmers** deliver maize and soya directly to Yumi — Yumi's existing core business
+
+Both streams use the same platform, same primitives, same handshakes. The difference is organisational affiliation and which commodities flow through.
+
+**Kagezi wears multiple hats** — seed supplier + aggregator + warehouse operator. In the platform, this is one `organisation` with multiple `user_affiliations` and capability sets. No architectural problem.
+
+### Contract Flows
+
+**Phase 0: Purchase contracts only** (simplest flow, proves the core)
+
+Two purchase streams running through the same system:
+
+**Stream 1: Climate-smart crops via Kagezi**
+```
+Kagezi farmers → deliver millet/sorghum → Kagezi warehouse Monze (handshake) → Yumi buys → waterfall settles
+```
+Kagezi aggregates. Yumi posts buy contracts for climate-smart crops. Farmers deliver against them.
+
+**Stream 2: Maize/soya direct to Yumi**
+```
+Independent farmers → deliver maize/soya → Yumi (handshake) → waterfall settles
+```
+Yumi's existing business. No Kagezi involvement. Same platform, same handshake.
+
+**Phase 1 adds: Toll/contract processing** (Kagezi retains ownership, Yumi processes for a fee — for munkoyo products etc.)
+```
+Kagezi sends grain → Yumi mills (handshake on receipt) → Yumi returns processed product → Kagezi sells under own brand
+```
+Different contract type (`toll_processing`), different waterfall config, same primitives. Added when the purchase flow is proven.
+
+### Multi-Crop from Day 1
+
+The `items` table (commodities) needs Yumi's current crops AND Kagezi's portfolio:
+
+**Yumi's existing business (independent farmers):**
+
+| Crop | Source | Yumi Processing |
+|---|---|---|
+| White maize | Independent farmers, Monze area | Roller meal, flour, stockfeed |
+| Soya beans | Independent farmers | Soya meal, oil, animal feed |
+
+**Kagezi's climate-smart portfolio (Kagezi farmer networks):**
+
+| Crop | Kagezi Role | Yumi Processing |
+|---|---|---|
+| Pearl millet | Seed, aggregation, grading | Flour, meal, contract milling for munkoyo |
+| Sorghum | Seed, aggregation | Flour, brewing grits, animal feed |
+| Sunflower | Seed, aggregation | Oil pressing, cake (feed byproduct) |
+| Groundnuts | Seed, mobilisation | Peanut butter, oil, roasted snacks |
+| Rice | Seed, aggregation | Dehulling, polishing, grading |
+| Beans / Cowpeas / Pigeon peas | Seed, quality assurance | Sorting, grading, splitting, flour |
+
+Each crop has its own `grading_standards` rows. The platform doesn't care what flows through it — the modules are crop-agnostic. Phase 0 starts with maize, soya, pearl millet, and sorghum. Others added as Kagezi's farmer networks scale.
+
+### Sprint Sequence (Revised for Real Pilot)
+
+**Sprint 0: Foundation (2 weeks)**
+1. Supabase project setup (hosted)
+2. Foundation migrations: users, organisations, affiliations, capabilities, presets, audit_log, attestations
 3. `auth.has_capability()` + `auth.scoped_values()` functions
 4. RLS policies on foundation tables
-5. Auth: Google OAuth + phone OTP (mobile money binding deferred to Phase 1)
-6. Seed data: 1 processor, 1 depot, 1 cluster (25 farmers), 1 input supplier — with preset capabilities assigned
-7. Basic React app shell with auth + capability-gated routing
+5. Auth: NFC card + PIN (kiosk farmers) + Google OAuth (Yumi/Kagezi admin) + phone OTP (fallback)
+6. Seed data: Yumi Milling (processor), Kagezi Seeds (supplier + aggregator + warehouse in Monze), pilot farmer group with NFC card registration, commodities (maize, soya, pearl millet, sorghum), grading standards per crop
+7. React app shell with auth + capability-gated routing + kiosk mode
 
-### Sprint 1: Value Chain (2 weeks)
-1. Migrations: `seasons`, `commodities`, `grading_standards`, `forward_contracts`, `deliveries`, `handshakes`, `contract_deliveries`, `input_advances`
-2. RLS policies (all using `auth.has_capability()`)
-3. Edge Function: `handshake-confirm` — the core bilateral verification logic
-4. UI: Processor posts contract → Cluster views it → Farmer confirms delivery → Handshake
-5. Audit log writes for every action
+**Sprint 1: Contracts + Verification + Kiosk (2 weeks)**
+1. Migrations: seasons, items (commodities), grading_standards, contracts, deliveries, handshakes, advances
+2. Purchase contract flow (Yumi buys grain) — toll processing deferred to Phase 1
+3. RLS policies
+4. Edge Function: `handshake-confirm` — bilateral verification
+5. Kiosk UI: operator enters weight/grade → farmer taps NFC card + PIN → handshake recorded → receipt prints
+6. Admin UI: Yumi posts buy contract for pearl millet → visible at kiosk for Kagezi farmers
+7. NFC reader + receipt printer integration (Web NFC API / Web Serial API)
 
-### Sprint 2: Governance + Display Waterfall (2 weeks)
-1. Migrations: `cluster_treasury`, `proposals`, `votes`, `cluster_memberships`, `cluster_constitutions`
-2. SMS-based voting (Africa's Talking integration — simple send/receive, not full USSD yet)
-3. Waterfall calculation (display only — shows the split, human executes payment)
-4. Trust score engine (basic — delivery confirmed = +, disputed = -, computed in Edge Function)
-5. Dashboard per role (processor sees their contracts, farmer sees their deliveries, depot sees inventory)
+**Sprint 2: Governance + Display Waterfall (2 weeks)**
+1. Governance migrations: treasury, proposals, votes, memberships
+2. SMS-based voting (Africa's Talking — simple inbound/outbound SMS, not USSD)
+3. Waterfall calculation — display only (shows the split, receipt prints the breakdown, human executes payment)
+4. Basic trust score engine
+5. Dashboards: Yumi sees contracts + deliveries. Kagezi sees farmer performance + warehouse inventory. Farmer sees their history at kiosk.
 
-### Sprint 3: Offline + Polish (2 weeks)
-1. Service worker + IndexedDB for offline data cache
-2. Action queue for offline handshake confirmations and votes
-3. Sync-when-connected with conflict resolution
-4. QR code generation for bags (traceability)
-5. Phase 0 field test preparation
+**Sprint 3: Resilience + Field Prep (2 weeks)**
+1. PowerSync on kiosk tablet — queue transactions when internet drops, sync when back
+2. QR codes for bag-level traceability
+3. SMS notifications: payment confirmation to farmer's phone when mobile money hits
+4. Kiosk hardening: auto-restart on crash, lock to PWA, physical mounting plan
+5. Field test preparation with Kagezi's Monze team — farmer NFC card registration day (issue cards, set PINs, test tap-and-confirm flow)
 
-**Phase 0 total: ~8 weeks to a testable PoC with 1 processor, 1 depot, 1 cluster.**
+**Phase 0 total: ~8 weeks to a testable PoC with kiosk at Monze warehouse, processing real pearl millet and sorghum with Kagezi farmers, plus maize/soya from independent farmers.**
 
 ---
 
@@ -398,11 +501,12 @@ Before writing code, these must be resolved:
 
 | Decision | Options | Recommendation | Why |
 |---|---|---|---|
+| **Backend** | Supabase / PocketBase / Custom | **Supabase** (+ PowerSync on kiosk only) | PostgreSQL + RLS maps directly to capability model. Auth built in (OAuth + OTP). PowerSync as safety net on kiosk tablet for internet drops — not primary offline strategy. |
+| **Farmer access** | Individual phones / USSD / Kiosk | **Kiosk at aggregation point** | Rugged tablet + fingerprint scanner + receipt printer. Farmer doesn't need a phone. Fixed power, fixed internet. USSD deferred to Phase 1+. |
 | **Monorepo tool** | Turborepo / Nx / pnpm workspaces | pnpm workspaces | Simplest. No build orchestration needed yet. |
 | **TypeScript?** | Yes / No | Yes (strict) | Type safety for capabilities, presets, waterfall math. Catches bugs at compile time. |
 | **Supabase hosted vs self-hosted** | Hosted / Self-hosted | Hosted for Phase 0-1, self-host option for Phase 2+ | Speed to market. Data sovereignty conversation later. |
 | **USSD provider** | Africa's Talking / Zamtel direct | Africa's Talking | Better API, multi-country support for Phase 2. |
-| **Offline sync library** | Custom / Dexie.js / RxDB / PowerSync | Dexie.js + custom sync | PowerSync is ideal but adds dependency. Dexie is lightweight and proven. |
 | **State management** | Zustand / Jotai / TanStack Query | TanStack Query + Zustand | TanStack for server state/cache, Zustand for local UI state. Minimal footprint. |
 | **CSS framework** | Tailwind / Pure CSS | Tailwind | Brand guide specifies it for platform (DEC-013). Presentation site stays pure CSS. |
 
@@ -424,15 +528,18 @@ The current ZamaiTrust repo contains the presentation site + spec tracking. The 
 
 ## 8. Verification Plan
 
-### How to test that the architecture works:
+### How to test that the architecture works (using Kagezi × Yumi data):
 
-1. **Foundation test:** Create a user with `farmer_cluster` preset. Verify they can see their own contracts but not another cluster's. Verify they CANNOT see financial aggregates.
-2. **RLS test:** Create a user with `extension_officer` preset. Verify `financial.view` is denied at every scope.
-3. **Handshake test:** Farmer and depot both submit claims. Verify: matching = confirmed, mismatching = disputed with both claims preserved.
-4. **Offline test:** Go offline. Queue a handshake confirmation. Go online. Verify it syncs and the handshake resolves.
-5. **USSD test:** Call the USSD gateway with a test phone number. Walk through delivery confirmation in 2 screens.
-6. **Waterfall test:** Trigger a confirmed handshake linked to a forward contract. Verify waterfall calculation matches the financial model's math.
-7. **Capability composition test:** Take a `farmer_cluster` user, manually add `contracts.create`. Verify they can now post contracts without any code change.
+1. **Foundation test:** Create Kagezi farmer with `farmer_cluster` preset. Verify they see their own deliveries to Monze warehouse but not another cluster's data.
+2. **Multi-hat test:** Create Kagezi Seeds as organisation with affiliations: seed_supplier + aggregator + warehouse_operator. Verify different capabilities activate for each role.
+3. **Purchase handshake:** Kagezi farmer delivers pearl millet to Monze warehouse. Both parties submit claims. Matching = confirmed. Mismatching = disputed.
+4. **Toll processing handshake:** Kagezi sends grain to Yumi for milling. Yumi confirms receipt. Different contract type, same handshake primitive.
+5. **Multi-crop test:** Post contracts for pearl millet AND sorghum. Verify grading standards differ per commodity. Verify waterfall works for both.
+6. **Kiosk resilience test:** Disconnect kiosk internet mid-delivery. Verify handshake queues locally (PowerSync). Reconnect. Verify it syncs and receipt prints.
+7. **Waterfall test (purchase):** Trigger confirmed handshake on a purchase contract. Verify waterfall: warehouse fee → supplier repayment → farmer net.
+8. **Waterfall test (toll):** Trigger confirmed handshake on a toll contract. Verify waterfall: processing fee to Yumi → product returned to Kagezi.
+9. **Capability composition:** Take a Kagezi farmer, add `contracts.create`. Verify they can now post their own spot sale — zero code changes.
+10. **RLS privacy:** Verify Yumi cannot see Kagezi's farmer-level financials. Verify Kagezi farmers cannot see Yumi's processing margins.
 
 ---
 
@@ -440,10 +547,12 @@ The current ZamaiTrust repo contains the presentation site + spec tracking. The 
 
 | File | Purpose |
 |---|---|
-| `supabase/migrations/00_foundation/001_users.sql` | User identity |
+| `supabase/migrations/00_foundation/001_users.sql` | User identity (includes NFC card UID field + PIN hash) |
 | `supabase/migrations/00_foundation/003_capabilities.sql` | The permission vocabulary |
 | `supabase/migrations/00_foundation/004_auth_functions.sql` | `has_capability()` + `scoped_values()` |
 | `packages/shared/capabilities.ts` | Capability constants shared across all channels |
-| `packages/shared/waterfall.ts` | Deterministic waterfall math (shared between PWA, USSD, Edge Functions) |
-| `apps/web/src/core/auth.tsx` | Auth provider with capability-gated routing |
-| `apps/web/src/core/offline.ts` | Service worker + IndexedDB sync engine |
+| `packages/shared/waterfall.ts` | Deterministic waterfall math |
+| `apps/web/src/core/auth.tsx` | Auth provider — NFC + PIN (kiosk), OAuth (admin), OTP (fallback) |
+| `apps/web/src/kiosk/` | Kiosk-specific UI: delivery flow, NFC tap, PIN entry, receipt generation |
+| `apps/web/src/kiosk/receipt.tsx` | Thermal receipt layout + print trigger |
+| `apps/web/src/kiosk/nfc.tsx` | NFC card reader integration (Web NFC API / Web Serial) |
