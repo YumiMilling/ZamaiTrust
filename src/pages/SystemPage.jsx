@@ -31,6 +31,36 @@ const capabilities = [
   { module: 'enforcement', examples: 'enforcement.suspend, enforcement.eject', scopes: 'custom (requires 2 admins or arbitration ruling)' },
 ]
 
+const dbDomains = [
+  { domain: 'Identity & Access', color: 'var(--eg-vi)', desc: 'Who is in the system, what organisations they belong to, what they can do, and how they authenticate.',
+    tables: ['users', 'organisations', 'user_affiliations', 'capabilities', 'user_capabilities', 'user_capability_scopes', 'presets', 'user_auth_profiles', 'user_devices'] },
+  { domain: 'Value Chain', color: 'var(--cu)', desc: 'The commercial engine: seasons, commodities, grading standards, forward contracts, deliveries, handshakes, input advances.',
+    tables: ['seasons', 'commodities', 'grading_standards', 'forward_contracts', 'deliveries', 'handshakes', 'contract_deliveries', 'input_advances'] },
+  { domain: 'Financial', color: 'var(--eg-br)', desc: 'Money flowing through the waterfall: payments, payment lines, SAFF loans, insurance policies, claims.',
+    tables: ['waterfall_config', 'payments', 'payment_lines', 'saff_loans', 'saff_loan_documents', 'insurance_policies', 'insurance_claims'] },
+  { domain: 'Governance', color: 'var(--cu-mid)', desc: 'Cluster self-governance: treasury, proposals, votes, constitutions, distribution rules, memberships, exit settlements.',
+    tables: ['cluster_treasury', 'treasury_transactions', 'proposals', 'votes', 'vote_delegations', 'cluster_constitutions', 'cluster_memberships', 'cluster_distribution_rules', 'member_distributions', 'exit_settlements'] },
+  { domain: 'Trust & Conflict', color: 'var(--eg)', desc: 'Behavioural reputation and dispute resolution: trust scores, trust events, cases, arbitrator pool, case precedents.',
+    tables: ['trust_score_config', 'trust_scores', 'trust_events', 'cases', 'arbitrator_pool', 'case_precedents', 'evidence_packages'] },
+  { domain: 'Integrity & Extension', color: 'var(--t3)', desc: 'Attestations (quality tests, training, monitoring), audit log, anomaly detection, Merkle tree, early warnings, partner tracking.',
+    tables: ['attestations', 'audit_log', 'anomaly_flags', 'merkle_roots', 'merkle_leaves', 'whistleblower_reports', 'partner_contracts', 'extension_assignments', 'early_warnings', 'issue_flags'] },
+]
+
+const presets = [
+  { name: 'farmer_cluster', caps: 'View/accept contracts, handshake deliveries, vote on proposals, view own financials', money: 'Own only' },
+  { name: 'cluster_leader', caps: 'Everything a farmer can do + propose governance changes', money: 'Own only' },
+  { name: 'processor', caps: 'Create/view contracts, handshake deliveries, trigger waterfall payments', money: 'Own only' },
+  { name: 'depot_operator', caps: 'Handshake deliveries, record quality tests (attestation)', money: 'No' },
+  { name: 'input_supplier', caps: 'Record input advances, handshake deliveries, view linked contracts', money: 'Own only' },
+  { name: 'extension_officer', caps: 'Record training/monitoring (attestation), view assigned clusters, mediate disputes', money: 'No' },
+  { name: 'district_coordinator', caps: 'View all clusters in district, extension activity, aggregate financials, anomaly flags', money: 'Aggregate only' },
+  { name: 'provincial_coordinator', caps: 'Province-wide aggregates, district comparison, partner coverage', money: 'Aggregate only' },
+  { name: 'zareta', caps: 'National view of everything: aggregates, partner performance, KPIs, audit trail, anomalies', money: 'Aggregate only' },
+  { name: 'implementing_partner', caps: 'Record service delivery (attestation), view assigned clusters, raise issues', money: 'No' },
+  { name: 'insurer', caps: 'Underwrite contracts, set premiums, process claims, view actuarial data', money: 'Actuarial only' },
+  { name: 'zattf_staff', caps: 'View facility-specific portfolio, national metrics, partner performance', money: 'Facility aggregate' },
+]
+
 export default function SystemPage() {
   return (
     <>
@@ -264,6 +294,114 @@ export default function SystemPage() {
           <div style={{ fontSize: 11, color: 'var(--t4)', marginTop: 13 }}>Append-only audit log. No UPDATE or DELETE policies. Ever.</div>
         </div>
       </section>
+
+      <Divider />
+
+      {/* How It's Built — Database */}
+      <div className="sec-alt">
+        <div className="inner">
+          <div className="eye">How It's Built</div>
+          <h2 className="h2">A relational database. Not a blockchain.</h2>
+          <p className="p">Everything described above — handshakes, attestations, contracts, payments, trust scores — lives in a relational database. Think of it as a set of connected spreadsheets, where every row in one sheet can point to a row in another. A farmer's delivery points to their cluster. That cluster points to a forward contract. That contract points to a processor. Pull on any thread and you can trace the entire chain.</p>
+          <p className="p"><strong>Why relational, not blockchain?</strong> Because the relationships between records are the point. A blockchain is a list. A relational database is a web. We need the web — who delivered to whom, against which contract, tested by which lab, settled through which waterfall. That's not a chain of blocks. That's a graph of relationships.</p>
+
+          <div style={{ marginTop: 34 }}>
+            <div className="eye">~30 tables, six domains</div>
+            {dbDomains.map(d => (
+              <div key={d.domain} style={{ background: 'var(--s2)', marginBottom: 3, padding: '21px 28px', borderLeft: '2px solid ' + d.color, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+                  <div style={{ fontFamily: 'var(--serif)', fontSize: 18, fontWeight: 600, color: 'var(--t1)' }}>{d.domain}</div>
+                  <div style={{ fontSize: 11, color: 'var(--t4)', letterSpacing: '.1em' }}>{d.tables.length} tables</div>
+                </div>
+                <div style={{ fontSize: 14, color: 'var(--t2)', lineHeight: '1.75', marginBottom: 13 }}>{d.desc}</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {d.tables.map(t => (
+                    <span key={t} style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--eg)', background: 'var(--s1)', padding: '2px 8px', borderRadius: 2 }}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="note" style={{ marginTop: 21 }}>
+            <div className="note-title">How the tables connect</div>
+            <div className="note-body">A <strong>delivery</strong> points to a <strong>contract</strong>, which points to a <strong>season</strong> and a <strong>commodity</strong>. A <strong>handshake</strong> confirms the delivery — two users, two claims, one result. A confirmed handshake triggers a <strong>payment</strong>, which splits into <strong>payment lines</strong> following the <strong>waterfall config</strong>. Every action writes to the <strong>audit log</strong> and feeds the <strong>Merkle tree</strong>. Pull any thread: you reach every other.</div>
+          </div>
+        </div>
+      </div>
+
+      <Divider />
+
+      {/* Capabilities & Access */}
+      <section className="sec">
+        <div className="eye">Access Control</div>
+        <h2 className="h2">What you can do. Not who you are.</h2>
+        <p className="p">Most systems give people roles: "admin", "user", "manager". Roles are rigid. Add a new type of participant and you need new code, new migrations, new permissions. The CATSP OS uses <strong>capabilities</strong> instead — atomic units of permission that compose like building blocks.</p>
+
+        <div className="card-grid-3" style={{ marginTop: 34 }}>
+          <div className="card" style={{ borderColor: 'var(--eg-vi)' }}>
+            <div className="eye" style={{ color: 'var(--eg)' }}>Dimension 1</div>
+            <h3 className="h3">Capability</h3>
+            <p className="p">What the action is. <strong>contracts.view</strong>, <strong>deliveries.handshake</strong>, <strong>governance.vote</strong>, <strong>enforcement.suspend</strong>. Each is a single, testable permission.</p>
+          </div>
+          <div className="card" style={{ borderColor: 'var(--cu)' }}>
+            <div className="eye" style={{ color: 'var(--cu)' }}>Dimension 2</div>
+            <h3 className="h3">Scope Level</h3>
+            <p className="p">How far it reaches. <strong>own</strong> (your data), <strong>assigned</strong> (clusters you manage), <strong>district</strong>, <strong>province</strong>, <strong>national</strong>. Same capability, different reach.</p>
+          </div>
+          <div className="card" style={{ borderColor: 'var(--eg-br)' }}>
+            <div className="eye" style={{ color: 'var(--eg-br)' }}>Dimension 3</div>
+            <h3 className="h3">Scope Values</h3>
+            <p className="p">Which specific targets. <strong>Choma</strong> district, <strong>Southern</strong> province, <strong>cluster CL-044</strong>. The capability tells you what. The scope tells you where.</p>
+          </div>
+        </div>
+
+        <p className="p" style={{ marginTop: 34 }}>Every database query runs through a single check: <strong>does this user have this capability at this scope?</strong> The database itself enforces it — not the application, not the frontend. Even if someone bypasses the interface, the database refuses.</p>
+
+        <div className="code-block">
+          <div className="code-label">The access check — one function, every table</div>
+          <pre>{`auth.has_capability('contracts.view', 'district')
+→ Does this user have contracts.view at district scope or higher?
+→ Yes: show contracts in their assigned districts
+→ No: access denied at the database level`}</pre>
+        </div>
+
+        <div className="note">
+          <div className="note-title">Why this matters</div>
+          <div className="note-body">Adding a new participant type — say, a seed certification officer — is two database inserts: define their capabilities and create the account. No code changes. No migration. No deployment. The system extends itself.</div>
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* Presets */}
+      <div className="sec-alt">
+        <div className="inner">
+          <div className="eye">Presets</div>
+          <h2 className="h2">Twelve starting points. Infinite customisation.</h2>
+          <p className="p">A preset is a convenience — a named bundle of capabilities that fits a common participant type. Every preset can be customised after assignment. A farmer who also trades individually? Start with the farmer preset, add <strong>contracts.create</strong>. An extension officer who also mediates disputes? Add <strong>cases.mediate</strong> to their set.</p>
+
+          <table className="btable" style={{ marginTop: 34 }}>
+            <thead>
+              <tr><th>Preset</th><th>Key Capabilities</th><th>Sees Money?</th></tr>
+            </thead>
+            <tbody>
+              {presets.map(p => (
+                <tr key={p.name}>
+                  <td>{p.name}</td>
+                  <td style={{ fontFamily: 'var(--body)', fontSize: 12 }}>{p.caps}</td>
+                  <td style={{ fontFamily: 'var(--body)', fontSize: 12, color: p.money === 'No' ? 'var(--red)' : 'var(--t2)' }}>{p.money}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="note" style={{ marginTop: 21 }}>
+            <div className="note-title">The privacy column</div>
+            <div className="note-body">Notice the pattern: extension officers and implementing partners — the people closest to farmers in the field — <strong>never see financial data</strong>. They see farming performance because they need it to advise. They are blind to money. This is not an oversight. It is the design. It prevents rent-seeking.</div>
+          </div>
+        </div>
+      </div>
 
       <Divider />
       <Footer />
