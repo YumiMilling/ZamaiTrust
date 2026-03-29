@@ -84,6 +84,7 @@ ZamaiTrust/
 ├── index.html                  # Entry HTML — loads Google Fonts, mounts #root
 ├── vite.config.js              # Vite config (React plugin only)
 ├── package.json                # Dependencies: react, react-dom, react-router-dom
+├── brand-guide-v10.html        # ZamAi Solutions corporate identity guide (archived reference)
 ├── trust-infrastructure-v01.html  # Original v0.1 HTML concept note (archived, do not modify)
 ├── public/
 │   ├── AI.png                  # Nav logo (small)
@@ -137,17 +138,42 @@ ZamaiTrust/
 
 ## Design System
 
-All styles in `src/App.css`. CSS custom properties in `:root`.
+All styles in `src/App.css`. CSS custom properties in `:root`. Governed by **Brand Guide v10** (`brand-guide-v10.html`).
+
+### Brand Foundation (from Brand Guide v10)
+
+**Evergreen is the centre of gravity.** Everything else exists in relation to it. Copper provides the warmth Evergreen withholds. Warm-dark surfaces create temperature contrast against Evergreen's cool teal.
 
 ### Colors
-- **Base/surface:** `--base` through `--s4` (dark grays)
-- **Emerald green (primary):** `--eg` through `--eg-hi`
-- **Copper (secondary):** `--cu` through `--cu-hi`
-- **Text:** `--t1` (brightest) through `--t4` (dimmest)
-- **Status:** `--green`, `--amber`, `--red`
+- **Base/surface:** `--base` through `--s4` (dark grays, warm undertone — R channel imperceptibly above B)
+- **Evergreen (primary):** `--eg` through `--eg-hi` — foundation colour. When used, it is a statement.
+- **Copper (secondary):** `--cu` through `--cu-hi` — warmth, eyebrow labels, dividers. Temperature opposite of Evergreen.
+- **Text:** `--t1` (brightest) through `--t4` (dimmest) — warm ivory, not clinical white
+- **Status:** `--green`, `--amber`, `--red` — regulatory/gap indicators (site-specific addition)
 
-### Typography
-- **Display:** Syne — **Serif:** Cormorant Garamond — **Body:** DM Sans — **Mono:** JetBrains Mono
+### Typography (four typefaces, each with its own role)
+
+| Font | Role | Weights | When |
+|---|---|---|---|
+| **Karenchang** | Logo & brand identity | Condensed variants | Logo only. Not a web font — Syne fills this role digitally. Never retype. |
+| **Syne** | Digital display headlines | 700, 800 only | Web headings, app titles. Never for body copy. Never in print. |
+| **Cormorant Garamond** | Gravitas & beauty | 600 semi-bold (headings), 300 italic (quotes) | Pull quotes, mission statements. Never for UI. |
+| **DM Sans** | Body & conversation | 300 (prose), 400 (UI), 500 (emphasis) | All body copy. Never heavier than 500. Reader should not notice the font. |
+| **JetBrains Mono** | Code & schema | 400, 500 | Code blocks, capability IDs, data fields. Site-specific addition. |
+
+### Golden Type Scale (φ from 11px)
+`11px` → `14px` → `17px` → `26px` → `42px` → `68px`. All sizes derive from the golden ratio. Do not introduce off-scale sizes.
+
+### Golden Spacing Scale
+`8px` → `13px` → `21px` → `34px` → `55px` → `89px` → `144px`. Same ratio, applied to padding, margins, gaps.
+
+### Visual Principles (from Brand Guide v10)
+1. **Proportion before decoration** — a well-proportioned page with no colour is more beautiful than a cluttered one
+2. **Whitespace is not empty** — space is deliberate, never filled because it makes us uncomfortable
+3. **One point of drama** — every design has one moment of beauty; two dramas cancel each other
+4. **Colour with intent** — each colour appears only where it belongs and means something there
+5. **Every line earns its weight** — 0.5px says "here is an edge"; 2px says "this matters"
+6. **Diagrams are arguments** — one thesis per diagram; if it tries to show everything, it shows nothing
 
 ### Key CSS Classes
 - `.sec` / `.sec-alt` / `.sec-eg` — section containers
@@ -213,7 +239,8 @@ npm run preview      # Preview production build locally
 5. **Confidential** — NDA-protected, do not expose to external services
 6. **Financial model accuracy** — verify formula changes against the spec
 7. **Domain terminology** — use exact CATSP terms, do not simplify
-8. **Accessible voice** — explain complex systems through metaphors, not jargon
-9. **Version tracking** — update `version.json`, `decisions.jsonl`, and `CHANGELOG.md` with every meaningful change
+8. **Accessible voice** — explain complex systems through metaphors, not jargon. Economy, rhythm, precision. (See Brand Guide v10 language rules.)
+9. **Version tracking** — update `version.json`, `decisions.jsonl`, `challenges.jsonl`, and `CHANGELOG.md` with every meaningful change
 10. **Deploy discipline** — run `npm run build` before pushing to `main`, prefix deploy commits with `[deploy]`
-11. **Archived reference** — `trust-infrastructure-v01.html` is read-only, never modify
+11. **Archived references** — `trust-infrastructure-v01.html` and `brand-guide-v10.html` are read-only, never modify
+12. **Brand compliance** — follow Brand Guide v10 for all design decisions: golden type scale, golden spacing, visual principles, font roles. When in doubt, refer to `brand-guide-v10.html`.
