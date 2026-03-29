@@ -202,7 +202,7 @@ export default function SystemPage() {
             <p className="p">60% quorum, simple majority, 72-hour voting window. Extension can add 48 hours if quorum not reached. The contract locks in — inputs flow, insurance binds, the season begins.</p>
           </div>
         </div>
-        <div style={{ marginTop: 55 }}>
+        <div className="dark" style={{ marginTop: 55, padding: 34, borderRadius: 2 }}>
           <ForwardLifecycle />
         </div>
       </section>
