@@ -3,7 +3,7 @@ import { ForwardLifecycle } from './TrustDiagrams'
 const classes = [
   { cls: 'delivery-verified', event: 'Grain arrives at the depot', plain: 'How much, what quality, who brought it', signed: 'Farmer + Depot' },
   { cls: 'quality-attested', event: 'An independent check confirms the grade', plain: 'Grade, moisture level, safety tests', signed: 'Quality assessor' },
-  { cls: 'forward-committed', event: 'A buyer locks in a purchase price', plain: 'Amount, minimum grade, price, delivery window', signed: 'Processor or buyer' },
+  { cls: 'forward-committed', event: 'A buyer commits to purchase', plain: 'Amount, grade, pricing rule (index/floor/collar), delivery window', signed: 'Processor or buyer' },
   { cls: 'input-advanced', event: 'A supplier provides seed or fertiliser on credit', plain: 'What was given, its value, repayment terms', signed: 'Supplier + Farmer group' },
   { cls: 'insurance-bound', event: 'An insurer underwrites the deal', plain: 'Policy details, coverage, payout triggers', signed: 'Insurer' },
   { cls: 'payment-settled', event: 'Money changes hands', plain: 'Amount, who paid, who received, deductions', signed: 'Payment system' },

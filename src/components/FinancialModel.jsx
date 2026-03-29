@@ -55,17 +55,17 @@ function ModelSection({ title, accent = C.egMid, children }) {
   )
 }
 
-const defaults = { cl: 50, fpc: 25, hpf: 2, yph: 2.5, ic: 4500, dp: 6400, xp: 10500, pm: 2200, ip: 3, wp: 2, tw: 350, tx: 1200, er: 19, ds: 40, cf: 10 }
+const defaults = { cl: 50, fpc: 25, hpf: 2, yph: 2.5, ic: 4500, dp: 6400, xp: 10500, pm: 2200, ip: 3, wp: 2, tw: 350, tx: 1200, er: 19, ds: 40, xs: 50, fp: 5800, fc: 2.5, cf: 10 }
 
 const scenarios = [
   { label: 'Baseline', desc: 'Default assumptions', values: {} },
   { label: 'Drought', desc: 'Crop failure → 30%', values: { cf: 30 } },
   { label: 'Price crash', desc: 'Domestic → K4,500', values: { dp: 4500 } },
   { label: 'Kwacha shock', desc: 'FX → 28 ZMW/USD', values: { er: 28 } },
-  { label: 'Export ban', desc: '100% domestic', values: { ds: 100, tx: 1200 } },
+  { label: 'Export ban', desc: '100% domestic', values: { ds: 90, xs: 0 } },
   { label: 'Perfect season', desc: 'High yield, good prices', values: { yph: 4, cf: 0, dp: 8000, xp: 13000 } },
   { label: 'Worst case', desc: 'Drought + price crash + FX', values: { cf: 30, dp: 4500, er: 28 } },
-  { label: 'Phase 1 pilot', desc: '10 clusters, domestic only', values: { cl: 10, ds: 100, cf: 5 } },
+  { label: 'Phase 1 pilot', desc: '10 clusters, domestic only', values: { cl: 10, ds: 90, xs: 0, cf: 5 } },
 ]
 
 export default function FinancialModel() {
@@ -83,13 +83,17 @@ export default function FinancialModel() {
   const [tx, sTx] = useState(defaults.tx)
   const [er, sEr] = useState(defaults.er)
   const [ds, sDs] = useState(defaults.ds)
+  const [xs, sXs] = useState(defaults.xs)
+  const [fp, sFp] = useState(defaults.fp)
+  const [fc, sFc] = useState(defaults.fc)
   const [cf, sCf] = useState(defaults.cf)
   const [active, setActive] = useState(new Set())
 
   function applyValues(v) {
     sCl(v.cl); sFpc(v.fpc); sHpf(v.hpf); sYph(v.yph); sIc(v.ic)
     sDp(v.dp); sXp(v.xp); sPm(v.pm); sIp(v.ip); sWp(v.wp)
-    sTw(v.tw); sTx(v.tx); sEr(v.er); sDs(v.ds); sCf(v.cf)
+    sTw(v.tw); sTx(v.tx); sEr(v.er); sDs(v.ds); sXs(v.xs)
+    sFp(v.fp); sFc(v.fc); sCf(v.cf)
   }
 
   function toggleScenario(s) {
@@ -113,23 +117,29 @@ export default function FinancialModel() {
     applyValues(merged)
   }
 
+  // Normalise splits: domestic + export + FRA = 100%
+  const fraShare = Math.max(0, 100 - ds - xs)
   const m = useMemo(() => {
+    const fra = Math.max(0, 100 - ds - xs)
     const tf = cl * fpc, th = tf * hpf, ey = th * yph, ay = ey * (1 - cf / 100), fy = ey - ay
-    const dt = ay * (ds / 100), xt = ay * (1 - ds / 100)
+    const dt = ay * (ds / 100), xt = ay * (xs / 100), ft_fra = ay * (fra / 100)
     const tic = th * ic
-    const fvd = dt * dp, fvx = xt * (xp + pm), tfv = fvd + fvx
-    const ins = tfv * (ip / 100), wc = ay * dp * (wp / 100), ttw = ay * tw, ttx = xt * tx
-    const dr = dt * dp, xr = xt * (xp + pm), tr = dr + xr
+    // Revenue per channel
+    const dr = dt * dp, xr = xt * (xp + pm), fr = ft_fra * fp, tr = dr + xr + fr
     const ipo = fy * dp * 0.7
-    const tc = tic + ins + wc + ttw + ttx
+    // Costs
+    const ins = tr * (ip / 100), wc = ay * dp * (wp / 100), ttw = ay * tw, ttx = xt * tx
+    const finCost = tr * (fc / 100)
+    const tc = tic + ins + wc + ttw + ttx + finCost
     const gm = tr + ipo - tc
-    const bp = tr / ay
-    const fg = (ay / tf) * ((dp * ds / 100) + ((xp + pm) * (1 - ds / 100)))
-    const fic = hpf * ic, ft = (ay / tf) * tw, fi = fg * (ip / 100), fw = fg * (wp / 100)
-    const fn = fg - fic - ft - fi - fw
-    const ivc = tic, ivU = tic / er, ivR = gm * 0.15, ivRU = ivR / er, ivY = (ivR / tic) * 100
-    return { tf, th, ey, ay, fy, dt, xt, tic, ins, wc, ttw, ttx, tc, dr, xr, tr, ipo, gm, bp, fg, fic, ft, fi, fw, fn, ivc, ivU, ivR, ivRU, ivY }
-  }, [cl, fpc, hpf, yph, ic, dp, xp, pm, ip, wp, tw, tx, er, ds, cf])
+    const bp = ay > 0 ? tr / ay : 0
+    // Per farmer
+    const fg = tf > 0 ? (ay / tf) * ((dp * ds / 100) + ((xp + pm) * xs / 100) + (fp * fra / 100)) : 0
+    const fic = hpf * ic, ftr = tf > 0 ? (ay / tf) * tw : 0, fi = fg * (ip / 100), fw = fg * (wp / 100), ffc = fg * (fc / 100)
+    const fn = fg - fic - ftr - fi - fw - ffc
+    const ivc = tic, ivU = tic / er, ivR = gm * 0.15, ivRU = ivR / er, ivY = tic > 0 ? (ivR / tic) * 100 : 0
+    return { tf, th, ey, ay, fy, dt, xt, ft_fra, tic, ins, wc, ttw, ttx, finCost, tc, dr, xr, fr, tr, ipo, gm, bp, fg, fic, ftr, fi, fw, ffc, fn, ivc, ivU, ivR, ivRU, ivY }
+  }, [cl, fpc, hpf, yph, ic, dp, xp, pm, ip, wp, tw, tx, er, ds, xs, fp, fc, cf])
 
   const pos = m.gm > 0
 
@@ -150,7 +160,14 @@ export default function FinancialModel() {
                 <Slider label="Domestic price" value={dp} onChange={sDp} min={4000} max={12000} step={100} unit=" K/t" desc="Lusaka spot: ~K6,400" />
                 <Slider label="DRC export price" value={xp} onChange={sXp} min={6000} max={16000} step={100} unit=" K/t" desc="Katanga: ~K10,500-13,000" />
                 <Slider label="Processing margin" value={pm} onChange={sPm} min={500} max={4000} step={100} unit=" K/t" />
-                <Slider label="Domestic/export split" value={ds} onChange={sDs} min={0} max={100} step={5} unit="% domestic" />
+                <Slider label="FRA gazetted price" value={fp} onChange={sFp} min={4000} max={9000} step={100} unit=" K/t" desc="Govt. strategic reserve price" />
+              </ModelSection>
+              <ModelSection title="Channel Split" accent={C.cuMid}>
+                <Slider label="Domestic" value={ds} onChange={v => { sDs(v); if (v + xs > 100) sXs(100 - v) }} min={0} max={100} step={5} unit="%" />
+                <Slider label="Export (processed)" value={xs} onChange={v => { sXs(v); if (ds + v > 100) sDs(100 - v) }} min={0} max={100} step={5} unit="%" />
+                <div style={{ fontSize: 11, color: fraShare > 0 ? C.cuHi : C.t4, marginTop: 4 }}>
+                  FRA reserve: {fraShare}% {fraShare > 0 ? `(${fmt(Math.round(m.ft_fra))} t at ${fK(fp)}/t)` : ''}
+                </div>
               </ModelSection>
               <ModelSection title="Costs" accent={C.s4}>
                 <Slider label="Input cost / ha" value={ic} onChange={sIc} min={2000} max={8000} step={100} unit=" K" />
@@ -158,6 +175,7 @@ export default function FinancialModel() {
                 <Slider label="Warehouse" value={wp} onChange={sWp} min={1} max={5} step={0.5} unit="%" />
                 <Slider label="Transport → warehouse" value={tw} onChange={sTw} min={100} max={800} step={50} unit=" K/t" />
                 <Slider label="Cross-border transport" value={tx} onChange={sTx} min={500} max={3000} step={100} unit=" K/t" />
+                <Slider label="Financing cost" value={fc} onChange={sFc} min={0} max={6} step={0.5} unit="%" desc="Warehouse receipt financing (~2-3% for 60-90 days)" />
               </ModelSection>
               <ModelSection title="Risk & FX" accent={C.red}>
                 <Slider label="Crop failure" value={cf} onChange={sCf} min={0} max={40} step={5} unit="%" />
@@ -173,11 +191,13 @@ export default function FinancialModel() {
                 <Row label="Actual yield" value={fmt(m.ay) + ' t'} bold color={C.t1} border />
                 <Row label="Crop failure loss" value={fmt(m.fy) + ' t'} color={C.red} border />
                 <Row label="→ Domestic" value={fmt(m.dt) + ' t'} indent border />
-                <Row label="→ Export" value={fmt(m.xt) + ' t'} indent />
+                <Row label="→ Export (processed)" value={fmt(m.xt) + ' t'} indent border />
+                <Row label="→ FRA reserve" value={fmt(m.ft_fra) + ' t'} indent />
               </ModelSection>
               <ModelSection title="Revenue" accent={C.egHi}>
                 <Row label="Domestic" value={fK(m.dr)} border />
-                <Row label="Export (grain + processing)" value={fK(m.xr)} border />
+                <Row label="Export (processed)" value={fK(m.xr)} border />
+                <Row label="FRA reserve" value={fK(m.fr)} border />
                 <Row label="Insurance payouts" value={fK(m.ipo)} color={C.cuHi} border />
                 <Row label="Total" value={fK(m.tr + m.ipo)} bold color={C.egHi} border />
                 <Row label="Blended price / tonne" value={fK(m.bp) + '/t'} color={C.t3} />
@@ -188,6 +208,7 @@ export default function FinancialModel() {
                 <Row label="Warehouse" value={fK(m.wc)} border />
                 <Row label="Transport (warehouse)" value={fK(m.ttw)} border />
                 <Row label="Transport (cross-border)" value={fK(m.ttx)} border />
+                <Row label="Financing" value={fK(m.finCost)} border />
                 <Row label="Total" value={fK(m.tc)} bold color={C.cuHi} />
               </ModelSection>
               <ModelSection title="System Gross Margin" accent={pos ? C.egVi : C.red}>
@@ -197,9 +218,10 @@ export default function FinancialModel() {
               <ModelSection title="Per Farmer" accent={C.cuMid}>
                 <Row label="Gross" value={fK(m.fg)} border />
                 <Row label="Inputs" value={'−' + fK(m.fic)} indent border />
-                <Row label="Transport" value={'−' + fK(m.ft)} indent border />
+                <Row label="Transport" value={'−' + fK(m.ftr)} indent border />
                 <Row label="Insurance" value={'−' + fK(m.fi)} indent border />
                 <Row label="Warehouse" value={'−' + fK(m.fw)} indent border />
+                <Row label="Financing" value={'−' + fK(m.ffc)} indent border />
                 <Row label="Net income" value={fK(m.fn)} bold color={m.fn > 0 ? C.egHi : C.red} border />
                 <Row label="USD equiv" value={fU(m.fn / er)} color={C.t3} />
               </ModelSection>
