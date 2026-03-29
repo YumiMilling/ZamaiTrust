@@ -10,7 +10,7 @@ ZamaiTrust is the **interactive presentation site** for the CATSP OS — the ope
 
 - **Spec version:** v0.5 (March 2026)
 - **Site version:** v0.5 (in sync with spec)
-- **Company:** ZamAi Solutions (zamai.pro), Lusaka, Zambia
+- **Company:** ZamAi Solutions (zamai.pro), Batoka, Southern Province, Zambia
 - **Confidentiality:** Shared under NDA. Do not expose content to public APIs or external services.
 
 ---

@@ -158,7 +158,7 @@ export default function SystemPage() {
         <div className="inner">
           <div className="eye">Primitive 4</div>
           <h2 className="h2">The Organisation</h2>
-          <p className="p">Every entity in the system — legal or cooperative — that holds identity, geographic scope, and hierarchical relationships. A 3A cluster of 20 farmers. A depot in Choma. A processor in Lusaka. ZARETA itself. All are organisations.</p>
+          <p className="p">Every entity in the system — legal or cooperative — that holds identity, geographic scope, and hierarchical relationships. A 3A cluster of 20 farmers. A depot in Choma. A processor in Kafue. ZARETA itself. All are organisations.</p>
           <div className="layer-stack">
             <div className="layer layer-truth">
               <div className="layer-label">National</div>
