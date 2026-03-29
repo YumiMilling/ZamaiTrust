@@ -55,22 +55,42 @@ function ModelSection({ title, accent = C.egMid, children }) {
   )
 }
 
+const defaults = { cl: 50, fpc: 25, hpf: 2, yph: 2.5, ic: 4500, dp: 6400, xp: 10500, pm: 2200, ip: 3, wp: 2, tw: 350, tx: 1200, er: 19, ds: 40, cf: 10 }
+
+const scenarios = [
+  { label: 'Baseline', desc: 'Default assumptions', values: {} },
+  { label: 'Drought', desc: 'Crop failure → 30%', values: { cf: 30 } },
+  { label: 'Price crash', desc: 'Domestic → K4,500', values: { dp: 4500 } },
+  { label: 'Kwacha shock', desc: 'FX → 28 ZMW/USD', values: { er: 28 } },
+  { label: 'Export ban', desc: '100% domestic', values: { ds: 100, tx: 1200 } },
+  { label: 'Perfect season', desc: 'High yield, good prices', values: { yph: 4, cf: 0, dp: 8000, xp: 13000 } },
+  { label: 'Worst case', desc: 'Drought + price crash + FX', values: { cf: 30, dp: 4500, er: 28 } },
+  { label: 'Phase 1 pilot', desc: '10 clusters, domestic only', values: { cl: 10, ds: 100, cf: 5 } },
+]
+
 export default function FinancialModel() {
-  const [cl, sCl] = useState(50)
-  const [fpc, sFpc] = useState(25)
-  const [hpf, sHpf] = useState(2)
-  const [yph, sYph] = useState(2.5)
-  const [ic, sIc] = useState(4500)
-  const [dp, sDp] = useState(6400)
-  const [xp, sXp] = useState(10500)
-  const [pm, sPm] = useState(2200)
-  const [ip, sIp] = useState(3)
-  const [wp, sWp] = useState(2)
-  const [tw, sTw] = useState(350)
-  const [tx, sTx] = useState(1200)
-  const [er, sEr] = useState(19)
-  const [ds, sDs] = useState(40)
-  const [cf, sCf] = useState(10)
+  const [cl, sCl] = useState(defaults.cl)
+  const [fpc, sFpc] = useState(defaults.fpc)
+  const [hpf, sHpf] = useState(defaults.hpf)
+  const [yph, sYph] = useState(defaults.yph)
+  const [ic, sIc] = useState(defaults.ic)
+  const [dp, sDp] = useState(defaults.dp)
+  const [xp, sXp] = useState(defaults.xp)
+  const [pm, sPm] = useState(defaults.pm)
+  const [ip, sIp] = useState(defaults.ip)
+  const [wp, sWp] = useState(defaults.wp)
+  const [tw, sTw] = useState(defaults.tw)
+  const [tx, sTx] = useState(defaults.tx)
+  const [er, sEr] = useState(defaults.er)
+  const [ds, sDs] = useState(defaults.ds)
+  const [cf, sCf] = useState(defaults.cf)
+
+  function applyScenario(s) {
+    const v = { ...defaults, ...s.values }
+    sCl(v.cl); sFpc(v.fpc); sHpf(v.hpf); sYph(v.yph); sIc(v.ic)
+    sDp(v.dp); sXp(v.xp); sPm(v.pm); sIp(v.ip); sWp(v.wp)
+    sTw(v.tw); sTx(v.tx); sEr(v.er); sDs(v.ds); sCf(v.cf)
+  }
 
   const m = useMemo(() => {
     const tf = cl * fpc, th = tf * hpf, ey = th * yph, ay = ey * (1 - cf / 100), fy = ey - ay
@@ -175,12 +195,27 @@ export default function FinancialModel() {
           </div>
 
           <div style={{ background: C.s2, borderLeft: '2px solid ' + C.cu, padding: '16px 20px', marginTop: 3 }}>
-            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.2em', textTransform: 'uppercase', color: C.cuHi, marginBottom: 6 }}>Stress Test It</div>
-            <div style={{ fontSize: 12, color: C.t3, lineHeight: '1.7' }}>
-              <strong style={{ color: C.t2 }}>Drought: </strong>Crop failure &rarr; 30%.{' '}
-              <strong style={{ color: C.t2 }}>Price crash: </strong>Domestic &rarr; K4,500.{' '}
-              <strong style={{ color: C.t2 }}>Kwacha shock: </strong>FX &rarr; 28.{' '}
-              <strong style={{ color: C.t2 }}>Export ban: </strong>Domestic split &rarr; 100%.
+            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.2em', textTransform: 'uppercase', color: C.cuHi, marginBottom: 10 }}>Scenarios — click to load</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {scenarios.map(s => (
+                <button
+                  key={s.label}
+                  onClick={() => applyScenario(s)}
+                  title={s.desc}
+                  style={{
+                    background: C.s3, border: '1px solid ' + C.s4, borderRadius: 3,
+                    padding: '6px 12px', cursor: 'pointer', transition: 'all .15s',
+                    color: C.t2, fontSize: 11, fontWeight: 500, fontFamily: "'DM Sans',sans-serif",
+                  }}
+                  onMouseEnter={e => { e.target.style.borderColor = C.egVi; e.target.style.color = C.egHi }}
+                  onMouseLeave={e => { e.target.style.borderColor = C.s4; e.target.style.color = C.t2 }}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            <div style={{ fontSize: 10, color: C.t4, marginTop: 8, lineHeight: '1.5' }}>
+              Each scenario resets all sliders to defaults, then applies its changes. Tweak further after loading.
             </div>
           </div>
         </div>
