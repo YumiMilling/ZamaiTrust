@@ -39,6 +39,37 @@ Append-only decision log. One JSON object per line. Answers: what was decided, w
 
 **Update when:** any design decision is made, any open gap is resolved, any architectural choice changes.
 
+### `challenges.jsonl` — What Could Go Wrong?
+
+Append-only log of threats, vulnerabilities, edge cases, and hard problems. Answers: what did we find, how severe is it, what mitigations exist, and are they sufficient?
+
+**Rules:**
+- **Append-only.** Same rule as decisions — never edit existing lines.
+- Record every challenge when discovered, even if no mitigation exists yet.
+- Link to related gaps and decisions.
+- Track whether identified mitigations are sufficient or not.
+- Next ID: look at the last line and increment.
+
+**Format:**
+```json
+{
+  "id": "CH-NNN",
+  "date": "YYYY-MM-DD",
+  "category": "integrity | governance | financial | privacy | scalability | adoption | legal | operational",
+  "title": "Short title",
+  "description": "What the challenge is",
+  "severity": "critical | high | medium | low",
+  "related_gaps": [8],
+  "related_decisions": ["DEC-006"],
+  "mitigations_identified": ["list of known mitigations"],
+  "mitigations_sufficient": false,
+  "status": "open | mitigated | accepted | resolved",
+  "notes": "Additional context"
+}
+```
+
+**Update when:** a new threat, vulnerability, edge case, or hard problem is discovered — in design sessions, code review, conversations, or adversarial thinking.
+
 ### `CHANGELOG.md` — What Happened When?
 
 Human-readable narrative. Answers: what changed, in which layer (spec vs site), and whether they're in sync.
@@ -67,6 +98,8 @@ Fix mobile nav overflow on 7-item layout                      ← bug fix
 |---|---|
 | New design decision | `decisions.jsonl` (new line) |
 | Changed design decision | `decisions.jsonl` (new line with `supersedes`) |
+| New threat / vulnerability / edge case found | `challenges.jsonl` (new line) |
+| Challenge mitigated or resolved | `challenges.jsonl` (new line with updated status) |
 | Gap resolved | `version.json` (update gap status) + `decisions.jsonl` (new decision) + `CHANGELOG.md` |
 | New module added | `version.json` (add module) + `CHANGELOG.md` |
 | Site page added/changed | `CHANGELOG.md` + `version.json` (update site version if significant) |

@@ -33,6 +33,7 @@ Every change that affects the spec, the site, or a design decision MUST update t
 |---|---|---|---|
 | `version.json` | Spec version, site version, module status, primitive status, gap status, deployment phases | When a gap closes, a module changes status, or a version ships | Machine-readable. Single source of truth. |
 | `decisions.jsonl` | Every architectural decision with rationale, impacts, and supersession chain | When any design decision is made or an existing decision changes | **Append-only. Never edit existing lines.** If a decision changes, add a new entry with `"supersedes": "DEC-NNN"`. |
+| `challenges.jsonl` | Threats, vulnerabilities, edge cases, and hard problems we've identified | When a new challenge is discovered during design, review, or conversation | **Append-only.** Track mitigations identified and whether they're sufficient. |
 | `CHANGELOG.md` | What changed, when, in which layer (spec vs site), sync status | With every meaningful change | Always include spec and site versions. Note sync status. |
 
 ### Decision Log Format (`decisions.jsonl`)
