@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --eg: #073233;
+  --eg-mid: #0A4A4B;
+  --eg-br: #0F7274;
+  --eg-vi: #14A0A3;
+  --eg-hi: #19C8CC;
+  --cu: #A86B2A;
+  --cu-mid: #C47E3A;
+  --cu-lt: #D99550;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
