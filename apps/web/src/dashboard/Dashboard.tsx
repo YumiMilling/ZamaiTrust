@@ -11,7 +11,9 @@ export function Dashboard() {
 
   const modules = [
     { path: '/contracts', label: 'Contracts', desc: 'View and manage buy contracts', cap: 'contracts.view' as const, icon: '📋' },
-    { path: '/kiosk/delivery', label: 'Kiosk: Record Delivery', desc: 'Weigh, grade, and confirm deliveries', cap: 'deliveries.handshake' as const, icon: '⚖️' },
+    { path: '/kiosk/delivery', label: 'Record Delivery', desc: 'Weigh, grade, and confirm at the kiosk', cap: 'deliveries.handshake' as const, icon: '⚖️' },
+    { path: '/governance', label: 'Governance', desc: 'Proposals, votes, and cluster decisions', cap: 'governance.view' as const, icon: '🗳️' },
+    { path: '/waterfall', label: 'Payment Waterfall', desc: 'See how money splits for each delivery', cap: 'financial.view' as const, icon: '💧' },
   ]
 
   const available = modules.filter(m => hasCapability(m.cap))

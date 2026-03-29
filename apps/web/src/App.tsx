@@ -3,6 +3,8 @@ import { AuthProvider, useAuth } from './core/auth'
 import { KioskDelivery } from './kiosk/KioskDelivery'
 import { KioskLogin } from './kiosk/KioskLogin'
 import { AdminContracts } from './modules/contracts/AdminContracts'
+import { Proposals } from './modules/governance/Proposals'
+import { WaterfallView } from './modules/treasury/WaterfallView'
 import { Dashboard } from './dashboard/Dashboard'
 import { type ReactNode } from 'react'
 
@@ -23,6 +25,8 @@ function AppRoutes() {
       {/* Admin / processor / dashboard */}
       <Route path="/login" element={<KioskLogin />} />
       <Route path="/contracts" element={<ProtectedRoute><AdminContracts /></ProtectedRoute>} />
+      <Route path="/governance" element={<ProtectedRoute><Proposals /></ProtectedRoute>} />
+      <Route path="/waterfall" element={<ProtectedRoute><WaterfallView /></ProtectedRoute>} />
       <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
     </Routes>
   )
