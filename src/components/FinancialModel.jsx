@@ -84,12 +84,33 @@ export default function FinancialModel() {
   const [er, sEr] = useState(defaults.er)
   const [ds, sDs] = useState(defaults.ds)
   const [cf, sCf] = useState(defaults.cf)
+  const [active, setActive] = useState(new Set())
 
-  function applyScenario(s) {
-    const v = { ...defaults, ...s.values }
+  function applyValues(v) {
     sCl(v.cl); sFpc(v.fpc); sHpf(v.hpf); sYph(v.yph); sIc(v.ic)
     sDp(v.dp); sXp(v.xp); sPm(v.pm); sIp(v.ip); sWp(v.wp)
     sTw(v.tw); sTx(v.tx); sEr(v.er); sDs(v.ds); sCf(v.cf)
+  }
+
+  function toggleScenario(s) {
+    if (s.label === 'Baseline') {
+      setActive(new Set())
+      applyValues(defaults)
+      return
+    }
+    const next = new Set(active)
+    if (next.has(s.label)) {
+      next.delete(s.label)
+    } else {
+      next.add(s.label)
+    }
+    setActive(next)
+    // Merge: start from defaults, layer each active scenario on top
+    let merged = { ...defaults }
+    scenarios.forEach(sc => {
+      if (next.has(sc.label)) merged = { ...merged, ...sc.values }
+    })
+    applyValues(merged)
   }
 
   const m = useMemo(() => {
@@ -195,27 +216,31 @@ export default function FinancialModel() {
           </div>
 
           <div style={{ background: C.s2, borderLeft: '2px solid ' + C.cu, padding: '16px 20px', marginTop: 3 }}>
-            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.2em', textTransform: 'uppercase', color: C.cuHi, marginBottom: 10 }}>Scenarios — click to load</div>
+            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.2em', textTransform: 'uppercase', color: C.cuHi, marginBottom: 10 }}>Scenarios — combine them</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-              {scenarios.map(s => (
-                <button
-                  key={s.label}
-                  onClick={() => applyScenario(s)}
-                  title={s.desc}
-                  style={{
-                    background: C.s3, border: '1px solid ' + C.s4, borderRadius: 3,
-                    padding: '6px 12px', cursor: 'pointer', transition: 'all .15s',
-                    color: C.t2, fontSize: 11, fontWeight: 500, fontFamily: "'DM Sans',sans-serif",
-                  }}
-                  onMouseEnter={e => { e.target.style.borderColor = C.egVi; e.target.style.color = C.egHi }}
-                  onMouseLeave={e => { e.target.style.borderColor = C.s4; e.target.style.color = C.t2 }}
-                >
-                  {s.label}
-                </button>
-              ))}
+              {scenarios.map(s => {
+                const isActive = s.label === 'Baseline' ? active.size === 0 : active.has(s.label)
+                return (
+                  <button
+                    key={s.label}
+                    onClick={() => toggleScenario(s)}
+                    title={s.desc}
+                    style={{
+                      background: isActive ? C.eg : C.s3,
+                      border: '1px solid ' + (isActive ? C.egVi : C.s4),
+                      borderRadius: 3, padding: '6px 12px', cursor: 'pointer',
+                      transition: 'all .15s',
+                      color: isActive ? C.egHi : C.t2,
+                      fontSize: 11, fontWeight: 500, fontFamily: "'DM Sans',sans-serif",
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                )
+              })}
             </div>
             <div style={{ fontSize: 10, color: C.t4, marginTop: 8, lineHeight: '1.5' }}>
-              Each scenario resets all sliders to defaults, then applies its changes. Tweak further after loading.
+              Click to toggle on/off. Stack multiple scenarios — e.g. Drought + Kwacha shock. Baseline resets all.
             </div>
           </div>
         </div>
