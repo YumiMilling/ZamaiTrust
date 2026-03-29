@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './core/auth'
+import { ConnectivityProvider } from './core/connectivity'
 import { KioskDelivery } from './kiosk/KioskDelivery'
 import { KioskLogin } from './kiosk/KioskLogin'
 import { AdminContracts } from './modules/contracts/AdminContracts'
@@ -35,7 +36,9 @@ function AppRoutes() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <ConnectivityProvider>
+        <AppRoutes />
+      </ConnectivityProvider>
     </AuthProvider>
   )
 }
