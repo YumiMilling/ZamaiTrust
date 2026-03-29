@@ -26,7 +26,7 @@ export default function ClosingSection() {
           </div>
           <div style={{ fontSize: 14, color: 'rgba(242,237,230,.35)', textAlign: 'right' }}>
             <div>Exploration Document &middot; v0.1 &middot; March 2026</div>
-            <div style={{ marginTop: 5 }}>zamai.pro &middot; Lusaka, Zambia</div>
+            <div style={{ marginTop: 5 }}>zamai.pro &middot; Batoka, Zambia</div>
             <div style={{ marginTop: 5, fontSize: 11, color: 'rgba(242,237,230,.25)' }}>Confidential. Do not forward without written consent.</div>
           </div>
         </div>

@@ -1,0 +1,62 @@
+{
+  "spec": {
+    "version": "0.5",
+    "date": "2026-03-29",
+    "status": "draft",
+    "description": "CATSP OS — The Operating System for Zambia's Agricultural Transformation"
+  },
+  "site": {
+    "version": "0.5",
+    "date": "2026-03-29",
+    "status": "current",
+    "description": "Interactive presentation site — 7 pages reflecting full v0.5 spec content"
+  },
+  "primitives": {
+    "handshake":        { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with sacred rule callout + DualSignature SVG diagram." },
+    "attestation":      { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with example table (5 types) + corroboration explanation." },
+    "function":         { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with 3 dimensions + capability registry table (8 modules)." },
+    "organisation":     { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with hierarchy visualization + affiliations note." },
+    "forward_contract": { "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with governance vote + ForwardLifecycle SVG diagram." },
+    "payment_waterfall":{ "status": "designed", "spec_version": "0.5", "site_version": "0.5", "note": "Full section with 6-line priority + InsuranceFlow SVG diagram." }
+  },
+  "modules": {
+    "forward_contracts":    { "status": "designed",     "note": "Full schema. Discovery mechanism is OPEN." },
+    "deliveries":           { "status": "designed",     "note": "Full schema with handshake verification." },
+    "quality_attestations": { "status": "designed",     "note": "Via attestation primitive. Grading standards defined." },
+    "payment_waterfall":    { "status": "partial",      "note": "Priority order fixed. Async state machine OPEN. Escrow architecture OPEN. Minimum farmer floor OPEN." },
+    "trust_scores":         { "status": "designed",     "note": "Full schema. Weights configurable per org_type. Volume-weighted." },
+    "cluster_governance":   { "status": "designed",     "note": "Treasury, proposals, voting, constitution, right to exit. Declining quorum OPEN." },
+    "conflict_resolution":  { "status": "designed",     "note": "4-tier system with SLAs. Full schema." },
+    "saff_loans":           { "status": "designed",     "note": "Schema complete. Bank API integration OPEN." },
+    "insurance":            { "status": "designed",     "note": "Schema complete. ZIRSAT integration designed." },
+    "access_control":       { "status": "designed",     "note": "Capability-based RLS. Performance at scale OPEN." },
+    "audit_integrity":      { "status": "designed",     "note": "Append-only audit log, anomaly flags, Merkle tree. Publication target OPEN. Anomaly engine algorithms OPEN." },
+    "extension_partners":   { "status": "designed",     "note": "Assignments, attestation-based tracking, issue flags, early warnings." },
+    "authentication":       { "status": "designed",     "note": "Google OAuth + SIM OTP + mobile money binding." },
+    "notifications":        { "status": "not_started",  "note": "Referenced throughout but no infrastructure designed." },
+    "offline_sync":         { "status": "not_started",  "note": "Rural connectivity assumed online. PWA offline not specified." },
+    "ussd_flows":           { "status": "not_started",  "note": "Critical for feature phone users. No flow diagrams or session design." },
+    "api_endpoints":        { "status": "not_started",  "note": "Data models defined but no REST/GraphQL endpoint specs." }
+  },
+  "open_gaps": {
+    "settlement_escrow":        { "id": 1,  "severity": "critical", "status": "open", "summary": "Who holds money between handshake trigger and waterfall execution? Bank-escrow vs platform-escrow vs processor-direct.", "blocked_by": "Bank API conversations, possibly BoZ regulatory guidance" },
+    "contract_discovery":       { "id": 2,  "severity": "high",     "status": "open", "summary": "Clusters can't find posted contracts without notification and browse mechanism.", "blocked_by": "Notification infrastructure (gap #5) + marketplace UI" },
+    "waterfall_state_machine":  { "id": 3,  "severity": "high",     "status": "open", "summary": "Payment failure handling underspecified — partial settlements, retries, reconciliation.", "blocked_by": "Detailed state machine spec needed" },
+    "waterfall_farmer_floor":   { "id": 4,  "severity": "high",     "status": "open", "summary": "Deductions could exceed gross payment, leaving farmer with zero.", "blocked_by": "Design decision needed: minimum percentage floor, pro-rata reduction, or flag-and-halt" },
+    "notification_system":      { "id": 5,  "severity": "high",     "status": "open", "summary": "SMS/USSD notifications referenced throughout but no infrastructure designed.", "blocked_by": "Table design, message templates, channel routing, SMS gateway integration" },
+    "offline_connectivity":     { "id": 6,  "severity": "high",     "status": "open", "summary": "Rural Zambia has unreliable connectivity; all operations assume online.", "blocked_by": "PWA offline storage spec, sync-when-connected, conflict resolution" },
+    "bank_api_integration":     { "id": 7,  "severity": "high",     "status": "open", "summary": "SAFF documentation generation has no delivery target.", "blocked_by": "Conversations with ZANACO" },
+    "anomaly_engine":           { "id": 8,  "severity": "medium",   "status": "open", "summary": "Anomaly triggers listed but algorithms/thresholds not specified.", "blocked_by": "Edge Function specs for each trigger" },
+    "merkle_publication":       { "id": 9,  "severity": "medium",   "status": "open", "summary": "Root hash computed but no external publication mechanism.", "blocked_by": "Decision on IPFS / public chain / government endpoint / public feed" },
+    "declining_quorum":         { "id": 10, "severity": "medium",   "status": "open", "summary": "If cluster voting quorum never reached, contracts expire.", "blocked_by": "Field testing to decide: lower quorum threshold or leader-acts-with-challenge-window" },
+    "rls_performance":          { "id": 11, "severity": "medium",   "status": "open", "summary": "Capability checks on every query may be slow with 40,000+ users.", "blocked_by": "Load testing, JWT-based capability caching" },
+    "api_boundaries":           { "id": 12, "severity": "high",     "status": "open", "summary": "Spec defines data models but not API endpoints.", "blocked_by": "REST/GraphQL endpoint definitions, request/response schemas" },
+    "ussd_flows":               { "id": 13, "severity": "high",     "status": "open", "summary": "USSD critical for feature phone users but no flow diagrams.", "blocked_by": "Complete USSD session spec: menu trees, state management, SMS fallback" }
+  },
+  "deployment": {
+    "phase_0": { "status": "not_started", "label": "Proof of Concept", "scope": "1 processor, 1 depot, 1 cluster, 1 supplier. Manual payments.", "target": "1 season" },
+    "phase_1": { "status": "not_started", "label": "Pilot", "scope": "10 clusters, 2 depots, 2 processors. Automated waterfall, SAFF, insurance.", "target": "2 seasons" },
+    "phase_2": { "status": "not_started", "label": "Scale", "scope": "National + cross-border (DRC, Angola). Full ZATTF integration.", "target": "Season 3+" },
+    "phase_3": { "status": "not_started", "label": "International Capital", "scope": "Tokenised forwards. Tradeable warehouse receipts. Requires BoZ/SEC framework.", "target": "Future" }
+  }
+}

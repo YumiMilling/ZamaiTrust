@@ -16,7 +16,7 @@ function Slider({ label, value, onChange, min, max, step = 1, unit = '', desc })
   return (
     <div style={{ marginBottom: 14 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 3 }}>
-        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 12, fontWeight: 700, color: C.t1 }}>{label}</span>
+        <span style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 12, fontWeight: 700, color: C.t1 }}>{label}</span>
         <span style={{ fontSize: 13, fontWeight: 500, color: C.egHi }}>{fmt(value)}{unit}</span>
       </div>
       {desc && <div style={{ fontSize: 10, color: C.t4, marginBottom: 5, lineHeight: '1.4' }}>{desc}</div>}
@@ -212,7 +212,7 @@ export default function FinancialModel() {
                 <Row label="Total" value={fK(m.tc)} bold color={C.cuHi} />
               </ModelSection>
               <ModelSection title="System Gross Margin" accent={pos ? C.egVi : C.red}>
-                <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 28, fontWeight: 800, color: pos ? C.egHi : C.red, lineHeight: 1, marginBottom: 6 }}>{fK(m.gm)}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 28, fontWeight: 800, color: pos ? C.egHi : C.red, lineHeight: 1, marginBottom: 6 }}>{fK(m.gm)}</div>
                 <div style={{ fontSize: 12, color: C.t3 }}>{fU(m.gm / er)} at {er} ZMW/USD</div>
               </ModelSection>
               <ModelSection title="Per Farmer" accent={C.cuMid}>

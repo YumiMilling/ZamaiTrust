@@ -3,10 +3,12 @@ import './App.css'
 import Nav from './components/Nav'
 import ScrollToTop from './components/ScrollToTop'
 import VisionPage from './pages/VisionPage'
-import ModelPage from './pages/ModelPage'
-import SchemaPage from './pages/SchemaPage'
-import RegulationPage from './pages/RegulationPage'
+import SystemPage from './pages/SystemPage'
+import ParticipantsPage from './pages/ParticipantsPage'
 import GovernancePage from './pages/GovernancePage'
+import ModelPage from './pages/ModelPage'
+import PlanPage from './pages/PlanPage'
+import RegulationPage from './pages/RegulationPage'
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<VisionPage />} />
-        <Route path="/model" element={<ModelPage />} />
-        <Route path="/how-it-works" element={<SchemaPage />} />
-        <Route path="/regulation" element={<RegulationPage />} />
+        <Route path="/system" element={<SystemPage />} />
+        <Route path="/participants" element={<ParticipantsPage />} />
         <Route path="/governance" element={<GovernancePage />} />
+        <Route path="/model" element={<ModelPage />} />
+        <Route path="/plan" element={<PlanPage />} />
+        <Route path="/regulation" element={<RegulationPage />} />
       </Routes>
     </BrowserRouter>
   )
