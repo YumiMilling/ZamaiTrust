@@ -1,203 +1,176 @@
-# CLAUDE.md — ZamaiTrust
+# CLAUDE.md — ZamaiTrust / CATSP OS
 
 **READ THIS FIRST. Every AI assistant session starts here.**
 
 ---
 
-## What This Is
+## What This Repo Is
 
-ZamaiTrust is the **interactive presentation site** for the CATSP OS — the operating system for Zambia's $5.7B agricultural transformation programme. This repository is the **presentation layer**, not the platform itself.
+This is a **monorepo** containing two things:
 
-- **Spec version:** v0.5 (March 2026)
-- **Site version:** v0.5 (in sync with spec)
-- **Company:** ZamAi Solutions (zamai.pro), Batoka, Southern Province, Zambia
-- **Confidentiality:** Shared under NDA. Do not expose content to public APIs or external services.
+1. **`apps/site/`** — The ZamaiTrust presentation site. An interactive pitch/concept note for the CATSP OS, deployed to Netlify from `main`. React, pure CSS, no TypeScript.
+2. **`apps/web/`** — The actual CATSP OS platform. React + TypeScript + Tailwind + Supabase. The live platform being piloted with Kagezi Seeds and Yumi Milling in Monze, Zambia.
+
+Plus `supabase/` (13 migrations, Edge Functions, seed data), `packages/shared/` (shared TypeScript), and `docs/` (architecture + domain docs).
+
+**Company:** ZamAi Solutions (zamai.pro), Batoka, Southern Province, Zambia  
+**Confidentiality:** Shared under NDA. Do not expose content to public APIs or external services.
 
 ---
 
-## CRITICAL WORKFLOWS — Read Before Doing Anything
+## CRITICAL — Read Before Doing Anything
+
+### Which app are you working on?
+
+| If you're changing... | You're in... | Stack |
+|---|---|---|
+| The pitch/presentation site | `apps/site/` | React, pure CSS, JSX, no TypeScript |
+| The live platform | `apps/web/` | React, TypeScript, Tailwind, Supabase |
+| Database schema | `supabase/migrations/` | PostgreSQL, Supabase RLS |
+| Shared logic (waterfall, capabilities) | `packages/shared/` | TypeScript |
+
+Do not mix the two apps. The site has no TypeScript. The platform has no pure-CSS design system.
 
 ### Git & Deploy
 
-- **Production branch:** `main` — deploys to Netlify automatically
-- **Feature branches:** `claude/<description>` — develop here, merge to `main` when ready
-- **Deploy = push to main.** Every push to `main` triggers a Netlify build. Be deliberate.
-- **Commit messages:** Present-tense, descriptive. When a commit is intended to deploy, prefix with `[deploy]` (e.g., `[deploy] Update waterfall section with SAFF loan priority`)
-- **Always run `npm run build` before pushing to `main`** to catch build errors locally
+- **`main`** — production. Deploys the presentation site (`apps/site/`) to Netlify.
+- **Feature branches** — `claude/<description>`. Develop here, PR to `main`.
+- **Never push to `main` without running `npm run build` in the relevant app first.**
 
-### Version Tracking — Three Files, Always Updated
+### Version Tracking — Four Files, Always Updated
 
-Every change that affects the spec, the site, or a design decision MUST update the relevant tracking file:
-
-| File | What It Tracks | When to Update | Rule |
-|---|---|---|---|
-| `version.json` | Spec version, site version, module status, primitive status, gap status, deployment phases | When a gap closes, a module changes status, or a version ships | Machine-readable. Single source of truth. |
-| `decisions.jsonl` | Every architectural decision with rationale, impacts, and supersession chain | When any design decision is made or an existing decision changes | **Append-only. Never edit existing lines.** If a decision changes, add a new entry with `"supersedes": "DEC-NNN"`. |
-| `challenges.jsonl` | Threats, vulnerabilities, edge cases, and hard problems we've identified | When a new challenge is discovered during design, review, or conversation | **Append-only.** Track mitigations identified and whether they're sufficient. |
-| `CHANGELOG.md` | What changed, when, in which layer (spec vs site), sync status | With every meaningful change | Always include spec and site versions. Note sync status. |
-
-### Decision Log Format (`decisions.jsonl`)
-
-```json
-{
-  "id": "DEC-NNN",
-  "date": "YYYY-MM-DD",
-  "category": "architecture | access_control | privacy | governance | financial | trust | conflict | enforcement | technology | authentication | integrity",
-  "title": "Short title",
-  "decision": "What was decided",
-  "rationale": "Why",
-  "spec_version": "0.5",
-  "decided_by": "Who",
-  "status": "final | provisional | superseded",
-  "supersedes": "DEC-NNN or null",
-  "impacts": ["list", "of", "affected", "modules"]
-}
-```
-
-**Current decision count:** DEC-001 through DEC-015 (15 foundational decisions). Next ID: DEC-016.
-
----
-
-## Tech Stack
-
-| Layer | Technology | Version |
+| File | What It Tracks | Rule |
 |---|---|---|
-| Framework | React | 19.x |
-| Bundler | Vite | 8.x |
-| Routing | React Router DOM | 7.x |
-| Styling | Pure CSS (no framework) | Custom design system in `App.css` |
-| Fonts | Google Fonts (Syne, Cormorant Garamond, DM Sans, JetBrains Mono) | Loaded in `index.html` |
-| Hosting | Netlify | Auto-deploy from `main` via `vite build` → `dist/` |
+| `version.json` | Spec version, site version, module status, gap status | Update when a gap closes or module status changes |
+| `decisions.jsonl` | Every architectural decision | **Append-only. Never edit existing lines.** |
+| `challenges.jsonl` | Threats, vulnerabilities, hard problems | **Append-only.** |
+| `CHANGELOG.md` | What changed, when, which layer | Update with every meaningful change |
 
-No Tailwind. No component library. No state management library. No testing framework. No TypeScript.
+**Current decision count:** DEC-001 through DEC-015. Next ID: DEC-016.
 
 ---
 
-## Project Structure (v0.5)
+## Repo Structure
 
 ```
 ZamaiTrust/
-├── CLAUDE.md                   # THIS FILE — read first
-├── CHANGELOG.md                # Human-readable change narrative
-├── version.json                # Machine-readable version & status tracking
-├── decisions.jsonl             # Append-only decision log (never edit existing lines)
-├── index.html                  # Entry HTML — loads Google Fonts, mounts #root
-├── vite.config.js              # Vite config (React plugin only)
-├── package.json                # Dependencies: react, react-dom, react-router-dom
-├── brand-guide-v10.html        # ZamAi Solutions corporate identity guide (archived reference)
-├── trust-infrastructure-v01.html  # Original v0.1 HTML concept note (archived, do not modify)
-├── public/
-│   ├── AI.png                  # Nav logo (small)
-│   └── ZAMAI.png               # Full logo (hero + footer)
-├── src/
-│   ├── main.jsx                # React root mount
-│   ├── App.jsx                 # BrowserRouter + 7 routes + Nav
-│   ├── App.css                 # ALL styles — single file, custom design system
-│   ├── pages/
-│   │   ├── VisionPage.jsx      # Route: / — Hero, Problem, Solution, CATSP Mapping, ZATTF
-│   │   ├── SystemPage.jsx      # Route: /system — Six Primitives, Merkle tree
-│   │   ├── ParticipantsPage.jsx # Route: /participants — 12 types, Privacy Principle
-│   │   ├── GovernancePage.jsx  # Route: /governance — Trust scores, Cluster gov, Conflict resolution
-│   │   ├── ModelPage.jsx       # Route: /model — Interactive financial model
-│   │   ├── PlanPage.jsx        # Route: /plan — Phases, Named gaps, Tech stack
-│   │   └── RegulationPage.jsx  # Route: /regulation — Regulatory table, Closing
-│   └── components/
-│       ├── Nav.jsx             # Fixed top nav (7 links)
-│       ├── Hero.jsx            # Landing hero (v0.5)
-│       ├── Footer.jsx          # Reusable footer (v0.5)
-│       ├── ScrollToTop.jsx     # Scroll-to-top on route change
-│       ├── Divider.jsx         # Emerald-green horizontal rule
-│       ├── SectionHeader.jsx   # Numbered section header
-│       ├── FinancialModel.jsx  # Interactive slider-based financial model (14 sliders)
-│       ├── TrustDiagrams.jsx   # SVG diagrams (CoreLoop, ForwardLifecycle, DualSignature, InsuranceFlow, ThreeLayerArchitecture, InternationalCapital)
-│       └── [v0.1 components]   # Old section components kept for reference (ProblemSection, IdeaSection, etc.) — not imported
+├── CLAUDE.md                    # THIS FILE
+├── CHANGELOG.md
+├── version.json
+├── decisions.jsonl              # Append-only
+├── challenges.jsonl             # Append-only
+├── pnpm-workspace.yaml
+│
+├── docs/
+│   ├── architecture-plan-v1.md  # Full platform architecture (READ THIS)
+│   ├── cluster-governance-trust.md
+│   ├── forward-contract-pricing.md
+│   ├── post-warehouse-routing.md
+│   ├── stress-test-six-primitives.md
+│   └── waterfall-financing.md
+│
+├── supabase/
+│   ├── migrations/
+│   │   ├── 00_foundation/       # Always runs first
+│   │   │   ├── 000_extensions.sql  # pgcrypto, uuid-ossp
+│   │   │   ├── 001_users.sql       # organisations, users, affiliations, auth_profiles, devices
+│   │   │   ├── 002_capabilities.sql # capabilities, user_capabilities, scopes, presets (seeded)
+│   │   │   ├── 003_auth_functions.sql # has_capability(), scoped_values(), verify_nfc_pin()
+│   │   │   ├── 004_audit_log.sql
+│   │   │   ├── 005_attestations.sql
+│   │   │   ├── 006_notifications.sql
+│   │   │   └── 007_assign_preset.sql  # assign_preset() function (called by seed)
+│   │   ├── 10_contracts/        # seasons, items/commodities, contracts
+│   │   ├── 20_verification/     # deliveries, handshakes
+│   │   ├── 30_treasury/         # payment waterfall
+│   │   ├── 40_governance/       # proposals, votes, memberships
+│   │   └── 50_reputation/       # trust scores
+│   ├── functions/
+│   │   └── notifications/       # SMS Edge Function (Africa's Talking)
+│   └── seed/
+│       └── phase0_kagezi_yumi.sql  # Pilot seed: Kagezi Seeds + Yumi Milling, Monze
+│
+├── packages/
+│   └── shared/                  # @catsp/shared — capabilities, waterfall, trust logic
+│
+└── apps/
+    ├── web/                     # CATSP OS platform (React + TypeScript + Tailwind)
+    │   ├── src/
+    │   │   ├── core/            # auth.tsx, supabase.ts, offline.ts, connectivity.tsx
+    │   │   ├── kiosk/           # Kiosk mode: NFC tap, PIN entry, receipt printing
+    │   │   ├── modules/         # contracts/, verification/, treasury/, governance/, reputation/
+    │   │   └── dashboard/       # Role-specific landing pages
+    │   └── .env.example         # Copy to .env.local, fill in Supabase keys
+    └── site/                    # ZamaiTrust presentation site (React, pure CSS, JSX)
 ```
 
 ---
 
-## Site Architecture (v0.5)
+## Supabase Setup (Platform)
 
-### 7 Routes
-
-| Route | Nav Label | Content |
-|---|---|---|
-| `/` | Vision | Hero, problem (CATSP disconnection), solution (one OS), SP1-SP7 mapping, ZATTF integration |
-| `/system` | The System | Six primitives (Handshake, Attestation, Function, Organisation, Forward Contract, Waterfall), Merkle tree |
-| `/participants` | Participants | 12 types in 3 groups (value chain, government, service), Privacy Principle |
-| `/governance` | Governance | Trust scores (4 tiers), cluster self-governance, right to exit, 4-tier conflict resolution |
-| `/model` | Numbers | Interactive financial model with 14 sliders |
-| `/plan` | The Plan | 4 deployment phases, 13 named open gaps, tech stack |
-| `/regulation` | Legal | 18 regulatory items with traffic-light status, closing |
-
-### Component Pattern
-- Pages are self-contained with content data arrays + JSX rendering
-- Shared components: Nav, Hero, Footer, Divider, SectionHeader, ScrollToTop, FinancialModel, TrustDiagrams
-- All content hardcoded in JSX — no CMS, no data files, no API calls
-
----
-
-## Design System
-
-All styles in `src/App.css`. CSS custom properties in `:root`. Governed by **Brand Guide v10** (`brand-guide-v10.html`).
-
-### Brand Foundation (from Brand Guide v10)
-
-**Evergreen is the centre of gravity.** Everything else exists in relation to it. Copper provides the warmth Evergreen withholds. Warm-dark surfaces create temperature contrast against Evergreen's cool teal.
-
-### Colors
-- **Base/surface:** `--base` through `--s4` (dark grays, warm undertone — R channel imperceptibly above B)
-- **Evergreen (primary):** `--eg` through `--eg-hi` — foundation colour. When used, it is a statement.
-- **Copper (secondary):** `--cu` through `--cu-hi` — warmth, eyebrow labels, dividers. Temperature opposite of Evergreen.
-- **Text:** `--t1` (brightest) through `--t4` (dimmest) — warm ivory, not clinical white
-- **Status:** `--green`, `--amber`, `--red` — regulatory/gap indicators (site-specific addition)
-
-### Typography (four typefaces, each with its own role)
-
-| Font | Role | Weights | When |
-|---|---|---|---|
-| **Karenchang** | Logo & brand identity | Condensed variants | Logo only. Not a web font — Syne fills this role digitally. Never retype. |
-| **Syne** | Digital display headlines | 700, 800 only | Web headings, app titles. Never for body copy. Never in print. |
-| **Cormorant Garamond** | Gravitas & beauty | 600 semi-bold (headings), 300 italic (quotes) | Pull quotes, mission statements. Never for UI. |
-| **DM Sans** | Body & conversation | 300 (prose), 400 (UI), 500 (emphasis) | All body copy. Never heavier than 500. Reader should not notice the font. |
-| **JetBrains Mono** | Code & schema | 400, 500 | Code blocks, capability IDs, data fields. Site-specific addition. |
-
-### Golden Type Scale (φ from 11px)
-`11px` → `14px` → `17px` → `26px` → `42px` → `68px`. All sizes derive from the golden ratio. Do not introduce off-scale sizes.
-
-### Golden Spacing Scale
-`8px` → `13px` → `21px` → `34px` → `55px` → `89px` → `144px`. Same ratio, applied to padding, margins, gaps.
-
-### Visual Principles (from Brand Guide v10)
-1. **Proportion before decoration** — a well-proportioned page with no colour is more beautiful than a cluttered one
-2. **Whitespace is not empty** — space is deliberate, never filled because it makes us uncomfortable
-3. **One point of drama** — every design has one moment of beauty; two dramas cancel each other
-4. **Colour with intent** — each colour appears only where it belongs and means something there
-5. **Every line earns its weight** — 0.5px says "here is an edge"; 2px says "this matters"
-6. **Diagrams are arguments** — one thesis per diagram; if it tries to show everything, it shows nothing
-
-### Key CSS Classes
-- `.sec` / `.sec-alt` / `.sec-eg` — section containers
-- `.eye` — eyebrow label — `.h1`/`.h2`/`.h3` — headings — `.p` — paragraphs — `.pull` — pull quotes
-- `.card` / `.card-grid` / `.card-grid-3` — cards — `.agent-card` / `.agent-grid` — participant cards
-- `.flow` / `.flow-node` / `.flow-arrow` — flow diagrams — `.layer-stack` / `.layer` — layer diagrams
-- `.btable` / `.ftable` / `.summary` — tables — `.code-block` — code display
-- `.feature` / `.status` / `.status-clear` / `.status-gap` / `.status-blocker` — regulatory items
-- `.note` — callout boxes — `.risk-item` — gap/risk items
-- `.merkle` / `.merkle-node` — Merkle tree visualization
-- `.fade` / `.d1`–`.d4` — entrance animations
-
-### Responsive
-Mobile breakpoint at 820px. Grids → single column. Tables → horizontal scroll.
-
----
-
-## Commands
+### Prerequisites
 
 ```bash
-npm install          # Install dependencies
-npm run dev          # Vite dev server (localhost:5173)
-npm run build        # Production build → dist/ (RUN BEFORE PUSHING TO MAIN)
-npm run preview      # Preview production build locally
+npm install -g supabase
+supabase login
+pnpm install   # from repo root
+```
+
+### Option A: Local development
+
+```bash
+supabase start                    # starts local Postgres + Auth + Studio
+supabase db reset                 # runs all migrations + seed in order
+cd apps/web && cp .env.example .env.local
+# Fill VITE_SUPABASE_URL=http://localhost:54321
+# Fill VITE_SUPABASE_ANON_KEY=<from supabase start output>
+pnpm dev
+```
+
+### Option B: Hosted Supabase project
+
+```bash
+supabase link --project-ref <your-project-ref>
+supabase db push                  # runs all migrations in order
+psql "$DATABASE_URL" -f supabase/seed/phase0_kagezi_yumi.sql
+# Then call: SELECT apply_preset_to_users();  -- assigns capabilities to seed users
+cd apps/web && cp .env.example .env.local
+# Fill VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY from project Settings > API
+pnpm dev
+```
+
+### Migration run order
+
+Supabase CLI runs migrations alphabetically within each directory. The directory prefix enforces module order:
+
+```
+00_foundation → 10_contracts → 20_verification → 30_treasury → 40_governance → 50_reputation
+```
+
+Within `00_foundation`, files run `000_extensions.sql` first (alphabetical), which is correct — pgcrypto must exist before `003_auth_functions.sql` uses `crypt()`.
+
+### Auth setup (hosted project)
+
+1. **Google OAuth** (for Yumi/Kagezi admin staff): Authentication > Providers > Google. Add `GOOGLE_CLIENT_ID` and `GOOGLE_SECRET`.
+2. **Phone OTP** (fallback for field users): Authentication > Providers > Phone. Requires Twilio or similar.
+3. **NFC + PIN** (kiosk farmers): handled entirely in-app via `auth.verify_nfc_pin()` DB function. No Supabase Auth provider needed — returns a `user_id` which the kiosk uses to act on behalf of the farmer.
+
+---
+
+## Platform Commands
+
+```bash
+# From repo root
+pnpm install              # Install all workspace dependencies
+pnpm --filter @catsp/web dev      # Start platform dev server (localhost:5173)
+pnpm --filter @catsp/web build    # Build platform
+pnpm --filter @catsp/site dev     # Start presentation site dev server
+
+# Supabase
+supabase start            # Local Supabase stack
+supabase db reset         # Wipe + re-run all migrations + seed
+supabase db diff          # Generate migration from schema changes
+supabase functions serve  # Run Edge Functions locally
 ```
 
 ---
@@ -206,41 +179,59 @@ npm run preview      # Preview production build locally
 
 ### Key Terms
 - **CATSP:** Comprehensive Agricultural Transformation Support Programme ($5.7B, 10-year)
-- **ZATTF:** Zambia Agricultural Transformation Trust Fund (3 subsidiaries: ZIRSAT, ZIFSAT, ZINFSAT)
-- **ZARETA:** Zambia Agricultural Research and Extension Technical Authority
+- **Kagezi Seeds:** Seed company, Monze. Breeds climate-resilient varieties. Runs aggregation warehouse.
+- **Yumi Milling:** Processor, Monze. Maize + soya + expanding into multi-grain.
 - **3A Cluster:** Aggregation, Agribusiness, Association — cooperative farming units (10-30 farmers)
 - **SAFF:** Smallholder Agricultural Finance Facility (K500K max, 12%, 5 banks)
 - **ZAMACE:** Zambia Commodity Exchange — **ZMW:** Zambian Kwacha
+- **Kiosk:** Rugged tablet at aggregation point. NFC card + PIN auth. No farmer smartphone needed.
 
-### The Six Primitives
-1. **Handshake** — bilateral verification (sacred: do not add steps)
-2. **Attestation** — single-party claim with evidence + optional corroboration
-3. **Function** — capability-based access (what you can do, not who you are)
-4. **Organisation** — entity identity with affiliations + hierarchy
-5. **Forward Contract** — exchange commitment at set price/quantity/grade/time
-6. **Payment Waterfall** — deterministic settlement: warehouse → SAFF → inputs → insurance → platform → farmer
+### The Six Primitives → Modules
+1. **Function** (capabilities) → `00_foundation/002_capabilities.sql`
+2. **Organisation** (entities) → `00_foundation/001_users.sql`
+3. **Handshake** (bilateral verification) → `20_verification/`
+4. **Attestation** (single-party claim) → `00_foundation/005_attestations.sql`
+5. **Forward Contract** → `10_contracts/`
+6. **Payment Waterfall** → `30_treasury/`
 
-### Key Design Decisions (see `decisions.jsonl` for full list)
-- Capability-based access control, not roles (DEC-002)
-- Nobody sees the farmer's money (DEC-003)
+### Key Design Decisions (full list in `decisions.jsonl`)
+- Capability-based access, not roles — presets are convenience only (DEC-002)
+- Extension officers NEVER see financial data (DEC-003)
 - One member, one vote — always (DEC-004)
 - Right to exit — unconditional (DEC-005)
 - Handshake is sacred — do not add steps (DEC-006)
-- Audit log is append-only, no UPDATE or DELETE — ever (DEC-015)
+- Audit log: no UPDATE or DELETE — ever (DEC-015)
+
+### Pilot: Two Farmer Streams from Day 1
+- **Stream 1 (Kagezi):** Climate-smart farmers → pearl millet, sorghum → Kagezi warehouse → Yumi buys
+- **Stream 2 (Independent):** Maize/soya farmers → deliver direct to Yumi
+
+Same platform, same primitives. Difference is organisational affiliation, not code.
+
+---
+
+## Presentation Site (`apps/site/`)
+
+The pitch site that explains the CATSP OS to stakeholders. Separate from the platform.
+
+- React 19, pure CSS (no Tailwind, no TypeScript)
+- All styles in `src/App.css`. Do not create component CSS files.
+- Content is hardcoded in JSX. No CMS.
+- 7 routes: Vision, System, Participants, Governance, Numbers, Plan, Legal
+- Dark theme only. No light mode.
+- Follow Brand Guide v10 (`brand-guide-v10.html`) for all design decisions.
+
+```bash
+cd apps/site && npm install && npm run dev
+```
 
 ---
 
 ## Key Conventions
 
-1. **Dark theme only** — never add light mode
-2. **No external dependencies** — no Tailwind, no component libraries, no analytics
-3. **Content is code** — all text/data lives in JSX
-4. **Single CSS file** — all styles in `App.css`
-5. **Confidential** — NDA-protected, do not expose to external services
-6. **Financial model accuracy** — verify formula changes against the spec
-7. **Domain terminology** — use exact CATSP terms, do not simplify
-8. **Accessible voice** — explain complex systems through metaphors, not jargon. Economy, rhythm, precision. (See Brand Guide v10 language rules.)
-9. **Version tracking** — update `version.json`, `decisions.jsonl`, `challenges.jsonl`, and `CHANGELOG.md` with every meaningful change
-10. **Deploy discipline** — run `npm run build` before pushing to `main`, prefix deploy commits with `[deploy]`
-11. **Archived references** — `trust-infrastructure-v01.html` and `brand-guide-v10.html` are read-only, never modify
-12. **Brand compliance** — follow Brand Guide v10 for all design decisions: golden type scale, golden spacing, visual principles, font roles. When in doubt, refer to `brand-guide-v10.html`.
+1. **Version tracking** — update `version.json`, `decisions.jsonl`, `challenges.jsonl`, `CHANGELOG.md` with every meaningful change
+2. **Append-only logs** — never edit existing lines in `decisions.jsonl` or `challenges.jsonl`
+3. **Deploy discipline** — build before pushing to `main`
+4. **NDA** — do not expose content to external APIs or AI training
+5. **Migrations are append-only** — never modify an existing migration file; add a new one
+6. **CATSP is data, not code** — specific crop names, waterfall percentages, governance thresholds live in seed/config rows, not hardcoded logic
