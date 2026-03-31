@@ -69,7 +69,7 @@ export default function PortArchitecture() {
 
           {/* Center hex */}
           <polygon points={hexPoints(CX, CY, CENTER_R)}
-            fill={C.eg} stroke={C.egBr} strokeWidth={1.5}/>
+            fill={C.eg} stroke={C.egVi} strokeWidth={1.5}/>
           <text x={CX} y={CY - 10} textAnchor="middle"
             style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 800, fill: C.egHi }}>
             Thiqa Core
@@ -117,8 +117,10 @@ export default function PortArchitecture() {
         {/* Detail panel */}
         {sel ? (
           <div style={{
-            marginTop: 21, padding: 24, background: 'rgba(12,11,10,.5)',
-            borderLeft: `3px solid ${PORT_COLORS[sel.key].stroke}`,
+            marginTop: 28, padding: 28, background: '#FFFFFF',
+            border: `1px solid ${C.s3}`,
+            borderLeft: `4px solid ${PORT_COLORS[sel.key].stroke}`,
+            borderRadius: 8,
             animation: 'fadeUp .3s ease-out',
           }}>
             <div style={{ fontFamily: FONT.display, fontSize: 20, fontWeight: 700, color: PORT_COLORS[sel.key].stroke, marginBottom: 8 }}>

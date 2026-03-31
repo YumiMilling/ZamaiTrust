@@ -26,15 +26,15 @@ export default function App() {
       <div className="divider" />
 
       {/* Footer */}
-      <footer style={{ padding: '55px 34px', textAlign: 'center', background: C.base }}>
-        <div style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 800, color: C.t1, marginBottom: 8 }}>
+      <footer style={{ padding: '55px 34px', textAlign: 'center', background: C.s1, borderTop: `1px solid ${C.s3}` }}>
+        <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 800, color: C.egHi, marginBottom: 8 }}>
           Thiqa
         </div>
-        <p style={{ fontFamily: FONT.body, fontSize: 13, color: C.t4, lineHeight: 1.75, maxWidth: 500, margin: '0 auto' }}>
+        <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t3, lineHeight: 1.75, maxWidth: 500, margin: '0 auto' }}>
           Trust infrastructure for the informal economy. Designed in Lusaka, built by ZamAi Solutions.
           <br/>Spec: AGPL (code) · CC BY-SA (design)
         </p>
-        <p style={{ fontFamily: FONT.mono, fontSize: 11, color: C.s4, marginTop: 21 }}>
+        <p style={{ fontFamily: FONT.mono, fontSize: 12, color: C.t4, marginTop: 21 }}>
           v0.3 — Architecture Visualizer
         </p>
       </footer>

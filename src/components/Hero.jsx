@@ -19,7 +19,7 @@ export default function Hero() {
       <p className="p" style={{ fontSize: 20 }}>
         A verifiable trust layer for informal economy workers. No bank account needed. No credit history required. Just work — attested, scored, and portable.
       </p>
-      <p className="p" style={{ fontSize: 18, color: C.t2 }}>
+      <p className="p" style={{ fontSize: 18, color: C.t3 }}>
         Plumbers, traders, painters, delivery riders — anyone whose livelihood depends on trust but who has no institutional mechanism to prove reliability.
       </p>
 

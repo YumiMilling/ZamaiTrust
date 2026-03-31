@@ -66,8 +66,8 @@ export default function AttestationFlow() {
             return (
               <g key={i} onClick={() => setStep(i)} style={{ cursor: 'pointer', transition: 'opacity .4s' }} opacity={opacity}
                 filter={isActive ? 'url(#stepGlow)' : undefined}>
-                <rect x={x} y={nodeY} width={nodeW} height={nodeH} rx={8}
-                  fill={C.s2} stroke={s.color} strokeWidth={isActive ? 2 : 1}/>
+                <rect x={x} y={nodeY} width={nodeW} height={nodeH} rx={12}
+                  fill="#FFFFFF" stroke={s.color} strokeWidth={isActive ? 2.5 : 1}/>
                 <text x={x + nodeW / 2} y={nodeY + nodeH / 2 - 6} textAnchor="middle"
                   style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, fill: s.color }}>
                   {s.label}
@@ -90,8 +90,10 @@ export default function AttestationFlow() {
 
         {/* Description panel */}
         <div style={{
-          marginTop: 21, padding: 24, background: 'rgba(12,11,10,.5)',
-          borderLeft: `3px solid ${STEPS[step].color}`,
+          marginTop: 28, padding: 28, background: '#FFFFFF',
+          border: `1px solid ${C.s3}`,
+          borderLeft: `4px solid ${STEPS[step].color}`,
+          borderRadius: 8,
           transition: 'border-color .3s',
         }}>
           <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: STEPS[step].color, marginBottom: 8 }}>

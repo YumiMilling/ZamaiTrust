@@ -1,45 +1,59 @@
 // Thiqa v0.3 — Design tokens
-// Dark theme: teal/copper palette from ZamAi brand system
+// Light theme: airy, modern, warm. High readability.
 
 export const C = {
-  // Base surfaces
-  base: '#0C0B0A', s1: '#161412', s2: '#1F1D1B', s3: '#282523', s4: '#333030',
+  // Surfaces — warm off-whites, not clinical
+  base: '#FAFAF7',    // page background
+  s1:   '#F3F2EF',    // alt section background
+  s2:   '#FFFFFF',    // cards
+  s3:   '#E8E6E1',    // borders, dividers
+  s4:   '#D4D1CC',    // heavier borders
 
-  // Teal (primary)
-  eg: '#073233', egMid: '#0A4A4B', egBr: '#0F7274', egVi: '#14A0A3', egHi: '#19C8CC',
+  // Teal (primary) — sophisticated, not neon
+  eg:   '#F0FDFA',    // teal tint (backgrounds)
+  egMid:'#CCFBF1',    // teal light fill
+  egBr: '#5EEAD4',    // teal medium
+  egVi: '#14B8A6',    // teal vivid
+  egHi: '#0D9488',    // teal deep (primary actions)
 
-  // Copper (accent)
-  cu: '#A86B2A', cuMid: '#C47E3A', cuLt: '#D99550', cuHi: '#E8AE68',
+  // Copper (accent) — warm, grounded
+  cu:   '#FEF3C7',    // amber tint
+  cuMid:'#FCD34D',    // amber light
+  cuLt: '#F59E0B',    // amber
+  cuHi: '#B45309',    // amber deep
 
-  // Text
-  t1: '#F2EDE6', t2: '#C5BFB8', t3: '#8A8480', t4: '#5A5652',
+  // Text — dark on light, high contrast
+  t1: '#1A1A1A',      // headings, primary text
+  t2: '#374151',      // body text
+  t3: '#6B7280',      // secondary text
+  t4: '#9CA3AF',      // tertiary, labels
 
   // Semantic
-  green: '#1D9E75', greenLt: '#E1F5EE', greenDk: '#085041',
-  red: '#A32D2D', redLt: '#FCEBEB', redFill: '#501313',
-  purple: '#534AB7', purpleLt: '#EEEDFE',
-  coral: '#D85A30', coralLt: '#FAECE7',
-  amber: '#BA7517', amberLt: '#FAEEDA',
-  teal: '#0F6E56', tealLt: '#E1F5EE', tealFill: '#5DCAA5',
-  pink: '#993556',
+  green:   '#059669',  greenLt: '#D1FAE5', greenDk: '#064E3B',
+  red:     '#DC2626',  redLt:   '#FEE2E2', redFill: '#FEF2F2',
+  purple:  '#7C3AED',  purpleLt:'#EDE9FE',
+  coral:   '#EA580C',  coralLt: '#FFF7ED',
+  amber:   '#D97706',  amberLt: '#FFFBEB',
+  teal:    '#0F766E',  tealLt:  '#F0FDFA', tealFill: '#99F6E4',
+  pink:    '#DB2777',
 };
 
-// Entity color mapping
+// Entity color mapping — vivid on light backgrounds
 export const ENTITY_COLORS = {
-  party:       { fill: C.eg,      stroke: C.egHi,  text: C.egHi  },
-  event:       { fill: '#0A2E1A', stroke: C.green,  text: C.green },
-  attestation: { fill: '#2A1A08', stroke: C.cuHi,   text: C.cuHi  },
-  action:      { fill: '#1A0E08', stroke: C.coral,   text: C.coral },
-  credential:  { fill: '#1A1530', stroke: C.purple,  text: '#8B83DB' },
+  party:       { fill: '#F0FDFA', stroke: '#0D9488', text: '#0D9488' },
+  event:       { fill: '#D1FAE5', stroke: '#059669', text: '#059669' },
+  attestation: { fill: '#FEF3C7', stroke: '#B45309', text: '#92400E' },
+  action:      { fill: '#FFF7ED', stroke: '#EA580C', text: '#C2410C' },
+  credential:  { fill: '#EDE9FE', stroke: '#7C3AED', text: '#6D28D9' },
 };
 
 // Port color mapping
 export const PORT_COLORS = {
-  payment:      { fill: C.eg,      stroke: C.egHi  },
-  identity:     { fill: '#2A1A08', stroke: C.cuHi  },
-  location:     { fill: '#0A2E1A', stroke: C.green },
-  notification: { fill: '#1A0E08', stroke: C.coral },
-  time:         { fill: '#1A1530', stroke: '#8B83DB' },
+  payment:      { fill: '#F0FDFA', stroke: '#0D9488' },
+  identity:     { fill: '#FEF3C7', stroke: '#B45309' },
+  location:     { fill: '#D1FAE5', stroke: '#059669' },
+  notification: { fill: '#FFF7ED', stroke: '#EA580C' },
+  time:         { fill: '#EDE9FE', stroke: '#7C3AED' },
 };
 
 export const FONT = {

@@ -55,7 +55,7 @@ export default function TrustScore() {
               })}
 
               {/* Probation zone */}
-              <rect x={60} y={36} width={(20 / 60) * 430} height={224} fill="#501313" opacity={0.3}/>
+              <rect x={60} y={36} width={(20 / 60) * 430} height={224} fill="#FEE2E2" opacity={0.6}/>
               <line x1={60 + (20 / 60) * 430} y1={36} x2={60 + (20 / 60) * 430} y2={260}
                 stroke={C.red} strokeWidth={1} strokeDasharray="4 3"/>
               <text x={60 + (10 / 60) * 430} y={150} textAnchor="middle"
@@ -111,18 +111,18 @@ export default function TrustScore() {
                   <span style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2 }}>{b.label}</span>
                   <span style={{ fontFamily: FONT.mono, fontSize: 14, color: b.color }}>{b.pct}%</span>
                 </div>
-                <div style={{ height: 6, background: C.s3, borderRadius: 3, overflow: 'hidden' }}>
+                <div style={{ height: 8, background: C.s3, borderRadius: 4, overflow: 'hidden' }}>
                   <div style={{ width: `${b.pct}%`, height: '100%', background: b.color, borderRadius: 3, transition: 'width 1s ease-out' }}/>
                 </div>
               </div>
             ))}
 
-            <div style={{ marginTop: 28, padding: 16, background: '#501313', borderLeft: `2px solid ${C.red}` }}>
+            <div style={{ marginTop: 28, padding: 18, background: C.redLt, borderLeft: `3px solid ${C.red}`, borderRadius: 6 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: C.red }}/>
-                <span style={{ fontFamily: FONT.display, fontSize: 12, fontWeight: 700, color: C.red }}>Probation Zone</span>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: C.red }}/>
+                <span style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, color: C.red }}>Probation Zone</span>
               </div>
-              <p style={{ fontFamily: FONT.body, fontSize: 12, color: '#C5BFB8', lineHeight: 1.65, margin: 0 }}>
+              <p style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.65, margin: 0 }}>
                 First 20 transactions carry minimal weight. A fresh fake account cannot immediately co-sign high-value events. Trust is earned through accumulated, verified activity.
               </p>
             </div>

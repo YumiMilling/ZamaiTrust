@@ -55,7 +55,7 @@ export default function EntityMap() {
           return (
             <g key={i} opacity={dimmed ? 0.15 : 0.6}>
               <line x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                stroke={C.t4} strokeWidth={1} strokeDasharray="4 4"
+                stroke={C.s4} strokeWidth={1.5} strokeDasharray="6 4"
                 markerEnd="url(#arrowhead)"/>
               <text x={(from.x + to.x) / 2} y={(from.y + to.y) / 2 - 8}
                 textAnchor="middle" style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 500, fill: C.t2 }}>
@@ -76,8 +76,8 @@ export default function EntityMap() {
               style={{ cursor: 'pointer', transition: 'opacity .3s' }}
               opacity={dimmed ? 0.25 : 1}
               filter={isSelected ? 'url(#glow)' : undefined}>
-              <rect x={e.x - 80} y={e.y - 36} width={160} height={72} rx={10}
-                fill={col.fill} stroke={col.stroke} strokeWidth={isSelected ? 2.5 : 1.5}/>
+              <rect x={e.x - 80} y={e.y - 36} width={160} height={72} rx={12}
+                fill={col.fill} stroke={col.stroke} strokeWidth={isSelected ? 2.5 : 1}/>
               <text x={e.x} y={e.y - 8} textAnchor="middle"
                 style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, fill: col.text }}>
                 {e.label}
@@ -94,8 +94,10 @@ export default function EntityMap() {
       {/* Detail panel */}
       {sel && (
         <div style={{
-          marginTop: 21, padding: 28, background: C.s2,
-          borderTop: `2px solid ${ENTITY_COLORS[sel.key].stroke}`,
+          marginTop: 28, padding: 32, background: C.s2,
+          border: `1px solid ${C.s3}`,
+          borderTop: `3px solid ${ENTITY_COLORS[sel.key].stroke}`,
+          borderRadius: 8,
           animation: 'fadeUp .3s ease-out',
         }}>
           <div style={{ fontFamily: FONT.display, fontSize: 22, fontWeight: 700, color: ENTITY_COLORS[sel.key].text, marginBottom: 10 }}>
@@ -109,8 +111,8 @@ export default function EntityMap() {
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {TAGS.map(t => (
                 <span key={t} style={{
-                  fontFamily: FONT.mono, fontSize: 14, padding: '6px 14px',
-                  background: C.eg, border: `1px solid ${C.egBr}`, color: C.egHi,
+                  fontFamily: FONT.mono, fontSize: 14, padding: '6px 14px', borderRadius: 4,
+                  background: C.eg, border: `1px solid ${C.egBr}`, color: C.teal,
                 }}>{t}</span>
               ))}
             </div>
@@ -118,10 +120,10 @@ export default function EntityMap() {
 
           {sel.key === 'attestation' && (
             <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
-              <div style={{ padding: '10px 18px', background: C.s3, fontSize: 15, fontFamily: FONT.mono }}>
+              <div style={{ padding: '10px 18px', background: C.redLt, borderRadius: 6, fontSize: 15, fontFamily: FONT.mono }}>
                 <span style={{ color: C.t2 }}>New worker:</span> <span style={{ color: C.red }}>weight 0.12</span>
               </div>
-              <div style={{ padding: '10px 18px', background: C.s3, fontSize: 15, fontFamily: FONT.mono }}>
+              <div style={{ padding: '10px 18px', background: C.greenLt, borderRadius: 6, fontSize: 15, fontFamily: FONT.mono }}>
                 <span style={{ color: C.t2 }}>Established:</span> <span style={{ color: C.green }}>weight 0.89</span>
               </div>
             </div>

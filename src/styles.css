@@ -1,42 +1,42 @@
-/* Thiqa v0.3 — Global styles */
+/* Thiqa v0.3 — Global styles · Light theme */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
 
 body {
   font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
-  background: #0C0B0A;
-  color: #F2EDE6;
+  background: #FAFAF7;
+  color: #1A1A1A;
   -webkit-font-smoothing: antialiased;
   font-size: 17px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.8;
 }
 
 /* Nav */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(12,11,10,.92);
+  background: rgba(250,250,247,.92);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #282523;
+  border-bottom: 1px solid #E8E6E1;
   padding: 0 34px;
-  display: flex; align-items: center; height: 48px; gap: 8px;
+  display: flex; align-items: center; height: 52px; gap: 8px;
 }
 .nav-brand {
   font-family: 'Syne', sans-serif;
   font-size: 16px; font-weight: 800;
-  color: #F2EDE6;
+  color: #0D9488;
   letter-spacing: .02em;
   margin-right: auto;
 }
 .nav a {
   font-size: 13px; font-weight: 500;
   letter-spacing: .12em; text-transform: uppercase;
-  color: #C5BFB8; text-decoration: none;
+  color: #6B7280; text-decoration: none;
   padding: 14px 14px;
   transition: color .2s;
 }
-.nav a:hover { color: #19C8CC; }
+.nav a:hover { color: #0D9488; }
 
 /* Sections */
 .sec {
@@ -47,13 +47,13 @@ body {
 .sec:first-of-type { padding-top: 150px; }
 
 .sec-alt {
-  background: #161412;
+  background: #F3F2EF;
   padding: 100px 55px;
 }
 .sec-alt .inner { max-width: 1200px; margin: 0 auto; }
 
 .sec-eg {
-  background: #073233;
+  background: #F0FDFA;
   padding: 100px 55px;
   position: relative;
   overflow: hidden;
@@ -62,7 +62,7 @@ body {
   content: '';
   position: absolute; bottom: -100px; right: -100px;
   width: 500px; height: 500px;
-  background: radial-gradient(ellipse at center, rgba(25,200,204,.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(13,148,136,.06) 0%, transparent 60%);
   pointer-events: none;
 }
 .sec-eg .inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
@@ -71,82 +71,92 @@ body {
 .eye {
   font-size: 13px; font-weight: 600;
   letter-spacing: .3em; text-transform: uppercase;
-  color: #D99550;
+  color: #0D9488;
   margin-bottom: 21px;
 }
 .h1 {
   font-family: 'Syne', sans-serif;
   font-size: 48px; font-weight: 800;
-  line-height: 1.1; color: #F2EDE6;
+  line-height: 1.1; color: #1A1A1A;
   margin-bottom: 16px;
 }
 .h2 {
   font-family: 'Syne', sans-serif;
   font-size: 32px; font-weight: 700;
-  line-height: 1.2; color: #F2EDE6;
+  line-height: 1.2; color: #1A1A1A;
   margin-bottom: 16px;
 }
 .h3 {
   font-family: 'Syne', sans-serif;
   font-size: 20px; font-weight: 700;
-  color: #F2EDE6;
+  color: #1A1A1A;
   margin-bottom: 10px;
 }
 .p {
-  font-size: 18px; font-weight: 300;
-  color: #C5BFB8;
+  font-size: 18px; font-weight: 400;
+  color: #374151;
   line-height: 1.85;
   margin-bottom: 24px;
   max-width: 780px;
 }
-.p strong { color: #F2EDE6; font-weight: 500; }
-.p em { color: #E8AE68; font-style: normal; font-weight: 400; }
+.p strong { color: #1A1A1A; font-weight: 600; }
+.p em { color: #B45309; font-style: normal; font-weight: 500; }
 
 /* Pull quote */
 .pull {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 26px; font-weight: 300; font-style: italic;
-  color: #C5BFB8;
+  font-size: 26px; font-weight: 400; font-style: italic;
+  color: #374151;
   line-height: 1.55;
   max-width: 680px;
-  border-left: 2px solid #14A0A3;
+  border-left: 3px solid #14B8A6;
   padding-left: 34px;
   margin: 55px 0;
 }
-.pull em { color: #19C8CC; font-style: normal; font-weight: 500; }
+.pull em { color: #0D9488; font-style: normal; font-weight: 600; }
 
 /* Divider */
-.divider { width: 100%; height: 1px; background: #0F7274; }
+.divider { width: 100%; height: 1px; background: #E8E6E1; }
 
 /* Card grid */
-.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 40px; }
-.card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 40px; }
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+.card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
 
 .card {
-  background: #1F1D1B;
+  background: #FFFFFF;
   padding: 38px;
   position: relative;
   overflow: hidden;
-  border-top: 2px solid #0A4A4B;
-  transition: transform .2s, border-color .2s;
+  border: 1px solid #E8E6E1;
+  border-top: 3px solid #14B8A6;
+  border-radius: 8px;
+  transition: transform .2s, box-shadow .2s;
 }
-.card:hover { transform: translateY(-2px); }
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
 
 /* Entity cards — specific borders */
-.card[data-entity="party"]       { border-color: #19C8CC; }
-.card[data-entity="event"]       { border-color: #1D9E75; }
-.card[data-entity="attestation"] { border-color: #E8AE68; }
-.card[data-entity="action"]      { border-color: #D85A30; }
-.card[data-entity="credential"]  { border-color: #534AB7; }
+.card[data-entity="party"]       { border-top-color: #0D9488; }
+.card[data-entity="event"]       { border-top-color: #059669; }
+.card[data-entity="attestation"] { border-top-color: #B45309; }
+.card[data-entity="action"]      { border-top-color: #EA580C; }
+.card[data-entity="credential"]  { border-top-color: #7C3AED; }
 
 /* Fraud trigger cards */
 .fraud-card {
-  background: #1F1D1B;
+  background: #FFFFFF;
   padding: 34px;
-  border-top: 2px solid #A32D2D;
-  transition: transform .2s;
+  border: 1px solid #E8E6E1;
+  border-top: 3px solid #DC2626;
+  border-radius: 8px;
+  transition: transform .2s, box-shadow .2s;
 }
-.fraud-card:hover { transform: translateY(-2px); }
+.fraud-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
 
 /* Animations */
 @keyframes fadeUp {
@@ -160,10 +170,6 @@ body {
 @keyframes pulse {
   0%, 100% { opacity: .4; }
   50% { opacity: 1; }
-}
-@keyframes slideRight {
-  from { transform: translateX(0); }
-  to   { transform: translateX(var(--slide-distance)); }
 }
 
 .animate-in { animation: fadeUp .5s ease-out both; }
@@ -182,5 +188,5 @@ body {
   .h2 { font-size: 22px; }
   .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
   .nav { padding: 0 16px; }
-  .nav a { padding: 14px 6px; font-size: 9px; }
+  .nav a { padding: 14px 6px; font-size: 10px; }
 }

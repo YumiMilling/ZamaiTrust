@@ -87,7 +87,7 @@ const TRIGGERS = [
 
 export default function FraudDetection() {
   return (
-    <section id="fraud" className="sec" style={{ background: C.s1 }}>
+    <section id="fraud" className="sec">
       <div className="eye" style={{ color: C.red }}>FRAUD DETECTION</div>
       <h2 className="h2">Six automatic triggers</h2>
       <p className="p">No manual review. The system detects irregularities in real time and acts immediately.</p>
@@ -114,7 +114,7 @@ export default function FraudDetection() {
         ))}
       </div>
 
-      <div style={{ marginTop: 28, padding: '16px 24px', background: C.redFill, borderLeft: `3px solid ${C.red}` }}>
+      <div style={{ marginTop: 28, padding: '18px 28px', background: C.redLt, borderLeft: `4px solid ${C.red}`, borderRadius: 8 }}>
         <span style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: C.red }}>Enforcement: </span>
         <span style={{ fontFamily: FONT.body, fontSize: 16, color: C.t1 }}>
           Immediate public suspension — not a quiet flag. Visible status change removes the party from active participation until review.
