@@ -9,10 +9,10 @@ const STEPS = [
   { label: 'Credential Updated',color: '#8B83DB', desc: "Bwalya's profile: 48 jobs completed. Trust score rises to 0.71." },
 ];
 
-const W = 900, H = 180, nodeW = 130, nodeH = 60;
+const W = 960, H = 210, nodeW = 152, nodeH = 72;
 const gap = (W - STEPS.length * nodeW) / (STEPS.length + 1);
 const nodeX = (i) => gap + i * (nodeW + gap);
-const nodeY = 60;
+const nodeY = 68;
 
 export default function AttestationFlow() {
   const [step, setStep] = useState(0);
@@ -69,11 +69,11 @@ export default function AttestationFlow() {
                 <rect x={x} y={nodeY} width={nodeW} height={nodeH} rx={8}
                   fill={C.s2} stroke={s.color} strokeWidth={isActive ? 2 : 1}/>
                 <text x={x + nodeW / 2} y={nodeY + nodeH / 2 - 6} textAnchor="middle"
-                  style={{ fontFamily: FONT.display, fontSize: 11, fontWeight: 700, fill: s.color }}>
+                  style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, fill: s.color }}>
                   {s.label}
                 </text>
-                <text x={x + nodeW / 2} y={nodeY + nodeH / 2 + 10} textAnchor="middle"
-                  style={{ fontFamily: FONT.body, fontSize: 9, fill: C.t4 }}>
+                <text x={x + nodeW / 2} y={nodeY + nodeH / 2 + 14} textAnchor="middle"
+                  style={{ fontFamily: FONT.body, fontSize: 12, fill: C.t2 }}>
                   Step {i + 1}
                 </text>
               </g>
@@ -82,7 +82,7 @@ export default function AttestationFlow() {
 
           {/* Moving packet */}
           <circle
-            cx={nodeX(step) + nodeW / 2} cy={nodeY - 12} r={4}
+            cx={nodeX(step) + nodeW / 2} cy={nodeY - 14} r={6}
             fill={STEPS[step].color}
             style={{ transition: 'cx .5s ease-in-out', filter: 'url(#stepGlow)' }}
           />
@@ -94,18 +94,18 @@ export default function AttestationFlow() {
           borderLeft: `3px solid ${STEPS[step].color}`,
           transition: 'border-color .3s',
         }}>
-          <div style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, color: STEPS[step].color, marginBottom: 6 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: STEPS[step].color, marginBottom: 8 }}>
             Step {step + 1}: {STEPS[step].label}
           </div>
-          <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t2, lineHeight: 1.75, margin: 0 }}>
+          <p style={{ fontFamily: FONT.body, fontSize: 17, color: C.t1, lineHeight: 1.8, margin: 0 }}>
             {STEPS[step].desc}
           </p>
         </div>
 
         <button onClick={() => setStep(0)} style={{
-          marginTop: 16, padding: '8px 20px', background: 'transparent',
+          marginTop: 16, padding: '10px 24px', background: 'transparent',
           border: `1px solid ${C.egBr}`, color: C.egHi, fontFamily: FONT.body,
-          fontSize: 12, fontWeight: 500, cursor: 'pointer', letterSpacing: '.1em',
+          fontSize: 14, fontWeight: 600, cursor: 'pointer', letterSpacing: '.1em',
         }}>
           REPLAY
         </button>

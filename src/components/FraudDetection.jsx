@@ -23,8 +23,8 @@ const TRIGGERS = [
         <circle cx="20" cy="20" r="5" fill={C.red} opacity={0.6}/>
         <circle cx="100" cy="20" r="5" fill={C.red} opacity={0.6}/>
         <line x1="27" y1="20" x2="93" y2="20" stroke={C.red} strokeWidth="1" strokeDasharray="4 3"/>
-        <text x="60" y="14" textAnchor="middle" style={{ fontFamily: "'JetBrains Mono'", fontSize: 8, fill: C.red }}>500km</text>
-        <text x="60" y="34" textAnchor="middle" style={{ fontFamily: "'JetBrains Mono'", fontSize: 7, fill: '#5A5652' }}>3 min</text>
+        <text x="60" y="13" textAnchor="middle" style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, fontWeight: 600, fill: C.red }}>500km</text>
+        <text x="60" y="36" textAnchor="middle" style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, fill: '#C5BFB8' }}>3 min</text>
       </svg>
     ),
   },
@@ -103,10 +103,10 @@ export default function FraudDetection() {
 
         {TRIGGERS.map((t, i) => (
           <div key={i} className="fraud-card">
-            <div style={{ fontFamily: FONT.display, fontSize: 15, fontWeight: 700, color: C.t1, marginBottom: 6 }}>
+            <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: C.t1, marginBottom: 8 }}>
               {t.name}
             </div>
-            <p style={{ fontFamily: FONT.body, fontSize: 13, color: C.t3, lineHeight: 1.65, marginBottom: 14 }}>
+            <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t2, lineHeight: 1.7, marginBottom: 16 }}>
               {t.desc}
             </p>
             {t.visual}
@@ -115,8 +115,8 @@ export default function FraudDetection() {
       </div>
 
       <div style={{ marginTop: 28, padding: '16px 24px', background: C.redFill, borderLeft: `3px solid ${C.red}` }}>
-        <span style={{ fontFamily: FONT.display, fontSize: 13, fontWeight: 700, color: C.red }}>Enforcement: </span>
-        <span style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2 }}>
+        <span style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: C.red }}>Enforcement: </span>
+        <span style={{ fontFamily: FONT.body, fontSize: 16, color: C.t1 }}>
           Immediate public suspension — not a quiet flag. Visible status change removes the party from active participation until review.
         </span>
       </div>

@@ -57,8 +57,8 @@ export default function EntityMap() {
               <line x1={from.x} y1={from.y} x2={to.x} y2={to.y}
                 stroke={C.t4} strokeWidth={1} strokeDasharray="4 4"
                 markerEnd="url(#arrowhead)"/>
-              <text x={(from.x + to.x) / 2} y={(from.y + to.y) / 2 - 6}
-                textAnchor="middle" style={{ fontFamily: FONT.body, fontSize: 10, fill: C.t4 }}>
+              <text x={(from.x + to.x) / 2} y={(from.y + to.y) / 2 - 8}
+                textAnchor="middle" style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 500, fill: C.t2 }}>
                 {edge.label}
               </text>
             </g>
@@ -76,14 +76,14 @@ export default function EntityMap() {
               style={{ cursor: 'pointer', transition: 'opacity .3s' }}
               opacity={dimmed ? 0.25 : 1}
               filter={isSelected ? 'url(#glow)' : undefined}>
-              <rect x={e.x - 65} y={e.y - 30} width={130} height={60} rx={8}
-                fill={col.fill} stroke={col.stroke} strokeWidth={isSelected ? 2 : 1}/>
-              <text x={e.x} y={e.y - 6} textAnchor="middle"
-                style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, fill: col.text }}>
+              <rect x={e.x - 80} y={e.y - 36} width={160} height={72} rx={10}
+                fill={col.fill} stroke={col.stroke} strokeWidth={isSelected ? 2.5 : 1.5}/>
+              <text x={e.x} y={e.y - 8} textAnchor="middle"
+                style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, fill: col.text }}>
                 {e.label}
               </text>
-              <text x={e.x} y={e.y + 12} textAnchor="middle"
-                style={{ fontFamily: FONT.body, fontSize: 10, fill: C.t3 }}>
+              <text x={e.x} y={e.y + 14} textAnchor="middle"
+                style={{ fontFamily: FONT.body, fontSize: 13, fill: C.t2 }}>
                 {e.sub}
               </text>
             </g>
@@ -98,10 +98,10 @@ export default function EntityMap() {
           borderTop: `2px solid ${ENTITY_COLORS[sel.key].stroke}`,
           animation: 'fadeUp .3s ease-out',
         }}>
-          <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: ENTITY_COLORS[sel.key].text, marginBottom: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 22, fontWeight: 700, color: ENTITY_COLORS[sel.key].text, marginBottom: 10 }}>
             {sel.label}
           </div>
-          <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t2, lineHeight: 1.75, marginBottom: 16 }}>
+          <p style={{ fontFamily: FONT.body, fontSize: 17, color: C.t1, lineHeight: 1.8, marginBottom: 18 }}>
             {sel.desc}
           </p>
 
@@ -109,7 +109,7 @@ export default function EntityMap() {
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {TAGS.map(t => (
                 <span key={t} style={{
-                  fontFamily: FONT.mono, fontSize: 11, padding: '4px 10px',
+                  fontFamily: FONT.mono, fontSize: 14, padding: '6px 14px',
                   background: C.eg, border: `1px solid ${C.egBr}`, color: C.egHi,
                 }}>{t}</span>
               ))}
@@ -118,18 +118,18 @@ export default function EntityMap() {
 
           {sel.key === 'attestation' && (
             <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
-              <div style={{ padding: '8px 14px', background: C.s3, fontSize: 12, fontFamily: FONT.mono }}>
-                <span style={{ color: C.t4 }}>New worker:</span> <span style={{ color: C.red }}>weight 0.12</span>
+              <div style={{ padding: '10px 18px', background: C.s3, fontSize: 15, fontFamily: FONT.mono }}>
+                <span style={{ color: C.t2 }}>New worker:</span> <span style={{ color: C.red }}>weight 0.12</span>
               </div>
-              <div style={{ padding: '8px 14px', background: C.s3, fontSize: 12, fontFamily: FONT.mono }}>
-                <span style={{ color: C.t4 }}>Established:</span> <span style={{ color: C.green }}>weight 0.89</span>
+              <div style={{ padding: '10px 18px', background: C.s3, fontSize: 15, fontFamily: FONT.mono }}>
+                <span style={{ color: C.t2 }}>Established:</span> <span style={{ color: C.green }}>weight 0.89</span>
               </div>
             </div>
           )}
 
           <div style={{ marginTop: 16, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {EDGES.filter(e => e.from === sel.key || e.to === sel.key).map((e, i) => (
-              <span key={i} style={{ fontSize: 11, color: C.t3, fontFamily: FONT.mono }}>
+              <span key={i} style={{ fontSize: 14, color: C.t2, fontFamily: FONT.mono }}>
                 {e.from === sel.key ? `${sel.label} → ${e.label} → ${getEntity(e.to).label}` : `${getEntity(e.from).label} → ${e.label} → ${sel.label}`}
               </span>
             ))}

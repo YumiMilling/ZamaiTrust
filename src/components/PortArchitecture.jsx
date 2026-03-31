@@ -23,7 +23,7 @@ const PORTS = [
     desc: 'SMS for critical alerts — payment confirmation, suspension notice. WhatsApp for trust profile sharing and job completion notifications. Low-bandwidth first.' },
 ];
 
-const CX = 350, CY = 250, DIST = 175, OUTER_R = 48, CENTER_R = 68;
+const CX = 350, CY = 250, DIST = 190, OUTER_R = 58, CENTER_R = 78;
 
 // Position outer hexes at 72-degree intervals starting from top
 const portPos = PORTS.map((_, i) => {
@@ -70,16 +70,16 @@ export default function PortArchitecture() {
           {/* Center hex */}
           <polygon points={hexPoints(CX, CY, CENTER_R)}
             fill={C.eg} stroke={C.egBr} strokeWidth={1.5}/>
-          <text x={CX} y={CY - 8} textAnchor="middle"
-            style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 800, fill: C.egHi }}>
+          <text x={CX} y={CY - 10} textAnchor="middle"
+            style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 800, fill: C.egHi }}>
             Thiqa Core
           </text>
           <text x={CX} y={CY + 8} textAnchor="middle"
-            style={{ fontFamily: FONT.body, fontSize: 8, fill: C.t3 }}>
+            style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t2 }}>
             5 entities · tag-driven
           </text>
-          <text x={CX} y={CY + 18} textAnchor="middle"
-            style={{ fontFamily: FONT.body, fontSize: 8, fill: C.t3 }}>
+          <text x={CX} y={CY + 22} textAnchor="middle"
+            style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t2 }}>
             trust-weighted
           </text>
 
@@ -97,16 +97,16 @@ export default function PortArchitecture() {
                 filter={isActive ? 'url(#portGlow)' : undefined}>
                 <polygon points={hexPoints(pos.x, pos.y, OUTER_R)}
                   fill={col.fill} stroke={col.stroke} strokeWidth={isActive ? 2 : 1}/>
-                <text x={pos.x} y={pos.y - 6} textAnchor="middle"
-                  style={{ fontFamily: FONT.display, fontSize: 11, fontWeight: 700, fill: col.stroke }}>
+                <text x={pos.x} y={pos.y - 8} textAnchor="middle"
+                  style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, fill: col.stroke }}>
                   {p.label}
                 </text>
                 <text x={pos.x} y={pos.y + 7} textAnchor="middle"
-                  style={{ fontFamily: FONT.body, fontSize: 8, fill: C.t3 }}>
+                  style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t1 }}>
                   {p.sub}
                 </text>
-                <text x={pos.x} y={pos.y + 17} textAnchor="middle"
-                  style={{ fontFamily: FONT.body, fontSize: 7, fill: C.t4 }}>
+                <text x={pos.x} y={pos.y + 20} textAnchor="middle"
+                  style={{ fontFamily: FONT.body, fontSize: 10, fill: C.t2 }}>
                   {p.sub2}
                 </text>
               </g>
@@ -121,15 +121,15 @@ export default function PortArchitecture() {
             borderLeft: `3px solid ${PORT_COLORS[sel.key].stroke}`,
             animation: 'fadeUp .3s ease-out',
           }}>
-            <div style={{ fontFamily: FONT.display, fontSize: 15, fontWeight: 700, color: PORT_COLORS[sel.key].stroke, marginBottom: 6 }}>
+            <div style={{ fontFamily: FONT.display, fontSize: 20, fontWeight: 700, color: PORT_COLORS[sel.key].stroke, marginBottom: 8 }}>
               {sel.label} Port
             </div>
-            <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t2, lineHeight: 1.75, margin: 0 }}>
+            <p style={{ fontFamily: FONT.body, fontSize: 17, color: C.t1, lineHeight: 1.8, margin: 0 }}>
               {sel.desc}
             </p>
           </div>
         ) : (
-          <p style={{ fontFamily: FONT.body, fontSize: 13, color: C.t4, textAlign: 'center', marginTop: 21 }}>
+          <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t2, textAlign: 'center', marginTop: 24 }}>
             Click a port to see details
           </p>
         )}

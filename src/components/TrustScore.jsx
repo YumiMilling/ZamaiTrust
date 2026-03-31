@@ -59,11 +59,11 @@ export default function TrustScore() {
               <line x1={60 + (20 / 60) * 430} y1={36} x2={60 + (20 / 60) * 430} y2={260}
                 stroke={C.red} strokeWidth={1} strokeDasharray="4 3"/>
               <text x={60 + (10 / 60) * 430} y={150} textAnchor="middle"
-                style={{ fontFamily: FONT.mono, fontSize: 9, fill: C.red }}>
+                style={{ fontFamily: FONT.mono, fontSize: 12, fontWeight: 600, fill: C.red }}>
                 PROBATION
               </text>
               <text x={60 + (10 / 60) * 430} y={163} textAnchor="middle"
-                style={{ fontFamily: FONT.mono, fontSize: 8, fill: '#A32D2D' }}>
+                style={{ fontFamily: FONT.mono, fontSize: 11, fill: '#D85555' }}>
                 Min. weight
               </text>
 
@@ -74,23 +74,23 @@ export default function TrustScore() {
               {/* Y labels */}
               {[0, 0.25, 0.5, 0.75, 1.0].map((v) => (
                 <text key={v} x={52} y={260 - v * 224 + 3} textAnchor="end"
-                  style={{ fontFamily: FONT.mono, fontSize: 9, fill: C.t4 }}>
+                  style={{ fontFamily: FONT.mono, fontSize: 12, fill: C.t2 }}>
                   {v.toFixed(2)}
                 </text>
               ))}
               {/* X labels */}
               {[0, 20, 40, 60].map((v) => (
                 <text key={v} x={60 + (v / 60) * 430} y={276} textAnchor="middle"
-                  style={{ fontFamily: FONT.mono, fontSize: 9, fill: C.t4 }}>
+                  style={{ fontFamily: FONT.mono, fontSize: 12, fill: C.t2 }}>
                   {v}
                 </text>
               ))}
               <text x={275} y={295} textAnchor="middle"
-                style={{ fontFamily: FONT.body, fontSize: 10, fill: C.t4 }}>
+                style={{ fontFamily: FONT.body, fontSize: 13, fill: C.t2 }}>
                 Transactions
               </text>
               <text x={20} y={150} textAnchor="middle" transform="rotate(-90 20 150)"
-                style={{ fontFamily: FONT.body, fontSize: 10, fill: C.t4 }}>
+                style={{ fontFamily: FONT.body, fontSize: 13, fill: C.t2 }}>
                 Trust Score
               </text>
 
@@ -101,15 +101,15 @@ export default function TrustScore() {
 
           {/* Score breakdown */}
           <div style={{ flex: '1 1 280px', minWidth: 240 }}>
-            <div style={{ fontFamily: FONT.display, fontSize: 14, fontWeight: 700, color: C.t1, marginBottom: 21 }}>
+            <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: C.t1, marginBottom: 24 }}>
               Score components
             </div>
 
             {BARS.map((b) => (
               <div key={b.label} style={{ marginBottom: 16 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                  <span style={{ fontFamily: FONT.body, fontSize: 12, color: C.t3 }}>{b.label}</span>
-                  <span style={{ fontFamily: FONT.mono, fontSize: 11, color: b.color }}>{b.pct}%</span>
+                  <span style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2 }}>{b.label}</span>
+                  <span style={{ fontFamily: FONT.mono, fontSize: 14, color: b.color }}>{b.pct}%</span>
                 </div>
                 <div style={{ height: 6, background: C.s3, borderRadius: 3, overflow: 'hidden' }}>
                   <div style={{ width: `${b.pct}%`, height: '100%', background: b.color, borderRadius: 3, transition: 'width 1s ease-out' }}/>
