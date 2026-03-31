@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZamaLoad — Freight Marketplace for Zambia</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f4f0e8;
+    --asphalt: #1a1a1a;
+    --amber: #e8a020;
+    --amber-dark: #b07810;
+    --dust: #8a8070;
+    --line: #d4cfc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ─── HEADER ─────────────────────────────────────── */
+  header {
+    background: var(--asphalt);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .road-stripe {
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--amber) 0px, var(--amber) 40px,
+      transparent 40px, transparent 70px
+    );
+    opacity: 0.9;
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 40px 52px;
+    position: relative;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #fff;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .logo-text span {
+    color: var(--amber);
+  }
+
+  .tagline-small {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dust);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(42px, 7vw, 72px);
+    color: #fff;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .header-sub {
+    font-size: 17px;
+    color: #b0a898;
+    max-width: 520px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── TRUCK GRAPHIC ───────────────────────────────── */
+  .truck-wrap {
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    opacity: 0.07;
+  }
+
+  /* ─── SECTIONS ───────────────────────────────────── */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 4vw, 36px);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  p {
+    font-size: 16px;
+    color: #3a3530;
+    max-width: 620px;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── STAT ROW ───────────────────────────────────── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 40px 0;
+    background: var(--line);
+  }
+
+  .stat {
+    background: var(--paper);
+    padding: 32px 28px;
+    text-align: left;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    color: var(--amber-dark);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-unit {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--amber-dark);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dust);
+    margin-top: 6px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── HOW IT WORKS ───────────────────────────────── */
+  .steps {
+    display: grid;
+    gap: 2px;
+    margin: 36px 0;
+    background: var(--line);
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0;
+    background: var(--paper);
+  }
+
+  .step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: var(--amber);
+    background: var(--asphalt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0;
+  }
+
+  .step-body {
+    padding: 22px 28px;
+  }
+
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: #5a5550;
+    margin: 0;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  /* ─── BENEFITS ───────────────────────────────────── */
+  .benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 36px 0;
+    background: var(--line);
+  }
+
+  .benefit {
+    background: var(--paper);
+    padding: 28px;
+  }
+
+  .benefit-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .benefit-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .benefit-desc {
+    font-size: 14px;
+    color: #5a5550;
+    line-height: 1.6;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ─── QUOTE ──────────────────────────────────────── */
+  .quote-block {
+    border-left: 4px solid var(--amber);
+    padding: 24px 32px;
+    background: #fff;
+    margin: 40px 0;
+  }
+
+  .quote-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ─── CTA ────────────────────────────────────────── */
+  .cta-section {
+    background: var(--asphalt);
+    color: #fff;
+  }
+
+  .cta-section .section {
+    border-bottom: none;
+  }
+
+  .cta-section h2 {
+    color: #fff;
+  }
+
+  .cta-section p {
+    color: #b0a898;
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+  }
+
+  .contact-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--amber);
+    letter-spacing: 0.02em;
+  }
+
+  .road-bottom {
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--amber) 0px, var(--amber) 40px,
+      transparent 40px, transparent 70px
+    );
+    opacity: 0.5;
+    margin-top: 40px;
+  }
+
+  /* ─── PERSONAL NOTE ──────────────────────────────── */
+  .note-box {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--amber);
+    padding: 32px;
+    margin-top: 40px;
+  }
+
+  .note-box p {
+    font-size: 15px;
+    color: #3a3530;
+    margin: 0;
+    font-style: italic;
+    max-width: none;
+  }
+
+  .note-sig {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dust);
+    font-style: normal;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner, .section { padding: 40px 24px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .benefits { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 48px 1fr; }
+    .contact-row { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="road-stripe"></div>
+  <div class="header-inner">
+
+    <div class="logo-row">
+      <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="44" height="44" rx="4" fill="#e8a020" opacity="0.15"/>
+        <path d="M6 28V18h22l6 6v4H6z" stroke="#e8a020" stroke-width="2" fill="none"/>
+        <circle cx="13" cy="31" r="3" stroke="#e8a020" stroke-width="2" fill="none"/>
+        <circle cx="29" cy="31" r="3" stroke="#e8a020" stroke-width="2" fill="none"/>
+        <path d="M6 22h16M22 18v10" stroke="#e8a020" stroke-width="1.5" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">Zama<span>Load</span></div>
+    </div>
+
+    <div class="tagline-small">A New Platform — Built for Zambia</div>
+    <h1>Every Load.<br><em>Connected.</em></h1>
+    <p class="header-sub">A freight marketplace that connects truck owners with shippers across Zambia — so your truck is always working, and your payment is always secure.</p>
+
+  </div>
+  <div class="road-stripe"></div>
+</header>
+
+
+<!-- THE PROBLEM -->
+<div class="section">
+  <div class="section-label">The Problem</div>
+  <h2>Good Trucks. Wasted Trips.</h2>
+  <p>Every day in Zambia, trucks run half-empty. A load goes one direction. The return trip is dead kilometres — fuel burned, tyres worn, driver paid, nothing earned. Or you find a load last minute through a broker who takes a cut without adding any value.</p>
+  <p>Shippers have the same problem from the other side: they need a truck, they make ten phone calls, they're not sure if the driver is reliable, and they hand over cash with no guarantee.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">30<span class="stat-unit">%</span></div>
+      <div class="stat-label">of freight capacity runs empty on Zambian roads</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10<span class="stat-unit">+</span></div>
+      <div class="stat-label">phone calls to find a single reliable load</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">secure payment systems for small freight operators today</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-label">The Solution</div>
+  <h2>How ZamaLoad Works</h2>
+  <p>Simple. Direct. No broker in the middle.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Post Your Truck</div>
+        <p class="step-desc">You have a truck going Choma to Lusaka on Thursday with 15 tonnes available. You post it: route, date, capacity, your rate. Takes 2 minutes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Shipper Books & Pays</div>
+        <p class="step-desc">A shipper sees your listing, books the load, and pays into a secure account. The money is held — not in your pocket yet, but guaranteed. You know it's real.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Deliver & Get Paid</div>
+        <p class="step-desc">You deliver the goods. Shipper confirms receipt on the app. Payment releases to you immediately. No chasing. No delays. No disputes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <p class="quote-text">"No broker. No phone tag. You post your truck, someone books it, you deliver, you get paid."</p>
+  </div>
+</div>
+
+
+<!-- WHAT TRUCKERS GET -->
+<div class="section">
+  <div class="section-label">For Truck Owners</div>
+  <h2>What You Get</h2>
+
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">📋</div>
+      <div class="benefit-title">Your Own Profile</div>
+      <p class="benefit-desc">Truck specs, load history, ratings from past clients — all in one place. Your reputation builds over time and works for you.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔒</div>
+      <div class="benefit-title">Secure Payments</div>
+      <p class="benefit-desc">Payment is confirmed before you load. No more delivering on trust and chasing for weeks.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">📍</div>
+      <div class="benefit-title">Loads Near You</div>
+      <p class="benefit-desc">See available loads on your routes. Find a load for your return trip. Stop driving empty.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">📱</div>
+      <div class="benefit-title">Works on Your Phone</div>
+      <p class="benefit-desc">Designed for Zambian conditions. WhatsApp notifications. Works on standard data. No laptop needed.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- WHY NOW -->
+<div class="section">
+  <div class="section-label">Why This. Why Now.</div>
+  <h2>Zambia Needs This</h2>
+  <p>Road freight is the backbone of this economy. Rail is unreliable. Air is expensive. Everything moves by truck — maize, fertiliser, goods, building materials, produce. The informal system of WhatsApp groups and phone brokers is the only thing holding it together right now.</p>
+  <p>ZamaLoad is being built by a Zambia-based team who understand the roads, the operators, and the shippers. This is not a foreign app being adapted. It is being designed from Batoka, Southern Province, for Zambian conditions.</p>
+  <p>We are starting with owner-operators — people with one or two trucks, who make every decision themselves, and who feel every empty kilometre personally.</p>
+</div>
+
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="section">
+    <div class="section-label" style="color: #6a6058;">An Invitation</div>
+    <h2>We Want You as Our First Partner</h2>
+    <p>We are not looking for 10,000 users. We are looking for 5 serious truck owners who want to shape how this works — and benefit first when it does.</p>
+    <p>No cost. No commitment yet. Just a conversation about what you need, and whether this can deliver it.</p>
+
+    <div class="note-box" style="background: #252525; border-color: #3a3530;">
+      <p style="color: #c0b8a8;">Vinbin — I've seen how you operate. You started with hardware and built something real. ZamaLoad is the same idea: solve a real problem, do it properly, and build a business around it. I want your input before we build, not after. Let's talk.</p>
+      <div class="note-sig" style="color: #6a6058;">— Christoph Lindinger, Batoka</div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-item">
+        <div class="contact-label">Phone / WhatsApp</div>
+        <div class="contact-value">+260 XXX XXX XXX</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">chris@zamai.pro</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Batoka, Southern Province</div>
+      </div>
+    </div>
+
+    <div class="road-bottom"></div>
+  </div>
+</div>
+
+</body>
+</html>
