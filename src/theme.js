@@ -53,7 +53,9 @@ export const PORT_COLORS = {
   identity:     { fill: '#FEF3C7', stroke: '#B45309' },
   location:     { fill: '#D1FAE5', stroke: '#059669' },
   notification: { fill: '#FFF7ED', stroke: '#EA580C' },
-  time:         { fill: '#EDE9FE', stroke: '#7C3AED' },
+  evidence:     { fill: '#EDE9FE', stroke: '#7C3AED' },
+  verification: { fill: '#FCE7F3', stroke: '#DB2777' },
+  time:         { fill: '#F5F3FF', stroke: '#6D28D9' },
 };
 
 export const FONT = {

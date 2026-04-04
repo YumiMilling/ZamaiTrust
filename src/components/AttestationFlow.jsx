@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { C, FONT } from '../theme';
 
 const STEPS = [
-  { label: 'Event Created',     color: '#1D9E75', desc: 'Bwalya completes a plumbing job for Mrs. Mwale in Kalingalinga.' },
-  { label: 'Attestation',       color: '#E8AE68', desc: 'Mrs. Mwale confirms the work via SMS. Her trust score: 0.82.' },
-  { label: 'Trust Validation',  color: '#19C8CC', desc: 'System weighs attestation: 0.82 score x event value. Threshold met.' },
-  { label: 'Action Triggered',  color: '#D85A30', desc: 'Payment of K150 released to Bwalya via MTN Money. Receipt hashed.' },
-  { label: 'Credential Updated',color: '#8B83DB', desc: "Bwalya's profile: 48 jobs completed. Trust score rises to 0.71." },
+  { label: 'Event Created',     color: '#1D9E75', desc: 'NewGrowCo depot in Choma records: "Purchased 2.4t soya from farmer Grace Banda. K18,000. Moisture 12%." GPS and timestamp captured.' },
+  { label: 'Attestation',       color: '#E8AE68', desc: 'Grace scans the depot clerk\'s QR code with her phone. Both apps record the mutual attestation locally — no internet needed at the depot.' },
+  { label: 'Trust Validation',  color: '#19C8CC', desc: 'Both events sync. Amounts match: Tier 1 mutual attestation. Grace\'s trust weight: 0.78. NewGrowCo\'s: 0.91. Transaction verified.' },
+  { label: 'Action Triggered',  color: '#D85A30', desc: 'Payment of K18,000 confirmed. WhatsApp receipt sent to Grace with a permanent verification URL. Document hash: SHA-256.' },
+  { label: 'Profile Updated',   color: '#8B83DB', desc: "Grace's trust profile: 23 verified deliveries across 2 depots. Consistent volumes over 8 months. Visible to any lender she authorises." },
 ];
 
 const W = 960, H = 210, nodeW = 152, nodeH = 72;
@@ -27,7 +27,7 @@ export default function AttestationFlow() {
       <div className="inner">
         <div className="eye">ATTESTATION LIFECYCLE</div>
         <h2 className="h2">How trust flows</h2>
-        <p className="p">A real example: Bwalya the plumber completes a job. Watch each stage light up.</p>
+        <p className="p">A real example: a soya delivery at a NewGrowCo depot. Watch each stage light up.</p>
 
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', maxWidth: W, display: 'block', margin: '34px auto 0' }}>
           <defs>

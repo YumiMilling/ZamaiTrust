@@ -114,10 +114,44 @@ export default function FraudDetection() {
         ))}
       </div>
 
-      <div style={{ marginTop: 28, padding: '18px 28px', background: C.redLt, borderLeft: `4px solid ${C.red}`, borderRadius: 8 }}>
-        <span style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: C.red }}>Enforcement: </span>
-        <span style={{ fontFamily: FONT.body, fontSize: 16, color: C.t1 }}>
-          Immediate public suspension — not a quiet flag. Visible status change removes the party from active participation until review.
+      {/* Three-tier response model */}
+      <div style={{ fontFamily: FONT.display, fontSize: 20, fontWeight: 700, color: C.t1, marginTop: 40, marginBottom: 16 }}>
+        Three-tier response — not instant suspension
+      </div>
+      <p style={{ fontFamily: FONT.body, fontSize: 16, color: C.t2, lineHeight: 1.75, marginBottom: 20, maxWidth: 780 }}>
+        Automated detection is good. Automated <em style={{ color: C.red, fontStyle: 'normal', fontWeight: 600 }}>suspension</em> without human review damages platform trust. False positives happen — GPS inaccuracy in rural Zambia, harvest-season volume spikes, standardised commodity pricing.
+      </p>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div style={{ padding: '24px', background: '#FFFBEB', border: '1px solid #FCD34D', borderTop: '3px solid #D97706', borderRadius: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: '#D97706', marginBottom: 6 }}>
+            Yellow — Weight reduction
+          </div>
+          <p style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.65, margin: 0 }}>
+            Soft signals (volume spikes, amount clustering). Events still processed but trust weight drops temporarily. Recovers as normal activity resumes.
+          </p>
+        </div>
+        <div style={{ padding: '24px', background: '#FFF7ED', border: '1px solid #FDBA74', borderTop: '3px solid #EA580C', borderRadius: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: '#EA580C', marginBottom: 6 }}>
+            Orange — Attestation hold
+          </div>
+          <p style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.65, margin: 0 }}>
+            Medium signals (geographic impossibility, ghost counterparties). Attestations held 24 hours before finalising. Party notified. Not publicly visible.
+          </p>
+        </div>
+        <div style={{ padding: '24px', background: C.redLt, border: `1px solid ${C.red}`, borderTop: `3px solid ${C.red}`, borderRadius: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 700, color: C.red, marginBottom: 6 }}>
+            Red — Manual review
+          </div>
+          <p style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.65, margin: 0 }}>
+            Hard signals (circular attestation, device compromise). Flagged for human review. Public suspension only after confirmed fraud.
+          </p>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 20, padding: '16px 22px', background: C.s1, borderLeft: `3px solid ${C.t3}`, borderRadius: 6 }}>
+        <span style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2 }}>
+          <strong style={{ color: C.t1 }}>Zambian tuning:</strong> GPS threshold 500m (not 50m). Volume baselines use seasonal norms, not rolling averages. Amount clustering exempts FRA/ZNFU published rates.
         </span>
       </div>
     </section>

@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { C, ENTITY_COLORS, FONT } from '../theme';
 
 const ENTITIES = [
-  { key: 'party',       label: 'Party',       sub: 'Worker, client, business', x: 350, y: 60,
-    desc: 'Parties are workers, clients, businesses, or institutions. Identity is phone-based — no KYC required. Each party accumulates a trust score through verified activity.' },
-  { key: 'event',       label: 'Event',        sub: 'Job, delivery, payment', x: 600, y: 200,
-    desc: 'Events are tagged freely — no rigid templates. Tags like job:plumbing, location:kalingalinga, amount:K150 drive behavior through combination, not predefined types.' },
-  { key: 'attestation', label: 'Attestation',  sub: 'Someone vouching it happened', x: 500, y: 400,
-    desc: 'Attestations are trust-score-weighted. A new account in probation (first 20 transactions) carries minimal weight. Established attestors carry more.' },
-  { key: 'action',      label: 'Action',       sub: 'Pay, notify, issue', x: 200, y: 400,
-    desc: 'Actions fire automatically when attestation conditions are met. Payment release, notification dispatch, credential issuance — all rule-driven.' },
-  { key: 'credential',  label: 'Credential',   sub: 'Portable proof of trust', x: 100, y: 200,
-    desc: 'Credentials are the portable output — shareable via WhatsApp link. Not a rating (4.7 stars) but evidence (47 jobs completed, multi-attested, payments confirmed).' },
+  { key: 'party',       label: 'Party',       sub: 'Farmer, operator, business', x: 350, y: 60,
+    desc: 'Parties are farmers, aggregators, processors, service providers, or institutions. Person identity: Google OAuth + SIM OTP. Business identity: domain verification + optional PACRA. Each party accumulates a trust profile through verified activity.' },
+  { key: 'event',       label: 'Event',        sub: 'Delivery, payment, attendance', x: 600, y: 200,
+    desc: 'Events are tagged freely — no rigid templates. Tags like delivery:soya, depot:choma, amount:K18000, grade:A drive behaviour through combination. A grain delivery, a workshop attendance, and a rent payment are all the same data structure.' },
+  { key: 'attestation', label: 'Attestation',  sub: 'Counterparty confirms it happened', x: 500, y: 400,
+    desc: 'Three tiers: Tier 1 (mutual — both on platform), Tier 2 (institutional email from verified domain), Tier 3 (self-reported, hashed). New accounts in probation carry minimal weight. The tier is fixed at attestation time.' },
+  { key: 'action',      label: 'Action',       sub: 'Pay, notify, verify', x: 200, y: 400,
+    desc: 'Actions fire when attestation conditions are met. Payment release via CGrate, WhatsApp receipt with permanent URL, document hash registration. All port-driven — the core orchestrates, ports execute.' },
+  { key: 'credential',  label: 'Credential',   sub: 'Trust profile', x: 100, y: 200,
+    desc: 'The trust profile is the portable output. Not a rating but evidence: 23 verified deliveries, 3 counterparties, 8-month history, 0 unresolved disputes. Shareable via time-limited signed URL. All-or-nothing within the time window — no cherry-picking.' },
 ];
 
 const EDGES = [
@@ -22,7 +22,7 @@ const EDGES = [
   { from: 'credential', to: 'party', label: 'belongs to' },
 ];
 
-const TAGS = ['job:plumbing', 'location:kalingalinga', 'amount:K150', 'client:verified'];
+const TAGS = ['delivery:soya', 'depot:choma', 'amount:K18000', 'grade:A', 'moisture:12%'];
 
 function getEntity(key) { return ENTITIES.find(e => e.key === key); }
 

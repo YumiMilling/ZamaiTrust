@@ -12,22 +12,26 @@ const hexPoints = (cx, cy, r) => {
 
 const PORTS = [
   { key: 'payment',      label: 'Payment',      sub: 'CGrate 543',        sub2: 'MTN / Airtel Money',
-    desc: 'All money moves through CGrate 543. 1.75% platform fee — 1.25% CGrate, 0.5% ZamAi. MTN Money and Airtel Money as rails. No bank account required.' },
-  { key: 'identity',     label: 'Identity',      sub: 'Phone-based',       sub2: 'No KYC required',
-    desc: 'Phone number is the identity anchor. No KYC gatekeeping. Trust is earned through activity, not paperwork. SIM registration provides a baseline.' },
-  { key: 'location',     label: 'Location',      sub: 'GPS verification',  sub2: 'Geo-fencing',
-    desc: 'GPS coordinates captured at attestation time. Enables geographic impossibility detection for fraud prevention. Location tags on events build spatial trust patterns.' },
-  { key: 'time',         label: 'Time',          sub: 'Tamper-proof',      sub2: 'Timestamps',
-    desc: 'Every event and attestation gets a tamper-proof timestamp. Enables sequence verification and temporal fraud detection. No retroactive modifications.' },
-  { key: 'notification', label: 'Notification',  sub: 'SMS / WhatsApp',    sub2: 'Push alerts',
-    desc: 'SMS for critical alerts — payment confirmation, suspension notice. WhatsApp for trust profile sharing and job completion notifications. Low-bandwidth first.' },
+    desc: 'All money moves through CGrate 543. 1.75% platform fee — 1.25% CGrate, 0.5% ZamAi. MTN Money and Airtel Money as rails. Degradation path: if CGrate is down, events still record — payment settles when the port recovers.' },
+  { key: 'identity',     label: 'Identity',      sub: 'Google + SIM OTP', sub2: 'Domain for business',
+    desc: 'Person identity: Google OAuth + SIM-bound OTP. Neither alone is sufficient — together they bind digital identity to a physical person. Business identity: anchored to domain (MX lookup). Optional PACRA cross-check. WhatsApp Business as future Tier 2 channel.' },
+  { key: 'location',     label: 'Location',      sub: 'GPS + cell tower',  sub2: '500m threshold',
+    desc: 'GPS coordinates captured at attestation time. Threshold set to 500m for rural Zambia — not 50m. Cell tower fallback for devices without GPS. Location tags build spatial trust patterns.' },
+  { key: 'notification', label: 'Notification',  sub: 'WhatsApp first',    sub2: 'SMS fallback',
+    desc: 'WhatsApp via Meta Business API for attestation requests, receipts, and trust profile sharing. SMS fallback for feature phones. Email for institutional Tier 2 validation (Resend/Postmark with signed URLs).' },
+  { key: 'evidence',     label: 'Evidence',      sub: 'SHA-256 + storage', sub2: 'Merkle roots (v2)',
+    desc: 'Documents hashed with SHA-256 on upload. Stored in Supabase Storage. v1: per-event hashing for verification. v2: daily Merkle roots for tamper-proof audit trail. External anchoring deferred until the data is important enough to survive ZamAi disappearing.' },
+  { key: 'verification', label: 'Verification',  sub: 'MX + signed URLs',  sub2: 'verify.zamai.pro',
+    desc: 'Institutional domain validation via MX lookup + transactional email with signed time-limited URLs. Public hash verification at verify.zamai.pro — drag a file, get provenance or "no match." No login, no account. Client-side hashing — only the hash hits the server.' },
+  { key: 'time',         label: 'Time',          sub: 'Dual timestamps',   sub2: 'Device + server',
+    desc: 'device_timestamp (when created) and sync_timestamp (when received by server). Both recorded, never merged. Large gaps flagged but not blocked — a 2-hour gap is normal in rural Zambia. NTP cross-check planned for v2.' },
 ];
 
-const CX = 350, CY = 250, DIST = 190, OUTER_R = 58, CENTER_R = 78;
+const CX = 350, CY = 280, DIST = 200, OUTER_R = 54, CENTER_R = 74;
 
-// Position outer hexes at 72-degree intervals starting from top
+// Position outer hexes evenly around center
 const portPos = PORTS.map((_, i) => {
-  const angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+  const angle = (Math.PI * 2 / PORTS.length) * i - Math.PI / 2;
   return { x: CX + DIST * Math.cos(angle), y: CY + DIST * Math.sin(angle) };
 });
 
@@ -42,7 +46,7 @@ export default function PortArchitecture() {
         <h2 className="h2">Hexagonal by design</h2>
         <p className="p">The core doesn't move money or verify identity itself. It orchestrates through pluggable ports.</p>
 
-        <svg viewBox="0 0 700 500" style={{ width: '100%', maxWidth: 700, display: 'block', margin: '34px auto 0' }}>
+        <svg viewBox="0 0 700 560" style={{ width: '100%', maxWidth: 700, display: 'block', margin: '34px auto 0' }}>
           <defs>
             <filter id="portGlow">
               <feGaussianBlur stdDeviation="5" result="blur"/>
@@ -72,15 +76,15 @@ export default function PortArchitecture() {
             fill={C.eg} stroke={C.egVi} strokeWidth={1.5}/>
           <text x={CX} y={CY - 10} textAnchor="middle"
             style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 800, fill: C.egHi }}>
-            Thiqa Core
+            ZamAi Core
           </text>
           <text x={CX} y={CY + 8} textAnchor="middle"
             style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t2 }}>
-            5 entities · tag-driven
+            party · event · attestation
           </text>
           <text x={CX} y={CY + 22} textAnchor="middle"
             style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t2 }}>
-            trust-weighted
+            7 swappable ports
           </text>
 
           {/* Outer port hexes */}
