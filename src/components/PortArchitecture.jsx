@@ -76,7 +76,7 @@ export default function PortArchitecture() {
             fill={C.eg} stroke={C.egVi} strokeWidth={1.5}/>
           <text x={CX} y={CY - 10} textAnchor="middle"
             style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 800, fill: C.egHi }}>
-            ZamAi Core
+            Thiqa Core
           </text>
           <text x={CX} y={CY + 8} textAnchor="middle"
             style={{ fontFamily: FONT.body, fontSize: 11, fill: C.t2 }}>

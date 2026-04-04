@@ -40,7 +40,7 @@ export default function App() {
       {/* Footer */}
       <footer style={{ padding: '55px 34px', textAlign: 'center', background: C.s1, borderTop: `1px solid ${C.s3}` }}>
         <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 800, color: C.egHi, marginBottom: 8 }}>
-          ZamAi
+          Thiqa
         </div>
         <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t3, lineHeight: 1.75, maxWidth: 500, margin: '0 auto' }}>
           Trust infrastructure for the real economy. Agriculture first, domain-agnostic by design.
