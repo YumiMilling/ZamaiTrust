@@ -41,6 +41,19 @@ const FACTS = [
       { v: 'EUDR', k: 'binding EU legal obligation, 4% fine ceiling' },
     ],
   },
+  {
+    key: 'corridor',
+    tag: 'THE INFRASTRUCTURE',
+    tagColor: C.coral,
+    headline: 'A physical route to the Atlantic opens in the same window.',
+    body: 'The US-backed, EU co-funded Lobito Corridor breaks ground in north-west Zambia in early 2026. The rail link from the Zambian and DRC copperbelts through Angola to the Port of Lobito cuts transit time to the Atlantic from 45 days to 7. Officially a critical-minerals corridor, it is deliberately marketed as a broader development play — and the agriculture money is already committed. US DFC has placed $10M in Seba Foods Zambia, a maize and soya processor, as the first food-security investment under the Lobito vision. The African Development Bank has pledged $370M across three agriculture projects along the route. The EU Global Gateway and Germany are funding ENTERPRISE 2.0, a €6M smallholder programme for legume and horticulture value chains. Minerals pay for the rail. Agriculture gets the discounted backhaul capacity. Without this corridor, the EUDR compliance premium is theoretical — Durban shipping costs would eat most of it. With it, the premium is margin.',
+    figures: [
+      { v: '$4B+', k: 'US commitment to Lobito (PGI)' },
+      { v: '45 → 7', k: 'days, Copperbelt to Atlantic' },
+      { v: 'Seba Foods', k: 'first DFC-backed soya / maize processor on the corridor' },
+      { v: '2026', k: 'Zambian rail leg breaks ground' },
+    ],
+  },
 ];
 
 export default function Context() {
@@ -51,9 +64,9 @@ export default function Context() {
     <section id="context" className="sec-alt">
       <div className="inner">
         <div className="eye">THE WINDOW</div>
-        <h2 className="h2">Three things that were not true a year ago</h2>
+        <h2 className="h2">Four things that were not true a year ago</h2>
         <p className="p">
-          The architecture that follows is not a bet on change — it is a response to change that has already happened. Three independent facts, converging for the first time on the 2026/27 farming season.
+          The architecture that follows is not a bet on change — it is a response to change that has already happened. Four independent facts, converging for the first time on the 2026/27 farming season: the input rail, the output rail, the money, and the physical route to market.
         </p>
 
         {/* Tabs */}

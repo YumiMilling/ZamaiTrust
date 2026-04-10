@@ -59,7 +59,7 @@ export default function App() {
           <br/>Designed in Batoka, built by ZamAi Solutions.
         </p>
         <p style={{ fontFamily: FONT.mono, fontSize: 12, color: C.t4, marginTop: 21 }}>
-          Concept Note v2.1 — April 2026
+          Concept Note v2.2 — April 2026
         </p>
       </footer>
     </>

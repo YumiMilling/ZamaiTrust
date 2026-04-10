@@ -53,6 +53,20 @@ const GROUPS = [
       { who: 'European Union', what: 'Regulation (EU) 2023/1115 — EU Deforestation Regulation (EUDR)' },
     ],
   },
+  {
+    key: 'corridor',
+    label: 'Corridor infrastructure',
+    color: C.coral,
+    items: [
+      { who: 'The White House', what: 'Fact Sheet — Partnership for Global Infrastructure and Investment in the Lobito Trans-Africa Corridor (Dec 2024)' },
+      { who: 'Atlantic Council', what: 'What to know about the Lobito Corridor — and how it may change how minerals move' },
+      { who: 'US DFC', what: 'Investments Supporting Development Along the Lobito Corridor (includes $10M to Seba Foods Zambia)' },
+      { who: 'Africa Finance Corporation', what: 'AFC-led Zambia-Lobito Rail Project — financing and 2026 groundbreaking' },
+      { who: 'European Commission', what: 'Global Gateway — Connecting DRC, Zambia and Angola to Global Markets through the Lobito Corridor' },
+      { who: 'USIP', what: 'The Lobito Corridor: A U.S. Bet on Africa’s Critical Mineral Development' },
+      { who: 'OECD', what: 'Emerging Markets Forum Background Note — The Lobito Corridor (April 2025)' },
+    ],
+  },
 ];
 
 export default function Sources() {

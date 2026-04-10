@@ -16,7 +16,7 @@ const verticals = [
 export default function Hero() {
   return (
     <section className="sec" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>CONCEPT NOTE v2.1 · APRIL 2026</div>
+      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>CONCEPT NOTE v2.2 · APRIL 2026</div>
       <h1 className="h1" style={{ fontSize: 72, marginBottom: 12 }}>Thiqa</h1>
       <p style={{ fontFamily: FONT.display, fontSize: 28, fontWeight: 700, color: C.cuHi, marginBottom: 28 }}>
         The verification layer for a market that is quietly being rebuilt.
@@ -27,8 +27,11 @@ export default function Hero() {
       <p className="p" style={{ fontSize: 18 }}>
         At the same time, two independent corporate money pools now sit on exactly the data this creates demand for: European importers under the EU Deforestation Regulation, and signatory banks under UNEP FI’s Principles for Responsible Banking, Net-Zero Banking Alliance and PCAF financed-emissions methodology. Each has its own legal or reputational reason to pay for verified plot-level provenance on the same farmer.
       </p>
+      <p className="p" style={{ fontSize: 18 }}>
+        And from early 2026, the US- and EU-backed <strong>Lobito Corridor</strong> gives that same soya a seven-day physical route to the Atlantic — cutting transit time from the Copperbelt to Europe from 45 days to 7, with agriculture funding already on the ground (DFC-backed Seba Foods Zambia, AfDB $370M across three projects, EU ENTERPRISE 2.0 for smallholder legume value chains).
+      </p>
       <p className="p" style={{ fontSize: 18, color: C.t2 }}>
-        Facts converging, pains already funded. <strong>Thiqa is the verification fabric that makes the private-sector alternatives legible.</strong> Two parties, an event, an attestation. Soya delivery, grain inspection, warehouse receipt, rent payment — same primitive.
+        Facts converging, pains already funded, physical route opening. <strong>Thiqa is the verification fabric that makes the private-sector alternatives legible.</strong> Two parties, an event, an attestation. Soya delivery, grain inspection, warehouse receipt, rent payment — same primitive.
       </p>
 
       <div style={{ display: 'flex', gap: 16, marginTop: 44, flexWrap: 'wrap' }}>
