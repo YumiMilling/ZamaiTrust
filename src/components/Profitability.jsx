@@ -123,19 +123,23 @@ const zmwK = (n) => `ZMW ${n}k`;
 
 const RAMP_MAX = Math.max(...RAMP.map((r) => r.rev));
 
-export default function Profitability() {
+export default function Profitability({ embedded = false }) {
+  const Wrapper = embedded ? 'div' : 'section';
+  const wrapperProps = embedded ? { id: 'profitability' } : { id: 'profitability', className: 'sec' };
   return (
-    <section id="profitability" className="sec">
-      <div className="eye">PROFITABILITY · UNIT ECONOMICS · PATH TO BREAKEVEN</div>
-      <h2 className="h2">Profitability is the prerequisite for sustainability</h2>
-      <p className="p">
-        A trust layer for the real economy has to pay for itself, or the real economy will stop using it the moment donor money dries up. The numbers below are illustrative, but they are sized against real cost lines and real counterparties. They are here so the model can be argued with, not admired.
-      </p>
+    <Wrapper {...wrapperProps}>
+      {!embedded && <div className="eye">PROFITABILITY · UNIT ECONOMICS · PATH TO BREAKEVEN</div>}
+      {!embedded && <h2 className="h2">Profitability is the prerequisite for sustainability</h2>}
+      {!embedded && (
+        <p className="p">
+          A trust layer for the real economy has to pay for itself, or the real economy will stop using it the moment donor money dries up. The numbers below are illustrative, but they are sized against real cost lines and real counterparties. They are here so the model can be argued with, not admired.
+        </p>
+      )}
 
       {/* ============================================================== */}
       {/* Unit economics table                                            */}
       {/* ============================================================== */}
-      <div style={{ marginTop: 44 }}>
+      <div style={{ marginTop: embedded ? 0 : 44 }}>
         <div style={{ fontFamily: FONT.mono, fontSize: 13, color: C.t3, letterSpacing: '.08em', marginBottom: 14 }}>
           UNIT ECONOMICS · WHAT IS PAID, BY WHOM, FOR WHAT
         </div>
@@ -431,14 +435,25 @@ export default function Profitability() {
       {/* ============================================================== */}
       {/* Honest closing                                                  */}
       {/* ============================================================== */}
-      <div className="pull" style={{ marginTop: 60 }}>
-        "A trust infrastructure that can't pay its engineers is an NGO project with a whitepaper. The reason profitability is stated up front, with numbers, is because <em>it is the only honest way</em> to argue that this is infrastructure and not a pitch."
+      <div style={{
+        marginTop: 60,
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: 22, fontStyle: 'italic',
+        color: C.t2, lineHeight: 1.55,
+        borderLeft: `3px solid ${C.egVi}`,
+        paddingLeft: 30,
+        maxWidth: 720,
+      }}>
+        "A trust infrastructure that can't pay its engineers is an NGO project with a whitepaper. The reason profitability is stated up front, with numbers, is because <em style={{ color: C.egHi, fontStyle: 'normal', fontWeight: 600 }}>it is the only honest way</em> to argue that this is infrastructure and not a pitch."
       </div>
 
-      <p className="p" style={{ marginTop: 20 }}>
+      <p style={{
+        fontFamily: FONT.body, fontSize: 15, color: C.t2,
+        lineHeight: 1.75, marginTop: 24, maxWidth: 780,
+      }}>
         The figures above will be wrong in specific ways — unit prices will move, depot counts will slip, donor lines will close and reopen. What matters is the shape: free creation, paid consumption, a flat cost baseline, and at least four independent revenue lines of which any one can carry the rail. If the shape holds, the business holds. If the shape doesn't hold, the prototype should be abandoned before it becomes infrastructure that other people depend on.
       </p>
-    </section>
+    </Wrapper>
   );
 }
 

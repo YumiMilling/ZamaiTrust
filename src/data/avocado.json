@@ -1,0 +1,159 @@
+{
+  "case_id": "avocado_export",
+  "case_name": "Zambian Hass avocado to the European Union",
+  "case_tagline": "Orchard → cooperative → pack-house → lab → cold chain → vessel → EU buyer.",
+  "scope_note": "All parties, batches, test values, temperatures, and coordinates in this case are illustrative. They are sized to realistic Zambian Hass production parameters but do not reference any specific real producer, cooperative, lab, or buyer.",
+  "parties": [
+    { "id": "p-01", "name": "Chilanga Orchard", "kind": "orchard", "location": "Chipata, Eastern Province", "trust_weight": 0.72, "probation": false, "events_count": 84, "geo_verified": true },
+    { "id": "p-02", "name": "Mwami Orchard", "kind": "orchard", "location": "Chipata, Eastern Province", "trust_weight": 0.64, "probation": false, "events_count": 61, "geo_verified": true },
+    { "id": "p-03", "name": "Kanyanta Orchard", "kind": "orchard", "location": "Chipata, Eastern Province (unverified)", "trust_weight": 0.11, "probation": true, "events_count": 7, "geo_verified": false },
+    { "id": "p-04", "name": "Chipata Growers Cooperative", "kind": "cooperative", "location": "Chipata depot", "trust_weight": 0.81, "probation": false, "events_count": 412 },
+    { "id": "p-05", "name": "Mbeya Fresh Pack-house", "kind": "packhouse", "location": "Lusaka industrial belt", "trust_weight": 0.88, "probation": false, "events_count": 1174 },
+    { "id": "p-06", "name": "SGS Lusaka Residue Lab", "kind": "lab", "location": "Lusaka", "trust_weight": 0.94, "probation": false, "events_count": 2061, "accredited": "ISO/IEC 17025" },
+    { "id": "p-07", "name": "Arctic Cold Logistics", "kind": "logistics", "location": "Lusaka → Durban corridor", "trust_weight": 0.83, "probation": false, "events_count": 689 },
+    { "id": "p-08", "name": "Yumi Export Ltd", "kind": "exporter", "location": "Lusaka", "trust_weight": 0.79, "probation": false, "events_count": 244 },
+    { "id": "p-09", "name": "Rotterdam Fresh BV", "kind": "buyer", "location": "Rotterdam, Netherlands", "trust_weight": 0.87, "probation": false, "events_count": 3108 }
+  ],
+  "batches": [
+    {
+      "id": "AVX-2026-011",
+      "cultivar": "Hass",
+      "weight_kg": 19840,
+      "packed_on": "2026-03-14",
+      "departed_on": "2026-03-16",
+      "arrived_on": "2026-04-02",
+      "buyer_id": "p-09",
+      "status": "delivered",
+      "status_label": "Delivered to EU buyer",
+      "status_color": "green",
+      "eudr_compliant": true,
+      "mrl_compliant": true,
+      "cold_chain_intact": true,
+      "exception": null,
+      "events": [
+        { "id": "e-011-01", "ts": "2026-03-10T06:12:00Z", "kind": "harvest", "party_id": "p-01", "tags": ["harvest", "orchard", "commodity:avocado_hass"], "summary": "220 crates harvested at Chilanga Orchard" },
+        { "id": "e-011-02", "ts": "2026-03-10T07:40:00Z", "kind": "harvest", "party_id": "p-02", "tags": ["harvest", "orchard", "commodity:avocado_hass"], "summary": "160 crates harvested at Mwami Orchard" },
+        { "id": "e-011-03", "ts": "2026-03-11T11:05:00Z", "kind": "aggregation", "party_id": "p-04", "tags": ["receipt", "cooperative", "aggregation"], "summary": "380 crates aggregated at Chipata depot" },
+        { "id": "e-011-04", "ts": "2026-03-12T15:20:00Z", "kind": "dispatch", "party_id": "p-04", "tags": ["dispatch", "origin:cooperative", "destination:pack_house"], "summary": "Dispatched to Mbeya Fresh Pack-house" },
+        { "id": "e-011-05", "ts": "2026-03-13T08:30:00Z", "kind": "receipt", "party_id": "p-05", "tags": ["receipt", "pack_house"], "summary": "Received 19,840 kg at pack-house" },
+        { "id": "e-011-06", "ts": "2026-03-13T16:00:00Z", "kind": "lab_result", "party_id": "p-06", "tags": ["lab_result", "mrl_compliant", "pesticide_screen"], "summary": "MRL test PASS — all residues below EU thresholds", "payload": { "pesticides_screened": 84, "max_residue_ppb": 2.1, "eu_threshold_ppb": 50 } },
+        { "id": "e-011-07", "ts": "2026-03-14T09:15:00Z", "kind": "packing", "party_id": "p-05", "tags": ["packing", "grading", "labelling"], "summary": "Packed into 1,240 retail cartons, grade 1A" },
+        { "id": "e-011-08", "ts": "2026-03-14T18:00:00Z", "kind": "cold_chain_load", "party_id": "p-07", "tags": ["cold_chain", "container_load", "temp:5.6C"], "summary": "Loaded into reefer, container ARCU-2214871" },
+        { "id": "e-011-09", "ts": "2026-03-16T03:45:00Z", "kind": "dispatch", "party_id": "p-07", "tags": ["dispatch", "destination:port_durban"], "summary": "Departed Lusaka for Durban" },
+        { "id": "e-011-10", "ts": "2026-03-19T14:10:00Z", "kind": "port_receipt", "party_id": "p-07", "tags": ["port_receipt", "vessel_load"], "summary": "Loaded onto MV Maersk Halden" },
+        { "id": "e-011-11", "ts": "2026-04-02T09:30:00Z", "kind": "buyer_receipt", "party_id": "p-09", "tags": ["buyer_receipt", "condition_verified"], "summary": "Received at Rotterdam, condition as specified" }
+      ],
+      "attestations": [
+        { "id": "a-011-01", "event_id": "e-011-01", "attester_id": "p-01", "ts": "2026-03-10T06:15:00Z", "tags": ["self_attest", "harvest"], "payload": null },
+        { "id": "a-011-02", "event_id": "e-011-01", "attester_id": "p-04", "ts": "2026-03-11T11:06:00Z", "tags": ["counterparty", "geo_verified", "orchard_geo:p-01"], "payload": { "lat": -13.6351, "lon": 32.6458 } },
+        { "id": "a-011-03", "event_id": "e-011-02", "attester_id": "p-02", "ts": "2026-03-10T07:42:00Z", "tags": ["self_attest", "harvest"], "payload": null },
+        { "id": "a-011-04", "event_id": "e-011-02", "attester_id": "p-04", "ts": "2026-03-11T11:06:00Z", "tags": ["counterparty", "geo_verified", "orchard_geo:p-02"], "payload": { "lat": -13.6290, "lon": 32.6512 } },
+        { "id": "a-011-05", "event_id": "e-011-05", "attester_id": "p-04", "ts": "2026-03-12T15:25:00Z", "tags": ["dispatch_attest"], "payload": { "weight_kg": 19840 } },
+        { "id": "a-011-06", "event_id": "e-011-05", "attester_id": "p-05", "ts": "2026-03-13T08:32:00Z", "tags": ["receipt_attest", "handshake_close"], "payload": { "weight_kg": 19840 } },
+        { "id": "a-011-07", "event_id": "e-011-06", "attester_id": "p-06", "ts": "2026-03-13T16:02:00Z", "tags": ["lab_result", "mrl_pass", "iso17025"], "payload": { "hash": "9a3c7f41b2e88f14" } },
+        { "id": "a-011-08", "event_id": "e-011-08", "attester_id": "p-07", "ts": "2026-03-14T18:04:00Z", "tags": ["cold_chain_start", "sensor_attest"], "payload": { "temp_c": 5.6 } },
+        { "id": "a-011-09", "event_id": "e-011-11", "attester_id": "p-09", "ts": "2026-04-02T09:35:00Z", "tags": ["buyer_receipt", "outcome_verification"], "payload": { "cartons": 1240 } }
+      ],
+      "handshakes": [
+        { "id": "h-011-01", "type": "dispatch_receipt", "label": "Cooperative → Pack-house", "attestation_ids": ["a-011-05", "a-011-06"], "status": "closed", "tolerance_note": "Weight match within 0 kg." },
+        { "id": "h-011-02", "type": "outcome_verification", "label": "Lab MRL certification", "attestation_ids": ["a-011-07"], "status": "closed", "tolerance_note": "All 84 residues below EU threshold. Max 2.1 ppb vs 50 ppb limit." },
+        { "id": "h-011-03", "type": "outcome_verification", "label": "EU buyer receipt", "attestation_ids": ["a-011-09"], "status": "closed", "tolerance_note": "Condition verified on arrival, no claims filed." }
+      ]
+    },
+    {
+      "id": "AVX-2026-012",
+      "cultivar": "Hass",
+      "weight_kg": 20160,
+      "packed_on": "2026-04-04",
+      "departed_on": "2026-04-06",
+      "arrived_on": null,
+      "buyer_id": "p-09",
+      "status": "in_transit",
+      "status_label": "In transit · cold chain green",
+      "status_color": "green",
+      "eudr_compliant": true,
+      "mrl_compliant": true,
+      "cold_chain_intact": true,
+      "exception": null,
+      "events": [
+        { "id": "e-012-01", "ts": "2026-04-01T06:00:00Z", "kind": "harvest", "party_id": "p-01", "tags": ["harvest", "orchard"], "summary": "230 crates harvested at Chilanga Orchard" },
+        { "id": "e-012-02", "ts": "2026-04-01T07:20:00Z", "kind": "harvest", "party_id": "p-02", "tags": ["harvest", "orchard"], "summary": "170 crates harvested at Mwami Orchard" },
+        { "id": "e-012-03", "ts": "2026-04-02T11:00:00Z", "kind": "aggregation", "party_id": "p-04", "tags": ["receipt", "cooperative"], "summary": "400 crates aggregated" },
+        { "id": "e-012-04", "ts": "2026-04-03T08:40:00Z", "kind": "receipt", "party_id": "p-05", "tags": ["receipt", "pack_house"], "summary": "Received 20,160 kg at pack-house" },
+        { "id": "e-012-05", "ts": "2026-04-03T15:50:00Z", "kind": "lab_result", "party_id": "p-06", "tags": ["lab_result", "mrl_compliant"], "summary": "MRL test PASS — max residue 1.8 ppb", "payload": { "pesticides_screened": 84, "max_residue_ppb": 1.8, "eu_threshold_ppb": 50 } },
+        { "id": "e-012-06", "ts": "2026-04-04T10:00:00Z", "kind": "packing", "party_id": "p-05", "tags": ["packing", "grading"], "summary": "Packed into 1,260 retail cartons, grade 1A" },
+        { "id": "e-012-07", "ts": "2026-04-04T17:30:00Z", "kind": "cold_chain_load", "party_id": "p-07", "tags": ["cold_chain", "container_load", "temp:5.4C"], "summary": "Loaded into reefer ARCU-2214902" },
+        { "id": "e-012-08", "ts": "2026-04-06T04:00:00Z", "kind": "dispatch", "party_id": "p-07", "tags": ["dispatch", "destination:port_durban"], "summary": "Departed Lusaka for Durban" }
+      ],
+      "attestations": [
+        { "id": "a-012-01", "event_id": "e-012-01", "attester_id": "p-01", "ts": "2026-04-01T06:02:00Z", "tags": ["self_attest"], "payload": null },
+        { "id": "a-012-02", "event_id": "e-012-01", "attester_id": "p-04", "ts": "2026-04-02T11:05:00Z", "tags": ["counterparty", "geo_verified"], "payload": { "lat": -13.6351, "lon": 32.6458 } },
+        { "id": "a-012-03", "event_id": "e-012-04", "attester_id": "p-04", "ts": "2026-04-02T15:00:00Z", "tags": ["dispatch_attest"], "payload": { "weight_kg": 20160 } },
+        { "id": "a-012-04", "event_id": "e-012-04", "attester_id": "p-05", "ts": "2026-04-03T08:42:00Z", "tags": ["receipt_attest", "handshake_close"], "payload": { "weight_kg": 20160 } },
+        { "id": "a-012-05", "event_id": "e-012-05", "attester_id": "p-06", "ts": "2026-04-03T15:55:00Z", "tags": ["lab_result", "mrl_pass"], "payload": { "hash": "b77e2f04881a9c13" } },
+        { "id": "a-012-06", "event_id": "e-012-07", "attester_id": "p-07", "ts": "2026-04-04T17:35:00Z", "tags": ["cold_chain_start", "sensor_attest"], "payload": { "temp_c": 5.4 } }
+      ],
+      "handshakes": [
+        { "id": "h-012-01", "type": "dispatch_receipt", "label": "Cooperative → Pack-house", "attestation_ids": ["a-012-03", "a-012-04"], "status": "closed", "tolerance_note": "Weight match within 0 kg." },
+        { "id": "h-012-02", "type": "outcome_verification", "label": "Lab MRL certification", "attestation_ids": ["a-012-05"], "status": "closed", "tolerance_note": "Max residue 1.8 ppb (EU limit 50 ppb)." },
+        { "id": "h-012-03", "type": "receipt_stock", "label": "Cold chain continuity", "attestation_ids": ["a-012-06"], "status": "open", "tolerance_note": "Sensor trace live, 5.4°C at last ping." }
+      ]
+    },
+    {
+      "id": "AVX-2026-013",
+      "cultivar": "Hass",
+      "weight_kg": 18720,
+      "packed_on": null,
+      "departed_on": null,
+      "arrived_on": null,
+      "buyer_id": "p-09",
+      "status": "hold",
+      "status_label": "Hold · EUDR origin attestation incomplete",
+      "status_color": "amber",
+      "eudr_compliant": false,
+      "mrl_compliant": true,
+      "cold_chain_intact": null,
+      "exception": {
+        "id": "x-013-01",
+        "kind": "missing_geo_attestation",
+        "trigger": "outcome_verification_gap",
+        "severity": "amber",
+        "title": "Orchard geolocation missing for one contributing orchard",
+        "summary": "Kanyanta Orchard (p-03) has contributed to this batch but has no verified geolocation on file. EUDR origin attestation cannot be completed without it.",
+        "affected_party_id": "p-03",
+        "required_action": "Field coordinator visit to Kanyanta Orchard with GPS logger. Estimated 1–2 days.",
+        "blocking": true,
+        "buyer_impact": "Due-diligence file incomplete on EUDR origin dimension. Recommended action: request missing orchard attestation before finalising purchase.",
+        "unblocked_status": "green"
+      },
+      "events": [
+        { "id": "e-013-01", "ts": "2026-04-06T06:10:00Z", "kind": "harvest", "party_id": "p-01", "tags": ["harvest", "orchard"], "summary": "210 crates harvested at Chilanga Orchard" },
+        { "id": "e-013-02", "ts": "2026-04-06T07:30:00Z", "kind": "harvest", "party_id": "p-02", "tags": ["harvest", "orchard"], "summary": "145 crates harvested at Mwami Orchard" },
+        { "id": "e-013-03", "ts": "2026-04-06T08:00:00Z", "kind": "harvest", "party_id": "p-03", "tags": ["harvest", "orchard", "geo_unverified"], "summary": "95 crates harvested at Kanyanta Orchard" },
+        { "id": "e-013-04", "ts": "2026-04-07T10:30:00Z", "kind": "aggregation", "party_id": "p-04", "tags": ["receipt", "cooperative"], "summary": "450 crates aggregated at Chipata depot" },
+        { "id": "e-013-05", "ts": "2026-04-08T09:00:00Z", "kind": "receipt", "party_id": "p-05", "tags": ["receipt", "pack_house"], "summary": "Received 18,720 kg at pack-house" },
+        { "id": "e-013-06", "ts": "2026-04-08T16:20:00Z", "kind": "lab_result", "party_id": "p-06", "tags": ["lab_result", "mrl_compliant"], "summary": "MRL test PASS — max residue 2.4 ppb", "payload": { "pesticides_screened": 84, "max_residue_ppb": 2.4, "eu_threshold_ppb": 50 } },
+        { "id": "e-013-07", "ts": "2026-04-09T08:00:00Z", "kind": "compliance_flag", "party_id": "p-08", "tags": ["eudr", "flag", "origin_incomplete"], "summary": "Batch placed on hold pending Kanyanta Orchard geolocation" }
+      ],
+      "attestations": [
+        { "id": "a-013-01", "event_id": "e-013-01", "attester_id": "p-01", "ts": "2026-04-06T06:12:00Z", "tags": ["self_attest"], "payload": null },
+        { "id": "a-013-02", "event_id": "e-013-01", "attester_id": "p-04", "ts": "2026-04-07T10:35:00Z", "tags": ["counterparty", "geo_verified"], "payload": { "lat": -13.6351, "lon": 32.6458 } },
+        { "id": "a-013-03", "event_id": "e-013-02", "attester_id": "p-02", "ts": "2026-04-06T07:33:00Z", "tags": ["self_attest"], "payload": null },
+        { "id": "a-013-04", "event_id": "e-013-02", "attester_id": "p-04", "ts": "2026-04-07T10:35:00Z", "tags": ["counterparty", "geo_verified"], "payload": { "lat": -13.6290, "lon": 32.6512 } },
+        { "id": "a-013-05", "event_id": "e-013-03", "attester_id": "p-03", "ts": "2026-04-06T08:05:00Z", "tags": ["self_attest", "geo_unverified"], "payload": null },
+        { "id": "a-013-06", "event_id": "e-013-05", "attester_id": "p-04", "ts": "2026-04-07T14:00:00Z", "tags": ["dispatch_attest"], "payload": { "weight_kg": 18720 } },
+        { "id": "a-013-07", "event_id": "e-013-05", "attester_id": "p-05", "ts": "2026-04-08T09:02:00Z", "tags": ["receipt_attest", "handshake_close"], "payload": { "weight_kg": 18720 } },
+        { "id": "a-013-08", "event_id": "e-013-06", "attester_id": "p-06", "ts": "2026-04-08T16:22:00Z", "tags": ["lab_result", "mrl_pass"], "payload": { "hash": "c99f1aa4532b0e77" } }
+      ],
+      "handshakes": [
+        { "id": "h-013-01", "type": "dispatch_receipt", "label": "Cooperative → Pack-house", "attestation_ids": ["a-013-06", "a-013-07"], "status": "closed", "tolerance_note": "Weight match within 0 kg." },
+        { "id": "h-013-02", "type": "outcome_verification", "label": "Lab MRL certification", "attestation_ids": ["a-013-08"], "status": "closed", "tolerance_note": "Max residue 2.4 ppb (EU limit 50 ppb)." },
+        { "id": "h-013-03", "type": "outcome_verification", "label": "EUDR origin attestation", "attestation_ids": [], "status": "missing", "tolerance_note": "Requires geolocation attestations from every contributing orchard. Kanyanta Orchard geolocation missing." }
+      ]
+    }
+  ],
+  "credentials": [
+    { "id": "c-011", "batch_id": "AVX-2026-011", "name": "EUDR + MRL + cold chain dossier", "composed_from": ["h-011-01", "h-011-02", "h-011-03"], "hash": "e4f2a19b8c01" },
+    { "id": "c-012", "batch_id": "AVX-2026-012", "name": "EUDR + MRL dossier (cold chain live)", "composed_from": ["h-012-01", "h-012-02"], "hash": "a7712fde4520" }
+  ]
+}

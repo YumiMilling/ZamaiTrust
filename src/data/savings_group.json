@@ -1,0 +1,41 @@
+{
+  "case_id": "savings_group",
+  "case_name": "Chongwe Women's Savings Group",
+  "case_tagline": "Collective reputation. The primitive applies to relational and communal economies, not just markets.",
+  "scope_note": "Group name, member names, and contribution amounts are illustrative.",
+  "parties": [
+    { "id": "p-01", "name": "Chongwe Women's Savings Group", "kind": "collective", "location": "Chongwe District", "trust_weight": 0.74, "probation": false, "events_count": 188, "members": 24 },
+    { "id": "p-02", "name": "Ms Nyirenda (Treasurer)", "kind": "member_officer", "trust_weight": 0.68, "probation": false, "events_count": 188 },
+    { "id": "p-03", "name": "Mrs Zulu (Chair)", "kind": "member_officer", "trust_weight": 0.66, "probation": false, "events_count": 188 },
+    { "id": "p-04", "name": "Mrs Mulenga (Secretary)", "kind": "member_officer", "trust_weight": 0.65, "probation": false, "events_count": 188 },
+    { "id": "p-05", "name": "Mrs Phiri (Member)", "kind": "member", "trust_weight": 0.41, "probation": false, "events_count": 34 },
+    { "id": "p-06", "name": "MFI Partner (Vision Fund)", "kind": "lender", "trust_weight": 0.89, "probation": false, "events_count": 4120 }
+  ],
+  "ledger": [
+    { "id": "l-apr-2026", "period": "April 2026", "summary": "Monthly cycle", "contributions_zmw": 14400, "loans_zmw": 8000, "repayments_zmw": 6200, "events": ["e-apr-01", "e-apr-02", "e-apr-03"] },
+    { "id": "l-mar-2026", "period": "March 2026", "summary": "Monthly cycle", "contributions_zmw": 13800, "loans_zmw": 5500, "repayments_zmw": 5500, "events": ["e-mar-01"] }
+  ],
+  "events": [
+    { "id": "e-apr-01", "ts": "2026-04-03T10:00:00Z", "kind": "contribution", "party_id": "p-05", "tags": ["savings", "contribution"], "summary": "Mrs Phiri contributed ZMW 600" },
+    { "id": "e-apr-02", "ts": "2026-04-05T14:00:00Z", "kind": "loan_issued", "party_id": "p-05", "tags": ["loan", "issued", "term:30d"], "summary": "Loan of ZMW 3,000 issued to Mrs Phiri" },
+    { "id": "e-apr-03", "ts": "2026-04-09T09:30:00Z", "kind": "repayment", "party_id": "p-05", "tags": ["loan", "repayment"], "summary": "First instalment ZMW 1,000 repaid" },
+    { "id": "e-mar-01", "ts": "2026-03-02T10:00:00Z", "kind": "contribution", "party_id": "p-05", "tags": ["savings", "contribution"], "summary": "Mrs Phiri contributed ZMW 600" }
+  ],
+  "attestations": [
+    { "id": "a-apr-01a", "event_id": "e-apr-01", "attester_id": "p-05", "ts": "2026-04-03T10:01:00Z", "tags": ["self_attest"], "payload": { "amount_zmw": 600 } },
+    { "id": "a-apr-01b", "event_id": "e-apr-01", "attester_id": "p-02", "ts": "2026-04-03T10:03:00Z", "tags": ["treasurer", "ledger_entry", "handshake_close"], "payload": { "amount_zmw": 600 } },
+    { "id": "a-apr-02a", "event_id": "e-apr-02", "attester_id": "p-05", "ts": "2026-04-05T14:01:00Z", "tags": ["borrower_attest"], "payload": null },
+    { "id": "a-apr-02b", "event_id": "e-apr-02", "attester_id": "p-03", "ts": "2026-04-05T14:02:00Z", "tags": ["chair_attest"], "payload": null },
+    { "id": "a-apr-02c", "event_id": "e-apr-02", "attester_id": "p-04", "ts": "2026-04-05T14:03:00Z", "tags": ["secretary_attest", "quorum_reached"], "payload": null },
+    { "id": "a-apr-03a", "event_id": "e-apr-03", "attester_id": "p-05", "ts": "2026-04-09T09:31:00Z", "tags": ["self_attest", "repayment"], "payload": { "amount_zmw": 1000 } },
+    { "id": "a-apr-03b", "event_id": "e-apr-03", "attester_id": "p-02", "ts": "2026-04-09T09:32:00Z", "tags": ["treasurer", "handshake_close"], "payload": { "amount_zmw": 1000 } }
+  ],
+  "handshakes": [
+    { "id": "h-apr-01", "type": "dispatch_receipt", "label": "Contribution → ledger", "attestation_ids": ["a-apr-01a", "a-apr-01b"], "status": "closed", "tolerance_note": "Amount match ZMW 600." },
+    { "id": "h-apr-02", "type": "outcome_verification", "label": "Loan issuance (quorum)", "attestation_ids": ["a-apr-02a", "a-apr-02b", "a-apr-02c"], "status": "closed", "tolerance_note": "Three officer signatures required, all present." },
+    { "id": "h-apr-03", "type": "dispatch_receipt", "label": "Repayment → ledger", "attestation_ids": ["a-apr-03a", "a-apr-03b"], "status": "closed", "tolerance_note": "Amount match ZMW 1,000." }
+  ],
+  "credentials": [
+    { "id": "c-savings", "party_id": "p-01", "name": "188 events, 100% repayment rate, 24 active members", "composed_from": ["h-apr-01", "h-apr-02", "h-apr-03"], "hash": "f3018c22aabb" }
+  ]
+}
