@@ -10,6 +10,7 @@ import TrustScore from './components/TrustScore';
 import FraudDetection from './components/FraudDetection';
 import PortArchitecture from './components/PortArchitecture';
 import BuildSequence from './components/BuildSequence';
+import Profitability from './components/Profitability';
 import { C, FONT } from './theme';
 
 export default function App() {
@@ -35,6 +36,8 @@ export default function App() {
       <PortArchitecture />
       <div className="divider" />
       <BuildSequence />
+      <div className="divider" />
+      <Profitability />
       <div className="divider" />
 
       {/* Footer */}

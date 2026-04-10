@@ -10,6 +10,7 @@ const links = [
   ['fraud', 'Fraud'],
   ['ports', 'Ports'],
   ['phases', 'Phases'],
+  ['profitability', 'Economics'],
 ];
 
 export default function Nav() {
