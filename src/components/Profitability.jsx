@@ -43,12 +43,23 @@ const UNITS = [
   },
   {
     line: 'Export compliance dossier',
-    who: 'EU buyers, exporters',
-    price: 'USD 25',
-    priceNote: 'per batch · EUDR + MRL + cold chain',
-    rationale: 'A full evidence chain for one container. Priced against the cost of a buyer\'s own due-diligence file.',
+    who: 'EU importers, retailers, traders (corporate)',
+    price: 'USD 180',
+    priceNote: 'per batch · EUDR + CSDDD + MRL + cold chain',
+    rationale: 'A full reconcilable evidence chain for one container, sized against the cost a corporation would otherwise pay an auditor for the same assurance. Priced below the internal cost of a compliance analyst hour, not above.',
     sign: '+',
     color: C.cuHi,
+    primary: true,
+  },
+  {
+    line: 'Enterprise compliance contract',
+    who: 'EU corporate buyers with portfolio exposure',
+    price: 'USD 60–220k',
+    priceNote: 'per year · unlimited batches on one commodity',
+    rationale: 'For a corporation sourcing thousands of containers, per-batch pricing is friction. Annual contracts are priced against the EUDR / CSDDD fine envelope — a single violation is multi-million, which makes this line item invisible.',
+    sign: '+',
+    color: C.cuHi,
+    primary: true,
   },
   {
     line: 'Third-party API call',
@@ -76,34 +87,34 @@ const RAMP = [
   },
   {
     phase: 'P2',
-    label: 'Depot SaaS',
+    label: 'Depot SaaS + first dossiers',
     when: 'Q4 2026',
-    rev: 45,
-    detail: '18 depots × ZMW 2,500/mo. First recurring line.',
+    rev: 85,
+    detail: '18 depots × ZMW 2,500/mo + ~30 export dossiers/mo at USD 180. First corporate cash.',
     color: C.egBr,
   },
   {
     phase: 'P3',
-    label: 'Operators + CCSMP',
+    label: 'First enterprise contract',
     when: 'Q2 2027',
-    rev: 165,
-    detail: 'Depot SaaS + operator subs + 500 schools × ZMW 120.',
+    rev: 290,
+    detail: 'Depot SaaS + CCSMP line + first corporate annual contract (USD ~80k/yr on one commodity). Breakeven crossed.',
     color: C.egVi,
   },
   {
     phase: 'P4',
-    label: 'Trust queries',
+    label: 'Three enterprise contracts',
     when: 'Q4 2027',
-    rev: 320,
-    detail: 'Add ~20,000 profile queries/mo at ZMW 8. Breakeven crossed.',
+    rev: 620,
+    detail: 'Three corporate buyers on annual contracts + growing dossier volume + trust queries. Corporate compliance is now the dominant line.',
     color: C.egHi,
   },
   {
     phase: 'P5',
-    label: 'API + export',
+    label: 'Platform margins',
     when: '2028+',
-    rev: 780,
-    detail: 'Add 200 EUDR dossiers/mo + API usage. Infrastructure margins.',
+    rev: 1350,
+    detail: '8+ enterprise contracts, API usage from fintechs and insurers, export dossiers at 400+/mo. Operating on infrastructure margins.',
     color: C.cuHi,
   },
 ];
@@ -177,6 +188,8 @@ export default function Profitability({ embedded = false }) {
               padding: '18px 22px',
               borderBottom: i === UNITS.length - 1 ? 'none' : `1px solid ${C.s3}`,
               alignItems: 'start',
+              background: u.primary ? C.eg : 'transparent',
+              borderLeft: u.primary ? `3px solid ${C.egHi}` : '3px solid transparent',
             }}>
               {/* Line name with sign marker */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
@@ -186,12 +199,22 @@ export default function Profitability({ embedded = false }) {
                 }}>
                   {u.sign}
                 </span>
-                <span style={{
-                  fontFamily: FONT.display, fontSize: 15, fontWeight: 700,
-                  color: C.t1, lineHeight: 1.4,
-                }}>
-                  {u.line}
-                </span>
+                <div>
+                  <span style={{
+                    fontFamily: FONT.display, fontSize: 15, fontWeight: 700,
+                    color: C.t1, lineHeight: 1.4,
+                  }}>
+                    {u.line}
+                  </span>
+                  {u.primary && (
+                    <div style={{
+                      fontFamily: FONT.mono, fontSize: 9, color: C.egHi,
+                      letterSpacing: '.1em', marginTop: 2,
+                    }}>
+                      PRIMARY REVENUE
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.55 }}>
@@ -402,24 +425,25 @@ export default function Profitability({ embedded = false }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <BreakevenRow
+              a="Enterprise contracts alone"
+              b="1 contract"
+              c="USD 80k/yr"
+              highlight
+            />
+            <BreakevenRow
+              a="Export dossiers alone"
+              b="~32 batches/mo"
+              c="USD 180 each"
+            />
+            <BreakevenRow
               a="Depot SaaS alone"
               b="58 depots"
               c="ZMW 2,500 each"
             />
             <BreakevenRow
-              a="CCSMP fees alone"
-              b="1,210 schools"
-              c="ZMW 120 each"
-            />
-            <BreakevenRow
               a="Trust queries alone"
               b="18,125 queries/mo"
               c="ZMW 8 each"
-            />
-            <BreakevenRow
-              a="Export dossiers alone"
-              b="~230 batches/mo"
-              c="USD 25 each"
             />
           </div>
 
@@ -427,7 +451,7 @@ export default function Profitability({ embedded = false }) {
             fontFamily: FONT.body, fontSize: 13, color: C.t2,
             lineHeight: 1.65, marginTop: 22, marginBottom: 0,
           }}>
-            Any single line can clear the baseline on its own. The plan is to stack them, not to bet on one. Redundancy of revenue sources is redundancy of survival.
+            <strong>One enterprise corporate contract clears the whole cost baseline.</strong> Everything else — depot SaaS, trust queries, CCSMP fees — is redundancy and substrate, not the thesis. The thesis is that EUDR and CSDDD have put a number on what a credible evidence chain is worth, and the number is large enough that an honest implementation can run for a year on one signature.
           </p>
         </div>
       </div>
@@ -458,16 +482,33 @@ export default function Profitability({ embedded = false }) {
 }
 
 // Small helper for the breakeven rows
-function BreakevenRow({ a, b, c }) {
+function BreakevenRow({ a, b, c, highlight = false }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
-      paddingBottom: 8,
-      borderBottom: `1px dashed ${C.egBr}`,
+      paddingBottom: 10, paddingTop: highlight ? 4 : 0,
+      paddingLeft: highlight ? 10 : 0, paddingRight: highlight ? 10 : 0,
+      background: highlight ? '#FFFFFF' : 'transparent',
+      borderLeft: highlight ? `3px solid ${C.egHi}` : 'none',
+      borderRadius: highlight ? 4 : 0,
+      borderBottom: highlight ? 'none' : `1px dashed ${C.egBr}`,
+      marginBottom: highlight ? 4 : 0,
     }}>
-      <span style={{ fontFamily: FONT.body, fontSize: 13, color: C.t2 }}>{a}</span>
+      <span style={{
+        fontFamily: FONT.body, fontSize: highlight ? 14 : 13,
+        color: highlight ? C.t1 : C.t2,
+        fontWeight: highlight ? 700 : 400,
+      }}>
+        {a}
+      </span>
       <span style={{ textAlign: 'right' }}>
-        <span style={{ fontFamily: FONT.mono, fontSize: 14, fontWeight: 600, color: C.egHi }}>{b}</span>
+        <span style={{
+          fontFamily: FONT.mono,
+          fontSize: highlight ? 16 : 14,
+          fontWeight: 700, color: C.egHi,
+        }}>
+          {b}
+        </span>
         <span style={{ fontFamily: FONT.mono, fontSize: 11, color: C.t4, marginLeft: 8 }}>@ {c}</span>
       </span>
     </div>

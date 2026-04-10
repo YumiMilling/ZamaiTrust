@@ -57,6 +57,9 @@ export default function AvocadoBatchDetail() {
         </div>
       </div>
 
+      {/* Buyer-view panel — what the corporate compliance officer sees */}
+      <BuyerViewPanel batch={batch} buyer={buyer} view={view} />
+
       {/* Exception panel — only on the amber batch */}
       {batch.exception && (
         <ExceptionPanel exception={batch.exception} batch={batch} view={view} />
@@ -108,6 +111,106 @@ export default function AvocadoBatchDetail() {
         parties={avocado.parties}
         view={view}
       />
+    </div>
+  );
+}
+
+function BuyerViewPanel({ batch, buyer, view }) {
+  // What a corporate compliance officer sees: regulatory coverage,
+  // their own due-diligence file state, and the next required action.
+  const eudr = batch.eudr_compliant;
+  const mrl  = batch.mrl_compliant;
+  const coverage = [
+    { framework: 'EUDR',           label: 'Deforestation + origin', covered: eudr,  note: eudr ? 'All contributing orchards geo-verified.' : 'One contributing orchard geolocation missing. File cannot close.' },
+    { framework: 'CSDDD',          label: 'Human rights + environment due diligence', covered: eudr, note: eudr ? 'Chain of custody auditable to source.' : 'Chain of custody breaks at unverified orchard. Required evidence absent.' },
+    { framework: 'EU MRL',         label: 'Pesticide residue thresholds', covered: mrl, note: 'Lab result attested by ISO/IEC 17025 accredited party.' },
+    { framework: 'Cold chain',     label: 'Product integrity', covered: batch.cold_chain_intact, note: batch.cold_chain_intact === null ? 'Batch not yet in cold chain.' : batch.cold_chain_intact ? 'Continuous sensor trace.' : 'Break in sensor trace.' },
+  ];
+  const canClose = coverage.every((c) => c.covered === true);
+  const buyerStatusColor = canClose ? C.green : C.cuHi;
+
+  return (
+    <div style={{
+      marginBottom: 28,
+      padding: 24,
+      background: C.s2,
+      border: `1px solid ${C.s3}`,
+      borderTop: `3px solid ${buyerStatusColor}`,
+      borderRadius: 8,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6, flexWrap: 'wrap', gap: 10 }}>
+        <div style={{
+          fontFamily: FONT.mono, fontSize: 11, color: buyerStatusColor,
+          letterSpacing: '.12em', fontWeight: 700,
+        }}>
+          BUYER VIEW · CORPORATE DUE-DILIGENCE FILE
+        </div>
+        <div style={{ fontFamily: FONT.mono, fontSize: 11, color: C.t4 }}>
+          {view === 'architecture' ? `party:${buyer.id}` : buyer.name}
+        </div>
+      </div>
+      <h2 style={{
+        fontFamily: FONT.display, fontSize: 20, fontWeight: 800,
+        color: C.t1, lineHeight: 1.3, marginBottom: 6,
+      }}>
+        {canClose
+          ? 'Due-diligence file is complete for this batch.'
+          : 'Due-diligence file is incomplete. Purchasing this batch exposes the buyer to regulatory liability.'}
+      </h2>
+      <p style={{
+        fontFamily: FONT.body, fontSize: 13, color: C.t3,
+        lineHeight: 1.6, margin: 0, marginBottom: 14, maxWidth: 720,
+      }}>
+        The corporate buyer is liable under EUDR and CSDDD for any claim they cannot substantiate with a reconcilable evidence chain. This panel is what their compliance officer sees when deciding whether to accept the batch into their supply chain.
+      </p>
+
+      <div style={{
+        display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: 8, marginBottom: 12,
+      }}>
+        {coverage.map((c) => {
+          const color = c.covered === true ? C.green : c.covered === false ? C.red : C.t4;
+          const mark  = c.covered === true ? '✓' : c.covered === false ? '✕' : '—';
+          return (
+            <div key={c.framework} style={{
+              padding: '10px 14px',
+              background: C.base,
+              border: `1px solid ${C.s3}`,
+              borderLeft: `3px solid ${color}`,
+              borderRadius: 4,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+                <div style={{ fontFamily: FONT.mono, fontSize: 12, fontWeight: 700, color: C.t1 }}>
+                  {c.framework}
+                </div>
+                <div style={{ fontFamily: FONT.mono, fontSize: 14, fontWeight: 700, color }}>
+                  {mark}
+                </div>
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 12, color: C.t3, lineHeight: 1.5 }}>
+                {c.label}
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 11, color: C.t4, marginTop: 3, lineHeight: 1.5 }}>
+                {c.note}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{
+        padding: '10px 14px',
+        background: canClose ? C.eg : C.amberLt,
+        border: `1px solid ${canClose ? C.egBr : C.cuMid}`,
+        borderRadius: 4,
+        fontFamily: FONT.body, fontSize: 13, color: C.t1,
+        lineHeight: 1.55,
+      }}>
+        <strong>Recommended action:</strong>{' '}
+        {canClose
+          ? 'Accept batch. Evidence chain supports your due-diligence file end-to-end. Dossier hash is linked below as the audit artefact.'
+          : 'Do not finalise purchase until the missing attestation is collected and the handshake closes. Alternatively, request the exporter escalate to the operator to close the gap.'}
+      </div>
     </div>
   );
 }

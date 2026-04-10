@@ -34,13 +34,13 @@ export default function LandingPage() {
           color: C.t1, lineHeight: 1.1, marginBottom: 20,
           maxWidth: 860,
         }}>
-          One architecture, demonstrated through one fully-worked case and three adjacent ones.
+          The evidence layer behind corporate due-diligence files for African agricultural exports.
         </h1>
         <p style={{
           fontFamily: FONT.body, fontSize: 18, color: C.t2,
           lineHeight: 1.7, maxWidth: 760, marginBottom: 14,
         }}>
-          The featured case is a Zambian Hass avocado batch moving from an Eastern Province orchard, through a cooperative and a pack-house, past a residue lab and a cold chain, onto a vessel, to an EU buyer who needs an auditable evidence chain to clear their own due-diligence file.
+          The featured case is a Zambian Hass avocado batch moving from an Eastern Province orchard, through a cooperative and a pack-house, past a residue lab and a cold chain, onto a vessel, to an EU buyer. The buyer is a corporation with <strong style={{ color: C.t1 }}>EUDR and CSDDD liability</strong>. Their compliance file has to reconcile down to the orchard, per batch, or they pay the fine. That reconciliation is the product.
         </p>
         <p style={{
           fontFamily: FONT.body, fontSize: 16, color: C.t3,
@@ -48,6 +48,27 @@ export default function LandingPage() {
         }}>
           The three adjacent cases — an informal plumber, a freelance translator, a village savings group — exist to prove that the same five entities, the same attestation weighting, and the same handshake structure apply across domains with no modification to the core. Toggle between the <strong style={{ color: C.t1 }}>application view</strong> (what a user sees) and the <strong style={{ color: C.t1 }}>architecture view</strong> (the generic primitives) on any case.
         </p>
+
+        {/* Market signal callout */}
+        <div style={{
+          marginTop: 24, padding: '16px 22px',
+          background: C.eg, border: `1px solid ${C.egBr}`,
+          borderLeft: `3px solid ${C.egHi}`,
+          borderRadius: 4, maxWidth: 760,
+        }}>
+          <div style={{
+            fontFamily: FONT.mono, fontSize: 10, color: C.egHi,
+            letterSpacing: '.12em', marginBottom: 6,
+          }}>
+            WHERE THE MONEY IS
+          </div>
+          <p style={{
+            fontFamily: FONT.body, fontSize: 14, color: C.t1,
+            lineHeight: 1.7, margin: 0,
+          }}>
+            Signal from current work with <strong>UNEP Finance Initiative</strong> and ongoing market scoping across ag solutions (ERP-integrated supplier/distributor platforms, aggregator upgrades, UN compliance tooling): the budgets sit with <strong>corporations facing regulatory due-diligence pressure</strong> — EUDR, CSDDD, scope-3 disclosure, TNFD. Not with donor pilots. The avocado case is priced and framed against that target, not against NGO line items.
+          </p>
+        </div>
       </div>
 
       {/* Featured case */}
@@ -121,7 +142,37 @@ export default function LandingPage() {
         <AdjacentCard slug="savings-group" data={savings}    />
       </div>
 
-      <div style={{ marginTop: 50, padding: 24, background: C.s1, border: `1px solid ${C.s3}`, borderRadius: 6 }}>
+      {/* Market position — connects prototype to adjacent work */}
+      <div style={{
+        marginTop: 50,
+        fontFamily: FONT.mono, fontSize: 11, color: C.t4,
+        letterSpacing: '.1em', marginBottom: 14,
+      }}>
+        MARKET POSITION · HOW THIS PROTOTYPE SITS NEXT TO ADJACENT WORK
+      </div>
+      <div style={{
+        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12,
+        marginBottom: 50,
+      }}>
+        <PositionCard
+          tag="ERP · AGGREGATOR UPGRADE"
+          title="Supplier / distributor platforms"
+          body="Upgraded Aggregator serving ag suppliers and distributors. The trust layer is the evidence substrate it writes into — the thing that makes reconciliation across two independent ERPs actually trustworthy."
+        />
+        <PositionCard
+          tag="UNEP FI · COMPLIANCE TOOLING"
+          title="Corporate sustainable finance"
+          body="Compliance tools under development with UN partners, targeting banks and corporate buyers with EUDR / CSDDD / SFDR / TNFD exposure. The trust layer is the data source their portfolio-level tools currently do not have."
+        />
+        <PositionCard
+          tag="THIS PROTOTYPE"
+          title="The evidence layer itself"
+          body="The shared primitive underneath both. Demonstrated here on a Zambian Hass avocado batch because that is the cleanest case to make the architecture legible to a technical reader in one sitting."
+          primary
+        />
+      </div>
+
+      <div style={{ padding: 24, background: C.s1, border: `1px solid ${C.s3}`, borderRadius: 6 }}>
         <div style={{
           fontFamily: FONT.mono, fontSize: 11, color: C.t4,
           letterSpacing: '.08em', marginBottom: 8,
@@ -147,6 +198,38 @@ function Stat({ label, value }) {
       </div>
       <div style={{ fontFamily: FONT.mono, fontSize: 10, color: C.t4, letterSpacing: '.08em' }}>
         {label.toUpperCase()}
+      </div>
+    </div>
+  );
+}
+
+function PositionCard({ tag, title, body, primary = false }) {
+  const accent = primary ? C.egHi : C.cuHi;
+  return (
+    <div style={{
+      padding: 20,
+      background: primary ? C.eg : C.s2,
+      border: `1px solid ${primary ? C.egBr : C.s3}`,
+      borderTop: `3px solid ${accent}`,
+      borderRadius: 6,
+    }}>
+      <div style={{
+        fontFamily: FONT.mono, fontSize: 10, color: accent,
+        letterSpacing: '.08em', marginBottom: 6,
+      }}>
+        {tag}
+      </div>
+      <div style={{
+        fontFamily: FONT.display, fontSize: 15, fontWeight: 700,
+        color: C.t1, marginBottom: 8, lineHeight: 1.3,
+      }}>
+        {title}
+      </div>
+      <div style={{
+        fontFamily: FONT.body, fontSize: 13, color: C.t3,
+        lineHeight: 1.6,
+      }}>
+        {body}
       </div>
     </div>
   );
