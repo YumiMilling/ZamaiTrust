@@ -1,15 +1,18 @@
 import { C } from '../theme';
 
 const links = [
-  ['tiers', 'Trust Tiers'],
+  ['context', 'Context'],
+  ['rails', 'Two Rails'],
+  ['tiers', 'Tiers'],
   ['entities', 'Entities'],
   ['flow', 'Flow'],
   ['offline', 'Offline'],
   ['disputes', 'Disputes'],
-  ['trust', 'Trust Score'],
+  ['trust', 'Score'],
   ['fraud', 'Fraud'],
   ['ports', 'Ports'],
   ['phases', 'Phases'],
+  ['sources', 'Sources'],
 ];
 
 export default function Nav() {

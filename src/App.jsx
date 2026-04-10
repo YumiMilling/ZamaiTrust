@@ -1,6 +1,8 @@
 import './styles.css';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
+import Context from './components/Context';
+import TwoRails from './components/TwoRails';
 import TrustTiers from './components/TrustTiers';
 import EntityMap from './components/EntityMap';
 import AttestationFlow from './components/AttestationFlow';
@@ -10,6 +12,7 @@ import TrustScore from './components/TrustScore';
 import FraudDetection from './components/FraudDetection';
 import PortArchitecture from './components/PortArchitecture';
 import BuildSequence from './components/BuildSequence';
+import Sources from './components/Sources';
 import { C, FONT } from './theme';
 
 export default function App() {
@@ -17,6 +20,10 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      <div className="divider" />
+      <Context />
+      <div className="divider" />
+      <TwoRails />
       <div className="divider" />
       <TrustTiers />
       <div className="divider" />
@@ -36,18 +43,20 @@ export default function App() {
       <div className="divider" />
       <BuildSequence />
       <div className="divider" />
+      <Sources />
+      <div className="divider" />
 
       {/* Footer */}
       <footer style={{ padding: '55px 34px', textAlign: 'center', background: C.s1, borderTop: `1px solid ${C.s3}` }}>
         <div style={{ fontFamily: FONT.display, fontSize: 16, fontWeight: 800, color: C.egHi, marginBottom: 8 }}>
           Thiqa
         </div>
-        <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t3, lineHeight: 1.75, maxWidth: 500, margin: '0 auto' }}>
-          Trust infrastructure for the real economy. Agriculture first, domain-agnostic by design.
+        <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t3, lineHeight: 1.75, maxWidth: 560, margin: '0 auto' }}>
+          Trust infrastructure for the real economy. Soya is the pilot because soya is EUDR-captured and rotates with maize \u2014 the mechanism is domain-agnostic.
           <br/>Designed in Batoka, built by ZamAi Solutions.
         </p>
         <p style={{ fontFamily: FONT.mono, fontSize: 12, color: C.t4, marginTop: 21 }}>
-          Architecture Note — April 2026
+          Concept Note v2 \u2014 April 2026
         </p>
       </footer>
     </>

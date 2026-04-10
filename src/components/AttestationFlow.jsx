@@ -27,7 +27,7 @@ export default function AttestationFlow() {
       <div className="inner">
         <div className="eye">ATTESTATION LIFECYCLE</div>
         <h2 className="h2">How trust flows</h2>
-        <p className="p">A real example: a soya delivery at a NewGrowCo depot. Watch each stage light up.</p>
+        <p className="p">A worked example: a soya delivery at a pilot depot, on its way to a warehouse receipt. Watch each stage light up. The same primitive handles a workshop attendance or a rent payment.</p>
 
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', maxWidth: W, display: 'block', margin: '34px auto 0' }}>
           <defs>

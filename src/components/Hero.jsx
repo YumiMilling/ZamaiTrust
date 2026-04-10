@@ -7,25 +7,25 @@ const primitives = [
 ];
 
 const verticals = [
-  { label: 'Agriculture', color: C.green },
-  { label: 'Services', color: C.cuHi },
-  { label: 'Transport', color: C.purple },
-  { label: 'Construction', color: C.coral },
+  { label: 'Soya (pilot)', color: C.green },
+  { label: 'Maize', color: C.cuHi },
+  { label: 'Legumes & oilseeds', color: C.purple },
+  { label: 'Beyond agriculture', color: C.coral },
 ];
 
 export default function Hero() {
   return (
     <section className="sec" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>TRUST INFRASTRUCTURE · ARCHITECTURE NOTE</div>
+      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>CONCEPT NOTE v2 · APRIL 2026</div>
       <h1 className="h1" style={{ fontSize: 72, marginBottom: 12 }}>Thiqa</h1>
       <p style={{ fontFamily: FONT.display, fontSize: 28, fontWeight: 700, color: C.cuHi, marginBottom: 28 }}>
-        The verification layer for the real economy.
+        The verification layer for a market that is quietly being rebuilt.
       </p>
       <p className="p" style={{ fontSize: 20 }}>
-        85% of Zambian employment is informal. The formal economy outside banking and mining isn't much better. Nobody can verify anything without physically being present or trusting a piece of paper.
+        Zambia\u2019s state marketing apparatus is in transition. FISP has been digitised and opened to 973 private agro-dealers. FRA is under fiscal pressure that will force it back toward a pure reserve role by the 2026/27 season. At the same time, European buyers of Zambian soya now carry binding legal obligations for plot-level provenance.
       </p>
       <p className="p" style={{ fontSize: 18, color: C.t2 }}>
-        Thiqa is the trust layer. It doesn't replace the actors or the transactions. It makes them <strong>visible</strong>, <strong>verifiable</strong>, and <strong>trustworthy</strong>. A grain delivery, a plumbing job, a rent payment — same primitive. Two parties, an event, an attestation.
+        Three separate facts, converging. Each creates structural demand for private-sector market infrastructure that doesn\u2019t replace state mechanisms \u2014 it gives smallholders commercial alternatives as the state share of marketing recedes. <strong>Thiqa is the verification fabric that makes those alternatives legible.</strong> Two parties, an event, an attestation. Soya delivery, grain inspection, warehouse receipt, rent payment \u2014 same primitive.
       </p>
 
       <div style={{ display: 'flex', gap: 16, marginTop: 44, flexWrap: 'wrap' }}>
@@ -49,7 +49,7 @@ export default function Hero() {
         <span style={{
           fontFamily: FONT.mono, fontSize: 13, padding: '6px 14px', borderRadius: 4,
           background: C.base, border: `1px dashed ${C.s4}`, color: C.t4,
-        }}>Domain-agnostic</span>
+        }}>Domain-agnostic by design</span>
       </div>
     </section>
   );
