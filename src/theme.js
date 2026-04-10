@@ -59,7 +59,7 @@ export const PORT_COLORS = {
 };
 
 export const FONT = {
-  display: "'Syne', sans-serif",
-  body: "'DM Sans', sans-serif",
-  mono: "'JetBrains Mono', monospace",
+  display: "'Fraunces', 'Source Serif 4', Georgia, serif",
+  body: "'Source Serif 4', Georgia, 'Times New Roman', serif",
+  mono: "'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace",
 };

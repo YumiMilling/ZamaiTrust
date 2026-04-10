@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
 import { C, FONT } from '../theme';
 import avocado from '../data/avocado.json';
-import plumber from '../data/plumber.json';
-import translator from '../data/translator.json';
-import savings from '../data/savings_group.json';
 
 export default function LandingPage() {
   return (
@@ -31,22 +28,22 @@ export default function LandingPage() {
         </div>
         <h1 style={{
           fontFamily: FONT.display, fontSize: 46, fontWeight: 800,
-          color: C.t1, lineHeight: 1.1, marginBottom: 20,
-          maxWidth: 860,
+          color: C.t1, lineHeight: 1.12, marginBottom: 20,
+          maxWidth: 860, letterSpacing: '-0.01em',
         }}>
           The evidence layer behind corporate due-diligence files for African agricultural exports.
         </h1>
         <p style={{
-          fontFamily: FONT.body, fontSize: 18, color: C.t2,
-          lineHeight: 1.7, maxWidth: 760, marginBottom: 14,
+          fontFamily: FONT.body, fontSize: 17, color: C.t2,
+          lineHeight: 1.75, maxWidth: 720, marginBottom: 14,
         }}>
-          The featured case is a Zambian Hass avocado batch moving from an Eastern Province orchard, through a cooperative and a pack-house, past a residue lab and a cold chain, onto a vessel, to an EU buyer. The buyer is a corporation with <strong style={{ color: C.t1 }}>EUDR and CSDDD liability</strong>. Their compliance file has to reconcile down to the orchard, per batch, or they pay the fine. That reconciliation is the product.
+          This prototype works one case end to end: a Zambian Hass avocado batch moving from an Eastern Province orchard, through a cooperative and a pack-house, past a residue lab and a cold chain, onto a vessel, to an EU buyer. The buyer is a corporation with <strong style={{ color: C.t1 }}>EUDR and CSDDD liability</strong>. Their compliance file has to reconcile down to the orchard, per batch, or they pay the fine. That reconciliation is the product.
         </p>
         <p style={{
-          fontFamily: FONT.body, fontSize: 16, color: C.t3,
-          lineHeight: 1.75, maxWidth: 760,
+          fontFamily: FONT.body, fontSize: 15, color: C.t3,
+          lineHeight: 1.75, maxWidth: 720,
         }}>
-          The three adjacent cases — an informal plumber, a freelance translator, a village savings group — exist to prove that the same five entities, the same attestation weighting, and the same handshake structure apply across domains with no modification to the core. Toggle between the <strong style={{ color: C.t1 }}>application view</strong> (what a user sees) and the <strong style={{ color: C.t1 }}>architecture view</strong> (the generic primitives) on any case.
+          One case, worked in detail. Three batches, one of them on hold. The exception is the most important screen in the prototype. Every batch can be read in <strong style={{ color: C.t1 }}>application view</strong> (what a compliance officer sees) or <strong style={{ color: C.t1 }}>architecture view</strong> (the generic primitives underneath). Toggle in the header on any case screen.
         </p>
 
         {/* Market signal callout */}
@@ -54,7 +51,7 @@ export default function LandingPage() {
           marginTop: 24, padding: '16px 22px',
           background: C.eg, border: `1px solid ${C.egBr}`,
           borderLeft: `3px solid ${C.egHi}`,
-          borderRadius: 4, maxWidth: 760,
+          borderRadius: 4, maxWidth: 720,
         }}>
           <div style={{
             fontFamily: FONT.mono, fontSize: 10, color: C.egHi,
@@ -76,7 +73,7 @@ export default function LandingPage() {
         fontFamily: FONT.mono, fontSize: 11, color: C.t4,
         letterSpacing: '.1em', marginBottom: 14,
       }}>
-        FEATURED CASE
+        THE CASE
       </div>
       <Link to="/case/avocado" style={{
         display: 'block', textDecoration: 'none',
@@ -86,10 +83,7 @@ export default function LandingPage() {
         borderRadius: 8,
         padding: 38,
         marginBottom: 50,
-        transition: 'transform .15s, box-shadow .15s',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,.08)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+      }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32 }}>
           <div style={{ flex: 1 }}>
             <div style={{
@@ -101,17 +95,18 @@ export default function LandingPage() {
             <h2 style={{
               fontFamily: FONT.display, fontSize: 28, fontWeight: 800,
               color: C.t1, marginBottom: 10, lineHeight: 1.2,
+              letterSpacing: '-0.005em',
             }}>
               {avocado.case_name}
             </h2>
             <p style={{
               fontFamily: FONT.body, fontSize: 15, color: C.t2,
-              lineHeight: 1.65, margin: 0, maxWidth: 620,
+              lineHeight: 1.7, margin: 0, maxWidth: 620,
             }}>
-              {avocado.case_tagline} Three batches, one of them on hold because a contributing orchard's geolocation is missing and the EUDR origin attestation can't close. The exception is the most important screen in the prototype.
+              {avocado.case_tagline} Three batches, one of them on hold because a contributing orchard's geolocation is missing and the EUDR origin attestation cannot close. The exception is the most important screen in the prototype.
             </p>
 
-            <div style={{ display: 'flex', gap: 20, marginTop: 22, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 24, marginTop: 22, flexWrap: 'wrap' }}>
               <Stat label="Parties"       value={avocado.parties.length} />
               <Stat label="Batches"       value={avocado.batches.length} />
               <Stat label="Events"        value={avocado.batches.reduce((s, b) => s + b.events.length, 0)} />
@@ -129,22 +124,9 @@ export default function LandingPage() {
         </div>
       </Link>
 
-      {/* Adjacent cases */}
-      <div style={{
-        fontFamily: FONT.mono, fontSize: 11, color: C.t4,
-        letterSpacing: '.1em', marginBottom: 14,
-      }}>
-        ADJACENT CASES · SAME ARCHITECTURE, DIFFERENT DOMAINS
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-        <AdjacentCard slug="plumber"       data={plumber}    />
-        <AdjacentCard slug="translator"    data={translator} />
-        <AdjacentCard slug="savings-group" data={savings}    />
-      </div>
-
       {/* Market position — connects prototype to adjacent work */}
       <div style={{
-        marginTop: 50,
+        marginTop: 10,
         fontFamily: FONT.mono, fontSize: 11, color: C.t4,
         letterSpacing: '.1em', marginBottom: 14,
       }}>
@@ -180,8 +162,8 @@ export default function LandingPage() {
           WHAT THIS PROTOTYPE DOES NOT CLAIM
         </div>
         <p style={{
-          fontFamily: FONT.body, fontSize: 13, color: C.t3,
-          lineHeight: 1.65, margin: 0,
+          fontFamily: FONT.body, fontSize: 14, color: C.t3,
+          lineHeight: 1.7, margin: 0,
         }}>
           No backend, no Supabase, no real attestations, no live users, no commercial traction. This is an architectural demonstration. The closest operational reference implementation is the CCSMP school feeding pilot running on real commodity flows in Choma District. Production evidence lives there, not here.
         </p>
@@ -193,7 +175,7 @@ export default function LandingPage() {
 function Stat({ label, value }) {
   return (
     <div>
-      <div style={{ fontFamily: FONT.display, fontSize: 22, fontWeight: 800, color: C.t1 }}>
+      <div style={{ fontFamily: FONT.display, fontSize: 24, fontWeight: 800, color: C.t1 }}>
         {value}
       </div>
       <div style={{ fontFamily: FONT.mono, fontSize: 10, color: C.t4, letterSpacing: '.08em' }}>
@@ -220,7 +202,7 @@ function PositionCard({ tag, title, body, primary = false }) {
         {tag}
       </div>
       <div style={{
-        fontFamily: FONT.display, fontSize: 15, fontWeight: 700,
+        fontFamily: FONT.display, fontSize: 16, fontWeight: 700,
         color: C.t1, marginBottom: 8, lineHeight: 1.3,
       }}>
         {title}
@@ -232,40 +214,5 @@ function PositionCard({ tag, title, body, primary = false }) {
         {body}
       </div>
     </div>
-  );
-}
-
-function AdjacentCard({ slug, data }) {
-  return (
-    <Link to={`/case/${slug}`} style={{
-      display: 'block', textDecoration: 'none',
-      background: C.s2,
-      border: `1px solid ${C.s3}`,
-      borderTop: `3px solid ${C.cuHi}`,
-      borderRadius: 6,
-      padding: 22,
-      transition: 'transform .15s, box-shadow .15s',
-    }}
-    onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,.06)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-    onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-      <div style={{
-        fontFamily: FONT.mono, fontSize: 10, color: C.cuHi,
-        letterSpacing: '.08em', marginBottom: 6,
-      }}>
-        ADJACENT
-      </div>
-      <div style={{
-        fontFamily: FONT.display, fontSize: 17, fontWeight: 700, color: C.t1,
-        marginBottom: 8, lineHeight: 1.3,
-      }}>
-        {data.case_name}
-      </div>
-      <p style={{
-        fontFamily: FONT.body, fontSize: 13, color: C.t3,
-        lineHeight: 1.6, margin: 0,
-      }}>
-        {data.case_tagline}
-      </p>
-    </Link>
   );
 }

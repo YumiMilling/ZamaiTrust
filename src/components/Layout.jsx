@@ -2,10 +2,7 @@ import { Link, NavLink, Outlet, useLocation, useSearchParams } from 'react-route
 import { C, FONT } from '../theme';
 
 const CASES = [
-  { slug: 'avocado',       label: 'Hass avocado → EU',   tag: 'Featured', color: C.egHi },
-  { slug: 'plumber',       label: 'Lusaka plumber',      tag: 'Adjacent', color: C.cuHi },
-  { slug: 'translator',    label: 'Kitwe translator',    tag: 'Adjacent', color: C.cuHi },
-  { slug: 'savings-group', label: 'Savings group',       tag: 'Adjacent', color: C.cuHi },
+  { slug: 'avocado', label: 'Hass avocado → EU', tag: 'Case', color: C.egHi },
 ];
 
 const META = [
@@ -87,7 +84,7 @@ export default function Layout() {
             fontFamily: FONT.mono, fontSize: 11, color: C.t4,
             letterSpacing: '.1em', marginBottom: 14,
           }}>
-            CASES
+            WORKED CASE
           </div>
           {CASES.map((c) => (
             <NavLink key={c.slug} to={`/case/${c.slug}`}

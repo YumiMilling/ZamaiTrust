@@ -35,7 +35,7 @@ export default function ArchitecturePage() {
         fontFamily: FONT.body, fontSize: 16, color: C.t3,
         lineHeight: 1.7, maxWidth: 760, marginBottom: 14,
       }}>
-        Domain specificity lives in the tag vocabulary and the port configurations, not in the core schema. Adding a new domain does not require a schema migration. It requires a new tag vocabulary and potentially new port adapters. This is what makes the architecture domain-general — and what lets the same primitives describe a Zambian avocado batch, a Lusaka plumber, and a village savings group.
+        Domain specificity lives in the tag vocabulary and the port configurations, not in the core schema. Adding a new domain does not require a schema migration. It requires a new tag vocabulary and potentially new port adapters. This is what makes the architecture domain-general — an agricultural export batch, a services invoice, and a community ledger cycle are all built from the same five primitives, with no extensions.
       </p>
       <p style={{
         fontFamily: FONT.body, fontSize: 14, color: C.t4,
@@ -49,7 +49,7 @@ export default function ArchitecturePage() {
         num="01"
         eyebrow="CORE ENTITIES"
         title="Five building blocks"
-        lede="The Trust Layer defines five types of thing. Every case in the prototype — agricultural export, services, community finance — is expressed as some combination of these five. There is nothing else."
+        lede="The Trust Layer defines five types of thing. Every claim the architecture has to reason about — who did what, when, where, to whom — is expressed as some combination of these five. There is nothing else."
       >
         <EntityMap />
       </Section>
@@ -59,7 +59,7 @@ export default function ArchitecturePage() {
         num="02"
         eyebrow="ATTESTATION LIFECYCLE"
         title="How an event becomes credible"
-        lede="A worked example: a 480kg Hass consignment leaving Kanyanta Orchard and arriving at the Chipata pack-house. The same five-step flow applies to every case in the prototype."
+        lede="A worked example from the avocado case: a 480kg Hass consignment leaving Kanyanta Orchard and arriving at the Chipata pack-house. The same five-step flow applies regardless of domain."
       >
         <AttestationFlow />
       </Section>

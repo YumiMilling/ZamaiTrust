@@ -4,7 +4,6 @@ import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import AvocadoCase from './pages/AvocadoCase';
 import AvocadoBatchDetail from './pages/AvocadoBatchDetail';
-import AdjacentCasePage from './pages/AdjacentCasePage';
 import PrinciplesPage from './pages/PrinciplesPage';
 import ArchitecturePage from './pages/ArchitecturePage';
 import EconomicsPage from './pages/EconomicsPage';
@@ -18,9 +17,6 @@ export default function App() {
 
           <Route path="/case/avocado"             element={<AvocadoCase />} />
           <Route path="/case/avocado/batch/:id"   element={<AvocadoBatchDetail />} />
-          <Route path="/case/plumber"             element={<AdjacentCasePage caseKey="plumber"    />} />
-          <Route path="/case/translator"          element={<AdjacentCasePage caseKey="translator" />} />
-          <Route path="/case/savings-group"       element={<AdjacentCasePage caseKey="savings"    />} />
 
           <Route path="/principles"   element={<PrinciplesPage />} />
           <Route path="/architecture" element={<ArchitecturePage />} />
