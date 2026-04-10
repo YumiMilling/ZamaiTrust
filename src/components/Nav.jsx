@@ -3,6 +3,8 @@ import { C } from '../theme';
 const links = [
   ['context', 'Context'],
   ['rails', 'Two Rails'],
+  ['business', 'Business'],
+  ['phases', 'Phases'],
   ['tiers', 'Tiers'],
   ['entities', 'Entities'],
   ['flow', 'Flow'],
@@ -11,7 +13,6 @@ const links = [
   ['trust', 'Score'],
   ['fraud', 'Fraud'],
   ['ports', 'Ports'],
-  ['phases', 'Phases'],
   ['sources', 'Sources'],
 ];
 

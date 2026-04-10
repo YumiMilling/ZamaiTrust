@@ -51,19 +51,20 @@ const PHASES = [
   },
   {
     phase: 4,
-    label: 'Trust profiles open to lenders',
+    label: 'Trust profiles open to lenders & PRB banks',
     status: 'Planned',
     statusColor: C.t3,
     color: C.purple,
     items: [
       '/trust endpoint goes live',
       'Farmers and operators share profiles with lenders and insurers',
+      'First paid query from a PRB / NZBA signatory bank against its ag-portfolio reporting obligation (PCAF)',
+      'First paid query from a domestic MFI or input-credit partner',
       'Supplier credit based on visible trade history',
       'Daily Merkle roots over events for tamper-proof audit',
-      'First paid queries from a microfinance or input-credit partner',
     ],
-    revenue: 'Paid trust-profile queries (lenders, insurers, corporate buyers).',
-    unlocks: 'The credit-file substitute exists. A season of accumulated attestations is what makes it credible \u2014 not a pitch deck.',
+    revenue: 'Per-query fees and seasonal subscriptions from PRB / NZBA signatory banks (discharging PCAF ag-portfolio reporting), EUDR corporate buyers, local MFIs and insurers.',
+    unlocks: 'The credit-file substitute exists — and the same data also feeds a PRB bank’s PCAF reporting. Two independent money pools, one underlying profile.',
   },
   {
     phase: 5,
@@ -92,7 +93,7 @@ export default function BuildSequence() {
         <div className="eye">BUILD SEQUENCE</div>
         <h2 className="h2">Five phases, anchored to one cohort</h2>
         <p className="p">
-          Soya is the worked example because it is EUDR-captured and it rotates with maize \u2014 the mechanism itself is domain-agnostic. Tools are the cost centre. Verified, queryable trust data is the revenue. Tool fees and receipt issuance fund Phases 1\u20133; query revenue kicks in at Phase 4.
+          Soya is the worked example because it is EUDR-captured and it rotates with maize — the mechanism itself is domain-agnostic. Tools are the cost centre. Verified, queryable trust data is the revenue. Tool fees and receipt issuance fund Phases 1–3; query revenue kicks in at Phase 4.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginTop: 34 }}>
@@ -140,7 +141,7 @@ export default function BuildSequence() {
                   </span>
 
                   <span style={{ fontFamily: FONT.body, fontSize: 18, color: C.t3, transition: 'transform .2s', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)' }}>
-                    \u25be
+                    ▾
                   </span>
                 </div>
 
@@ -164,7 +165,7 @@ export default function BuildSequence() {
                               fontFamily: FONT.body, fontSize: 14, color: C.t1, lineHeight: 1.65,
                               padding: '4px 0', paddingLeft: 16, position: 'relative',
                             }}>
-                              <span style={{ position: 'absolute', left: 0, color: p.color }}>\u00b7</span>
+                              <span style={{ position: 'absolute', left: 0, color: p.color }}>·</span>
                               {item}
                             </li>
                           ))}
@@ -202,7 +203,7 @@ export default function BuildSequence() {
             The economics
           </div>
           <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t1, lineHeight: 1.75, margin: 0 }}>
-            Event creation and attestation are <strong>free</strong>. Trust profile queries, document uploads and warehouse receipts are <strong>paid</strong> \u2014 by lenders, insurers and corporate buyers whose own obligations are priced by law. The tools generate the data, the API monetises the intelligence, and the funding sits on the side where legal compliance makes non-payment impossible.
+            Event creation and attestation are <strong>free</strong>. Trust profile queries, document uploads and warehouse receipts are <strong>paid</strong>. The tools generate the data; the API monetises the intelligence; and the funding sits on the two sides where legal compliance (<strong>EUDR</strong>) and portfolio reporting (<strong>PRB / NZBA / PCAF</strong>) make non-payment impossible.
           </p>
         </div>
       </div>

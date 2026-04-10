@@ -16,16 +16,19 @@ const verticals = [
 export default function Hero() {
   return (
     <section className="sec" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>CONCEPT NOTE v2 · APRIL 2026</div>
+      <div className="eye" style={{ fontFamily: FONT.mono, fontSize: 14 }}>CONCEPT NOTE v2.1 · APRIL 2026</div>
       <h1 className="h1" style={{ fontSize: 72, marginBottom: 12 }}>Thiqa</h1>
       <p style={{ fontFamily: FONT.display, fontSize: 28, fontWeight: 700, color: C.cuHi, marginBottom: 28 }}>
         The verification layer for a market that is quietly being rebuilt.
       </p>
       <p className="p" style={{ fontSize: 20 }}>
-        Zambia\u2019s state marketing apparatus is in transition. FISP has been digitised and opened to 973 private agro-dealers. FRA is under fiscal pressure that will force it back toward a pure reserve role by the 2026/27 season. At the same time, European buyers of Zambian soya now carry binding legal obligations for plot-level provenance.
+        Zambia’s state marketing apparatus is in transition. FISP has been digitised and opened to 973 private agro-dealers. FRA is under fiscal pressure that will force it back toward a pure reserve role by the 2026/27 season.
+      </p>
+      <p className="p" style={{ fontSize: 18 }}>
+        At the same time, two independent corporate money pools now sit on exactly the data this creates demand for: European importers under the EU Deforestation Regulation, and signatory banks under UNEP FI’s Principles for Responsible Banking, Net-Zero Banking Alliance and PCAF financed-emissions methodology. Each has its own legal or reputational reason to pay for verified plot-level provenance on the same farmer.
       </p>
       <p className="p" style={{ fontSize: 18, color: C.t2 }}>
-        Three separate facts, converging. Each creates structural demand for private-sector market infrastructure that doesn\u2019t replace state mechanisms \u2014 it gives smallholders commercial alternatives as the state share of marketing recedes. <strong>Thiqa is the verification fabric that makes those alternatives legible.</strong> Two parties, an event, an attestation. Soya delivery, grain inspection, warehouse receipt, rent payment \u2014 same primitive.
+        Facts converging, pains already funded. <strong>Thiqa is the verification fabric that makes the private-sector alternatives legible.</strong> Two parties, an event, an attestation. Soya delivery, grain inspection, warehouse receipt, rent payment — same primitive.
       </p>
 
       <div style={{ display: 'flex', gap: 16, marginTop: 44, flexWrap: 'wrap' }}>

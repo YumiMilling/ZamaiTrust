@@ -20,7 +20,7 @@ const FACTS = [
     tag: 'OUTPUT SIDE',
     tagColor: C.cuHi,
     headline: 'FRA is scheduled to recede. Fiscal math will enforce it.',
-    body: 'CATSP\u2019s declared policy is to limit FRA to a Strategic Food Reserve role with explicit annual purchase caps and clearer market-entry rules. Practice diverged: in 2024/25, following a presidential directive, FRA bought more than 1.7 million MT of maize \u2014 well above its financing envelope and storage capacity. The 2026 national budget allocates only K2.1 billion to the Strategic Food Reserve, barely enough to cover a 500,000 MT target for the 2026/27 season, let alone service the debt from the 2024/25 over-purchase. The scale-down is real as policy and chaotic as implementation. 2026/27 is where political pressure and fiscal reality collide.',
+    body: 'CATSP’s declared policy is to limit FRA to a Strategic Food Reserve role with explicit annual purchase caps and clearer market-entry rules. Practice diverged: in 2024/25, following a presidential directive, FRA bought more than 1.7 million MT of maize — well above its financing envelope and storage capacity. The 2026 national budget allocates only K2.1 billion to the Strategic Food Reserve, barely enough to cover a 500,000 MT target for the 2026/27 season, let alone service the debt from the 2024/25 over-purchase. The scale-down is real as policy and chaotic as implementation. 2026/27 is where political pressure and fiscal reality collide.',
     figures: [
       { v: '1.7M MT', k: 'FRA maize purchases in 2024/25 (over envelope)' },
       { v: 'K2.1B', k: 'Strategic Food Reserve allocation, 2026 budget' },
@@ -29,16 +29,16 @@ const FACTS = [
     ],
   },
   {
-    key: 'eudr',
-    tag: 'OUTSIDE THE COUNTRY',
+    key: 'money',
+    tag: 'THE MONEY',
     tagColor: C.purple,
-    headline: 'European buyers now need plot-level provenance, by law.',
-    body: 'The EU Deforestation Regulation creates binding legal obligations on European buyers of Zambian soya: plot-level traceability, deforestation-free attestation, and documentary proof held for five years. The compliance premium is real and priceable. It is paid by corporate balance sheets under legal duress, not by thin CATSP public envelopes. Any Zambian mechanism that can deliver EUDR-grade provenance has a funded buyer at the other end \u2014 and the buyer will keep paying as long as the law exists.',
+    headline: 'Corporate money is already committed to exactly this data.',
+    body: 'Two independent obligation layers converge on Zambian soya. First: the EU Deforestation Regulation creates binding legal duties on European importers — plot-level traceability, deforestation-free attestation, five-year retention, fines scaling to 4% of EU turnover. Second: more than 350 signatory banks under UNEP FI’s Principles for Responsible Banking — together with the Net-Zero Banking Alliance and the PCAF financed-emissions methodology — are committed to measure and reduce the nature and climate impact of their entire agricultural loan book. UNEP FI’s Sector Action Guidance for Nature names soy on a short priority commodity list alongside palm, cattle, wood, bauxite and copper. The buyers are different. The data is the same.',
     figures: [
-      { v: '2025', k: 'EUDR entry into application' },
-      { v: '2026/27', k: 'full phase-in for smallholder supply chains' },
-      { v: '5 years', k: 'mandatory provenance record retention' },
-      { v: 'Binding', k: 'legal obligation, not voluntary standard' },
+      { v: '$8.7T', k: 'AUM committed to tackle ag-commodity deforestation (UNEP FI coalition)' },
+      { v: '350+', k: 'PRB signatory banks taking action on nature' },
+      { v: 'Soy', k: 'on UNEP FI’s priority commodity list' },
+      { v: 'EUDR', k: 'binding EU legal obligation, 4% fine ceiling' },
     ],
   },
 ];
@@ -53,7 +53,7 @@ export default function Context() {
         <div className="eye">THE WINDOW</div>
         <h2 className="h2">Three things that were not true a year ago</h2>
         <p className="p">
-          The architecture that follows is not a bet on change \u2014 it is a response to change that has already happened. Three independent facts, converging for the first time on the 2026/27 farming season.
+          The architecture that follows is not a bet on change — it is a response to change that has already happened. Three independent facts, converging for the first time on the 2026/27 farming season.
         </p>
 
         {/* Tabs */}
@@ -114,7 +114,7 @@ export default function Context() {
         </div>
 
         <div className="pull" style={{ marginTop: 44 }}>
-          "Both transitions create structural demand for private-sector market infrastructure \u2014 not to replace state mechanisms, but to give smallholders commercial alternatives as the state share of marketing <em>recedes</em>."
+          "Both transitions create structural demand for private-sector market infrastructure — not to replace state mechanisms, but to give smallholders commercial alternatives as the state share of marketing <em>recedes</em>."
         </div>
       </div>
     </section>

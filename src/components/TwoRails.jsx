@@ -6,7 +6,7 @@ const INPUT_RAIL = {
   tag: 'INPUT RAIL',
   color: C.egHi,
   colorLt: C.eg,
-  label: 'E-voucher \u2192 Agro-dealer \u2192 Seed & fertiliser',
+  label: 'E-voucher → Agro-dealer → Seed & fertiliser',
   steps: [
     { label: 'State allocation', sub: 'K8,000 / farmer', detail: 'FISP e-voucher posted to farmer NRC against eligible beneficiary list.' },
     { label: 'Farmer contribution', sub: 'K400', detail: 'Paid via mobile money at redemption. Mutual attestation on both sides.' },
@@ -21,7 +21,7 @@ const OUTPUT_RAIL = {
   tag: 'OUTPUT RAIL',
   color: C.cuHi,
   colorLt: C.cu,
-  label: 'Harvest \u2192 Warehouse receipt \u2192 EU compliance buyer',
+  label: 'Harvest → Warehouse receipt → EU compliance buyer',
   steps: [
     { label: 'Harvest & grading', sub: 'volume, moisture', detail: 'Farmer delivers soya to a pilot warehouse. Mutual attestation on weight and grade.' },
     { label: 'Warehouse receipt', sub: 'EUDR-grade', detail: 'Receipt references the farmer identity, GPS plot, and the input rail that fed it. Provenance is structurally complete.' },
@@ -91,10 +91,10 @@ export default function TwoRails() {
       <div className="eye">TWO RAILS, ONE IDENTITY</div>
       <h2 className="h2">The input rail met the output rail</h2>
       <p className="p">
-        For the first time, both sides of a smallholder\u2019s commercial year can exist outside state marketing. The input rail is real because FISP was digitised. The output rail is real because EU law now pays for plot-level provenance. What has been missing is the identity layer that makes them the same story.
+        For the first time, both sides of a smallholder’s commercial year can exist outside state marketing. The input rail is real because FISP was digitised. The output rail is real because EU law now pays for plot-level provenance. What has been missing is the identity layer that makes them the same story.
       </p>
       <p className="p" style={{ color: C.t2 }}>
-        Thiqa is that layer. Not a market, not a subsidy, not a buyer \u2014 a verification fabric that lets one farmer carry the same identity across both rails, and lets everyone downstream trust what they see. Soya is the worked example because it is EUDR-captured and rotates with maize; the mechanism is domain-agnostic.
+        Thiqa is that layer. Not a market, not a subsidy, not a buyer — a verification fabric that lets one farmer carry the same identity across both rails, and lets everyone downstream trust what they see. Soya is the worked example because it is EUDR-captured and rotates with maize; the mechanism is domain-agnostic.
       </p>
 
       <div style={{ marginTop: 34, padding: 28, background: C.s1, border: `1px solid ${C.s3}`, borderRadius: 8 }}>
@@ -122,11 +122,11 @@ export default function TwoRails() {
               Single farmer identity
             </div>
             <div style={{ fontFamily: FONT.body, fontSize: 14, color: C.t2, lineHeight: 1.55 }}>
-              Same NRC, same device, same GPS plot, same trust profile. Input rail events and output rail events accumulate against one identity \u2014 that is what makes the story tellable.
+              Same NRC, same device, same GPS plot, same trust profile. Input rail events and output rail events accumulate against one identity — that is what makes the story tellable.
             </div>
           </div>
           <div style={{ fontFamily: FONT.mono, fontSize: 11, color: C.t3, letterSpacing: '.08em' }}>
-            party \u00b7 event \u00b7 attestation
+            party · event · attestation
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function TwoRails() {
           animation: 'fadeUp .3s ease-out',
         }}>
           <div style={{ fontFamily: FONT.mono, fontSize: 11, color: activeRail.color, letterSpacing: '.1em', marginBottom: 4 }}>
-            {activeRail.tag} \u00b7 STEP {activeStep + 1}
+            {activeRail.tag} · STEP {activeStep + 1}
           </div>
           <div style={{ fontFamily: FONT.display, fontSize: 18, fontWeight: 700, color: C.t1, marginBottom: 8 }}>
             {activeDetail.label}

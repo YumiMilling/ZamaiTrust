@@ -3,6 +3,8 @@ import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Context from './components/Context';
 import TwoRails from './components/TwoRails';
+import BusinessModel from './components/BusinessModel';
+import BuildSequence from './components/BuildSequence';
 import TrustTiers from './components/TrustTiers';
 import EntityMap from './components/EntityMap';
 import AttestationFlow from './components/AttestationFlow';
@@ -11,7 +13,6 @@ import DisputeResolution from './components/DisputeResolution';
 import TrustScore from './components/TrustScore';
 import FraudDetection from './components/FraudDetection';
 import PortArchitecture from './components/PortArchitecture';
-import BuildSequence from './components/BuildSequence';
 import Sources from './components/Sources';
 import { C, FONT } from './theme';
 
@@ -24,6 +25,10 @@ export default function App() {
       <Context />
       <div className="divider" />
       <TwoRails />
+      <div className="divider" />
+      <BusinessModel />
+      <div className="divider" />
+      <BuildSequence />
       <div className="divider" />
       <TrustTiers />
       <div className="divider" />
@@ -41,8 +46,6 @@ export default function App() {
       <div className="divider" />
       <PortArchitecture />
       <div className="divider" />
-      <BuildSequence />
-      <div className="divider" />
       <Sources />
       <div className="divider" />
 
@@ -52,11 +55,11 @@ export default function App() {
           Thiqa
         </div>
         <p style={{ fontFamily: FONT.body, fontSize: 15, color: C.t3, lineHeight: 1.75, maxWidth: 560, margin: '0 auto' }}>
-          Trust infrastructure for the real economy. Soya is the pilot because soya is EUDR-captured and rotates with maize \u2014 the mechanism is domain-agnostic.
+          Trust infrastructure for the real economy. Soya is the worked example because soya is EUDR-captured and rotates with maize — the mechanism is domain-agnostic.
           <br/>Designed in Batoka, built by ZamAi Solutions.
         </p>
         <p style={{ fontFamily: FONT.mono, fontSize: 12, color: C.t4, marginTop: 21 }}>
-          Concept Note v2 \u2014 April 2026
+          Concept Note v2.1 — April 2026
         </p>
       </footer>
     </>
