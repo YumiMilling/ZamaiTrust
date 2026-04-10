@@ -25,14 +25,13 @@ const PHASES = [
     color: C.egHi,
     items: [
       'Depot tool for soya deliveries (single pilot site)',
-      'Candidate operator: Seba Foods Zambia (DFC-backed maize & soya processor on the Lobito Corridor) or NewGrowCo',
       'First Tier 1 mutual attestations on real grain',
       'Business identity via domain verification',
       'EUDR-grade warehouse receipt, issued once against a single pilot corporate buyer',
       'Document port (upload, hash, provenance URL)',
     ],
-    revenue: 'Depot tool SaaS + receipt issuance fees paid by the corporate buyer. Corridor-adjacent operators (Seba) come with committed DFI capital already on their balance sheet.',
-    unlocks: 'One real soya load moves from farmer to EU-compliant buyer with a verifiable provenance chain — and, if the operator sits on the Lobito Corridor, over a physical route that makes the compliance premium real margin rather than a theoretical line item.',
+    revenue: 'Depot tool SaaS + receipt issuance fees paid by the corporate buyer.',
+    unlocks: 'One real soya load moves from farmer to EU-compliant buyer with a verifiable provenance chain — and, for a corridor-adjacent operator, over a physical route that makes the compliance premium real margin rather than a theoretical line item.',
   },
   {
     phase: 3,
